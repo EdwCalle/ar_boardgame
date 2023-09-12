@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "com.unity.collab-proxy": "2.0.7",
+    "com.unity.device-simulator.devices": "1.0.0",
     "com.unity.feature.2d": "2.0.0",
     "com.unity.feature.ar": "1.0.1",
     "com.unity.feature.development": "1.0.1",
@@ -10,7 +11,6 @@
     "com.unity.visualscripting": "1.9.1",
     "com.unity.xr.arcore": "5.0.7",
     "com.unity.xr.management": "4.3.3",
-    "org.khronos.unitygltf": "https://github.com/prefrontalcortex/UnityGLTF.git?path=/UnityGLTF/Assets/UnityGLTF",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",
     "com.unity.modules.animation": "1.0.0",
