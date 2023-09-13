@@ -11,8 +11,11 @@ public class PlayerManager : MonoBehaviour
 {
     // Start is called before the first frame update
     //[SerializeField]
-    // public GameObject[] boardSquares;
+    public GameObject[] boxes;
+
     private int currentSquare = 0;
+    public bool isDice;
+    public int defaultDice;
     Vector2 movementLeft = new Vector3(-100, 0, 0);
     Vector3 movementRight = new Vector3(100, 0, 0);
     Vector3 movementUp = new Vector3(0, 100, 0);
@@ -31,6 +34,7 @@ public class PlayerManager : MonoBehaviour
     Vector3 nextPosition;
     private int dice;
     private bool isWaitingClick;
+    private bool isActiveDice;
 
     void Start()
     {
@@ -52,7 +56,7 @@ public class PlayerManager : MonoBehaviour
         // set wich sqaure are sqarePoint and set the 2 directions to next square, 
         boardSquares[2].setSquarePointPropeties("right", "down", 34, 3);
         boardSquares[9].setSquarePointPropeties("up", "right", 46, 10);
-        boardSquares[14].setSquarePointPropeties("up", "right", 53, 15);
+        boardSquares[13].setSquarePointPropeties("up", "right", 53, 15);
         boardSquares[45].setSquarePointPropeties("up", "right", 44, 47);
         boardSquares[52].setSquarePointPropeties("up", "right", 51, 54);
         //set if the next square has another direction
@@ -79,19 +83,54 @@ public class PlayerManager : MonoBehaviour
     }
     void FixedUpdate()
     {
-        if (transform.position.Equals(nextPosition))
-        {
-            if (dice > 0)
-            {
-                if (!isWaitingClick)
-                    MovePlayer();
-            }
-            else
-                stopRunnig();
+        // if (transform.position.Equals(nextPosition))
+        // {
+        //     isMoving = false;
 
-        }
+        //     print($"dice:{dice} {transform.position.ToString()} {nextPosition.ToString()}");
+
+        //     if (dice > 0)
+        //     {
+        //         if (!isWaitingClick)
+        //             MovePlayer();
+        //     }
+        //     else
+        //         stopRunnig();
+
+        // }
         if (isMoving)
-            transform.position = Vector3.MoveTowards(transform.position, nextPosition, Time.deltaTime * velocity * 54);
+        {
+            transform.position = Vector3.MoveTowards(transform.position, nextPosition, Time.deltaTime * velocity);
+            if (transform.position.Equals(nextPosition))
+            {
+                isMoving = false;
+                dice--;
+            }
+        }
+        else
+        {
+            if (isActiveDice)
+            {
+                if (dice > 0)// if there are more movements, move again
+                {
+                    // ask for if there are directions, stop movments and stop asking for current position
+                    if (boardSquares[currentSquare].IsSquarePoint)
+                        showArrows();
+                    else
+                    {
+                        currentSquare = boardSquares[currentSquare].NextSquare;
+                        nextPosition.x = boxes[currentSquare].transform.position.x;
+                        nextPosition.y = boxes[currentSquare].transform.position.y;
+                        isMoving = true;
+                    }
+                }
+                else // stop moving
+                {
+                    isMoving = false;
+                    isActiveDice = false;
+                }
+            }
+        }
 
 
     }
@@ -107,51 +146,47 @@ public class PlayerManager : MonoBehaviour
     public void ThrowDice(TextMeshProUGUI number_dice)
     {
         dice = Random.Range(1, 7);
+        if (isDice)
+            dice = defaultDice;
         number_dice.text = $"{dice}";
-        MovePlayer();
+        nextPosition.z = transform.position.z;
+
+        isMoving = true;
+        isActiveDice = false;
+        //MovePlayer();
+
         //animator.SetBool("isRunning", true);
     }
     void MovePlayer()
     {
+        print($"dice; {dice} current square: {currentSquare}");
         // ask if the currentSquare is the last in the dice, if it's true then don't ask for select direction , else
         if (boardSquares[currentSquare].IsSquarePoint)
         {
             isWaitingClick = true;
             // HideArrows();
-            ShowArrow(boardSquares[currentSquare].DirectionOne);
-            ShowArrow(boardSquares[currentSquare].DirectionTwo);
+            showArrows();
         }
         else
-        {
-            // ask if the next sqaure change direction
-            if (boardSquares[currentSquare].IsNextSquareDirection)
-                ChangeDirection(boardSquares[currentSquare].DirectionOne);
             MoveToNextSquare();
-
-        }
     }
     void MoveToNextSquare()
     {
-
-        // lack animation (1 sec or less)
-        nextPosition.x = transform.position.x + currentMovement.x;
-        nextPosition.y = transform.position.y + currentMovement.y;
+        // nextPosition.x = transform.position.x + currentMovement.x;
+        //nextPosition.y = transform.position.y + currentMovement.y;
+        print("move to next square");
         nextPosition.z = transform.position.z;
         dice--;
-        isMoving = true;
         idle = true;
+        isMoving = true;
         currentSquare = boardSquares[currentSquare].NextSquare;
-
+        nextPosition.x = boxes[currentSquare].transform.position.x;
+        nextPosition.y = boxes[currentSquare].transform.position.y;
     }
-    void ChangeDirection(string direction)
+    void showArrows()
     {
-        switch (direction)
-        {
-            case "left": currentMovement = movementLeft; break;
-            case "right": currentMovement = movementRight; break;
-            case "up": currentMovement = movementUp; break;
-            case "down": currentMovement = movementDown; break;
-        }
+        ShowArrow(boardSquares[currentSquare].DirectionOne);
+        ShowArrow(boardSquares[currentSquare].DirectionTwo);
     }
     void ShowArrow(string direction)
     {
@@ -173,22 +208,13 @@ public class PlayerManager : MonoBehaviour
     public void Click(string direction)
     {
         if (direction == boardSquares[currentSquare].DirectionOne)
-        {
             boardSquares[currentSquare].SwitchToOne();
-            ChangeDirection(direction);
-
-        }
         else
-        {
             boardSquares[currentSquare].SwitchToTwo();
-            ChangeDirection(boardSquares[currentSquare].DirectionTwo);
-        }
-
         HideArrows();
         MoveToNextSquare();
         isWaitingClick = false;
     }
-
     public void GoToMinigame(int codeMinigame)
     {
         Debug.Log("go to minigame:" + codeMinigame);
