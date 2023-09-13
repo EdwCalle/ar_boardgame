@@ -92,7 +92,7 @@ public class PlayerManager : MonoBehaviour
         }
         if (isMoving)
             transform.position = Vector3.MoveTowards(transform.position, nextPosition, Time.deltaTime * velocity * 54);
-        //Vector2.MoveTowards(transform.position,nextPosition,Time.de);
+
 
     }
     void stopRunnig()
@@ -108,13 +108,8 @@ public class PlayerManager : MonoBehaviour
     {
         dice = Random.Range(1, 7);
         number_dice.text = $"{dice}";
-        // dice = 1;
-        // print(transform.position.ToString());
-        //transform.position += new Vector3(1, 1, 0);
-        //print(transform.position.ToString());
         MovePlayer();
         //animator.SetBool("isRunning", true);
-        print(currentSquare);
     }
     void MovePlayer()
     {
