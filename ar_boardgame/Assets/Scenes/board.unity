@@ -2762,7 +2762,7 @@ MonoBehaviour:
   - {fileID: 2014636994}
   - {fileID: 1114872552}
   - {fileID: 97953196}
-  isDice: 1
+  isDice: 0
   defaultDice: 5
   leftButton: {fileID: 552577814}
   rightButton: {fileID: 862465431}
@@ -9429,7 +9429,7 @@ PrefabInstance:
     - target: {fileID: 5136205976415959042, guid: 214fc17a9aadc4f9e93437a0cd5ca54a,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 425
+      value: 375
       objectReference: {fileID: 0}
     - target: {fileID: 5136205976415959042, guid: 214fc17a9aadc4f9e93437a0cd5ca54a,
         type: 3}

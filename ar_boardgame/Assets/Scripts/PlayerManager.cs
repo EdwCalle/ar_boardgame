@@ -74,6 +74,8 @@ public class PlayerManager : MonoBehaviour
         HideArrows();
         // get the animator for makes animations
         // animator = GetComponent<Animator>();
+
+        // nextPosition = boxes[2].transform.position;
     }
     // Update is called once per frame
     void Update()
@@ -105,6 +107,7 @@ public class PlayerManager : MonoBehaviour
             {
                 isMoving = false;
                 dice--;
+                Debug.Log(dice);
             }
         }
         else
@@ -150,9 +153,14 @@ public class PlayerManager : MonoBehaviour
             dice = defaultDice;
         number_dice.text = $"{dice}";
         nextPosition.z = transform.position.z;
+        // ask for next position, if yes continue
+        // currentSquare = boardSquares[currentSquare].NextSquare;
+        // nextPosition.x = boxes[currentSquare].transform.position.x;
+        // nextPosition.y = boxes[currentSquare].transform.position.y;
 
-        isMoving = true;
-        isActiveDice = false;
+
+        //isMoving = true;
+        isActiveDice = true;
         //MovePlayer();
 
         //animator.SetBool("isRunning", true);
@@ -176,7 +184,7 @@ public class PlayerManager : MonoBehaviour
         //nextPosition.y = transform.position.y + currentMovement.y;
         print("move to next square");
         nextPosition.z = transform.position.z;
-        dice--;
+        // dice--;
         idle = true;
         isMoving = true;
         currentSquare = boardSquares[currentSquare].NextSquare;
