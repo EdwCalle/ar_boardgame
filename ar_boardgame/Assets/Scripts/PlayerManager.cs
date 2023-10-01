@@ -6,7 +6,7 @@ using UnityEngine.Sprites;
 using TMPro;
 using Models;
 using Unity.VisualScripting;
-
+using UnityEngine.SceneManagement;
 public class PlayerManager : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -165,19 +165,7 @@ public class PlayerManager : MonoBehaviour
 
         //animator.SetBool("isRunning", true);
     }
-    void MovePlayer()
-    {
-        print($"dice; {dice} current square: {currentSquare}");
-        // ask if the currentSquare is the last in the dice, if it's true then don't ask for select direction , else
-        if (boardSquares[currentSquare].IsSquarePoint)
-        {
-            isWaitingClick = true;
-            // HideArrows();
-            showArrows();
-        }
-        else
-            MoveToNextSquare();
-    }
+
     void MoveToNextSquare()
     {
         // nextPosition.x = transform.position.x + currentMovement.x;
@@ -223,8 +211,9 @@ public class PlayerManager : MonoBehaviour
         MoveToNextSquare();
         isWaitingClick = false;
     }
-    public void GoToMinigame(int codeMinigame)
+    public void GoToMinigame(string codeMinigame)
     {
         Debug.Log("go to minigame:" + codeMinigame);
+        SceneManager.LoadScene(codeMinigame);
     }
 }
