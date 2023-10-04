@@ -2,58 +2,85 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Models;
+
 public class ModelManager : MonoBehaviour
 {
     public GameObject checkbox;
     private ModelObject modelObject;
     public Camera camara;
+    public GameObject timer;
 
     string names;
+
+    public bool isSolution;
+    bool stop = false;
     void Start()
     {
         modelObject = new ModelObject();
         modelObject.Name = names;
+        modelObject.IsSolution = this.isSolution;
         // checkbox.SetActive(false);
         // checkbox.GetComponent<Renderer>().material.SetColor("_Color", Color.red);
 
     }
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (timer.GetComponent<CountdownTimer>().isCountingDown)
         {
-            Ray ray = camara.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit))
+            if (Input.GetMouseButtonDown(0))
             {
-                if (hit.collider.gameObject == checkbox)
+                Ray ray = camara.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+
+                if (Physics.Raycast(ray, out hit))
                 {
-                    // This object was clicked.
-                    // Put your click logic here.
-                    print("selected model" + modelObject.Name);
-                    selectModel();
+                    if (hit.collider.gameObject == checkbox)
+                    {
+                        // This object was clicked.
+                        // Put your click logic here.
+                        print("selected model" + modelObject.Name);
+                        selectModel();
+                    }
                 }
             }
         }
+        else
+        {
+            print("go 1");
+            if (!stop)
+            {
+                print("go 2");
+                if (timer.GetComponent<CountdownTimer>().showResults)
+                {
+                    print("go 3");
+                    setCorrect();
+                }
+            }
+
+
+        }
+
     }
 
 
     public void setCorrect()
     {
-        if (!modelObject.IsSelected)
+        if (modelObject.IsSolution)
         {
-            checkbox.GetComponent<Renderer>().material.SetColor("_Color", Color.red);
-            modelObject.IsSelected = true;
+
+            checkbox.GetComponent<Renderer>().material.SetColor("_Color", Color.green);
         }
         else
         {
-            checkbox.GetComponent<Renderer>().material.SetColor("_Color", Color.white);
-            modelObject.IsSelected = false;
+            checkbox.GetComponent<Renderer>().material.SetColor("_Color", Color.red);
+
         }
+        stop = true;
         //  if (se)
     }
     public void selectModel()
     {
+
         if (!modelObject.IsSelected)
         {
             checkbox.GetComponent<Renderer>().material.SetColor("_Color", Color.cyan);
