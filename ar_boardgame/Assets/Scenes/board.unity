@@ -1602,7 +1602,7 @@ GameObject:
   - component: {fileID: 374821129}
   - component: {fileID: 374821128}
   m_Layer: 5
-  m_Name: Canvas (1)
+  m_Name: selectGame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2864,12 +2864,13 @@ MonoBehaviour:
   - {fileID: 2014636994}
   - {fileID: 1114872552}
   - {fileID: 97953196}
-  isDice: 0
+  isDice: 1
   defaultDice: 5
   leftButton: {fileID: 552577814}
   rightButton: {fileID: 862465431}
   upButton: {fileID: 1143268451}
   downButton: {fileID: 572497268}
+  selectGame: {fileID: 374821127}
   velocity: 100
 --- !u!1001 &714420619
 PrefabInstance:

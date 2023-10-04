@@ -28,6 +28,7 @@ public class PlayerManager : MonoBehaviour
     public GameObject rightButton;
     public GameObject upButton;
     public GameObject downButton;
+    public GameObject selectGame;
     public float velocity;
 
     Animator animator;
@@ -72,6 +73,7 @@ public class PlayerManager : MonoBehaviour
         //   currentMovement = movementDown;
         // it hides arrows which are used when the player has to change map's direction
         HideArrows();
+        selectGame.SetActive(false);
         // get the animator for makes animations
         // animator = GetComponent<Animator>();
 
@@ -131,6 +133,7 @@ public class PlayerManager : MonoBehaviour
                 {
                     isMoving = false;
                     isActiveDice = false;
+                    selectGame.SetActive(true);
                 }
             }
         }
