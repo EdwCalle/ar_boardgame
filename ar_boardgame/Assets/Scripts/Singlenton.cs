@@ -17,7 +17,7 @@ public class Singleton : MonoBehaviour
     private void Awake()
     {
         CreateSingleton();
-
+        PreLoadData();
 
     }
 

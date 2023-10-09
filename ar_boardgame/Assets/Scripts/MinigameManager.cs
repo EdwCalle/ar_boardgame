@@ -12,7 +12,7 @@ public class MinigameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Singleton.instance.PreLoadData();
+        //Singleton.instance.PreLoadData();
 
         //preload all models
         foreach (ModelObject item in Singleton.instance.currentMinigame.Models)
@@ -21,8 +21,11 @@ public class MinigameManager : MonoBehaviour
             modelPrefab.GetComponent<GLTFComponent>().GLTFUri = item.Url;
             Instantiate(modelPrefab, item.GetPosition(), Quaternion.identity);
 
+
+
+
         }
-        print("a");
+
 
         //
     }
