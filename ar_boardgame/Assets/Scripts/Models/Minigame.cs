@@ -1,12 +1,25 @@
-namespace Models
+
+using System.Collections;
+using Models;
+
+namespace Minigames
 {
+
     public class Minigame
     {
-        private string description;
-        private string difficulty;
+        private int code;
+        private int timer;
+
         private string title;
-        public string Description { get => description; set => description = value; }
-        public string Difficulty { get => difficulty; set => difficulty = value; }
+        private string function;
+        private ArrayList models = new ArrayList();
+
+        public int Code
+        { get => code; set => code = value; }
+        public int Timer { get => timer; set => timer = value; }
         public string Title { get => title; set => title = value; }
+        public string Function { get => function; set => function = value; }
+        public ArrayList Models { get => models; set => models = value; }
+
     }
 }

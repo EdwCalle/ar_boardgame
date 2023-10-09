@@ -20,8 +20,7 @@ namespace Models
         private void Start()
         {
             currentTime = totalTime;
-            //timerText2 = timerText.GetComponent<TextMeshPro>();
-            //StartCountdown();
+
         }
 
         private void Update()
