@@ -34,6 +34,7 @@ public class PlayerManager : MonoBehaviour
     private bool isWaitingClick;
     private bool isActiveDice;
 
+    //public GameObject firstCharacter;
 
 
     void Start()
@@ -76,10 +77,18 @@ public class PlayerManager : MonoBehaviour
         // get the animator for makes animations
         // animator = GetComponent<Animator>();
 
+
+
+
         currentSquare = Singleton.instance.currentPosition;
         if (currentSquare != 0)
             transform.position = boxes[currentSquare].transform.position;
+
+
+        GetComponent<SpriteRenderer>().sprite = Singleton.instance.firstSpritePlayer;
+
     }
+
     // Update is called once per frame
     void Update()
     {
@@ -143,6 +152,7 @@ public class PlayerManager : MonoBehaviour
     }
     public void ThrowDice(TextMeshProUGUI number_dice)
     {
+
         if (!isMoving)
         {
             dice = Random.Range(1, 7);

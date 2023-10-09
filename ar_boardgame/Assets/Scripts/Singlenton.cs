@@ -6,7 +6,7 @@ public class Singleton : MonoBehaviour
 
     [HideInInspector]
     public int currentPosition = 0;
-
+    public Sprite firstSpritePlayer;
     private void Awake()
     {
         CreateSingleton();
