@@ -1,5 +1,6 @@
 
 using System.Collections;
+using System.Collections.Generic;
 using Models;
 
 namespace Minigames
@@ -13,6 +14,7 @@ namespace Minigames
         private string title;
         private string function;
         private ArrayList models = new ArrayList();
+        List<Question> questions = new List<Question>();
 
         public int Code
         { get => code; set => code = value; }
@@ -20,6 +22,6 @@ namespace Minigames
         public string Title { get => title; set => title = value; }
         public string Function { get => function; set => function = value; }
         public ArrayList Models { get => models; set => models = value; }
-
+        public List<Question> Questions { get => questions; set => questions = value; }
     }
 }

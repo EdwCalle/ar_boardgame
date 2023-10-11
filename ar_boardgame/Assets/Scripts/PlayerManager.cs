@@ -223,7 +223,8 @@ public class PlayerManager : MonoBehaviour
     public void GoToMinigame(string codeMinigame)
     {
         Singleton.instance.currentPosition = currentSquare;
+        Singleton.instance.currentMinigame.Code = int.Parse(codeMinigame);
         Debug.Log("go to minigame:" + codeMinigame);
-        SceneManager.LoadScene(codeMinigame);
+        SceneManager.LoadScene("minigame1");
     }
 }
