@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using Models;
 
-public class ModelManager : MonoBehaviour
+public class SelectableModel : MonoBehaviour
 {
     public GameObject checkbox;
     private ModelObject modelObject;
-    public Camera camara;
+
     public GameObject timer;
 
     string names;
@@ -29,7 +29,7 @@ public class ModelManager : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                Ray ray = camara.ScreenPointToRay(Input.mousePosition);
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
 
                 if (Physics.Raycast(ray, out hit))
@@ -65,7 +65,7 @@ public class ModelManager : MonoBehaviour
 
     public void setCorrect()
     {
-        if (modelObject.IsSolution)
+        if (modelObject.IsSolution == modelObject.IsSelected)
         {
 
             checkbox.GetComponent<Renderer>().material.SetColor("_Color", Color.green);
