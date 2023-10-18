@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Models
 {
-    public class ModelObject
+    public class Item
     {
         private int code;
         private string name;
@@ -18,11 +18,11 @@ namespace Models
 
 
 
-        public ModelObject()
+        public Item()
         {
         }
 
-        public ModelObject(int code, string name, string description, string url, string position, string scale, bool isSolution, bool isSelected, string colliderSize, string colliderCenter)
+        public Item(int code, string name, string description, string url, string position, string scale, bool isSolution, bool isSelected, string colliderSize, string colliderCenter)
         {
             this.code = code;
             this.name = name;

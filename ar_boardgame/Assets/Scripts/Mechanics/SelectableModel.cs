@@ -6,7 +6,7 @@ using Models;
 public class SelectableModel : MonoBehaviour
 {
     public GameObject checkbox;
-    private ModelObject modelObject;
+    private Item modelObject;
 
     public GameObject timer;
 
@@ -16,7 +16,7 @@ public class SelectableModel : MonoBehaviour
     bool stop = false;
     void Start()
     {
-        modelObject = new ModelObject();
+        modelObject = new Item();
         modelObject.Name = names;
         modelObject.IsSolution = this.isSolution;
         // checkbox.SetActive(false);

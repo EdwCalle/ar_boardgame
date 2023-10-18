@@ -38,7 +38,7 @@ public class MinigameManager : MonoBehaviour
             minigame2.SetActive(false);
             counterText.text = "--";
             //preload all models
-            foreach (ModelObject item in Singleton.instance.currentMinigame.Models)
+            foreach (Item item in Singleton.instance.currentMinigame.Models)
             {
 
                 print(item.Name);
@@ -57,7 +57,7 @@ public class MinigameManager : MonoBehaviour
         if (Singleton.instance.currentMinigame.Code == 4)
         {
             modelPrefab.SetActive(false);
-            foreach (ModelObject item in Singleton.instance.currentMinigame.Models)
+            foreach (Item item in Singleton.instance.currentMinigame.Models)
             {
 
                 print(item.Name);
@@ -79,11 +79,9 @@ public class MinigameManager : MonoBehaviour
             setData(0);
         }
 
-
         //
     }
 
-    // Update is called once per frame
     void Update()
     {
 
@@ -114,4 +112,6 @@ public class MinigameManager : MonoBehaviour
         optionC.text = Singleton.instance.currentMinigame.Questions[pos].OptionC;
         optionD.text = Singleton.instance.currentMinigame.Questions[pos].OptionD;
     }
+
+
 }
