@@ -9,17 +9,17 @@ namespace Models
         private string name;
         private string description;
         private string url;
-        private string position;
-        private string scale;
+        private Vector3 position;
+        private Vector3 scale;
         private bool isSolution;
         private bool isSelected = false;
-        private string colliderCenter;
-        private string colliderSize;
+
+        private Models.Collider collider;
         public Item()
         {
         }
 
-        public Item(int code, string name, string description, string url, string position, string scale, bool isSolution, bool isSelected, string colliderSize, string colliderCenter)
+        public Item(int code, string name, string description, string url, Vector3 position, Vector3 scale, bool isSolution, bool isSelected, Models.Collider collider)
         {
             this.code = code;
             this.name = name;
@@ -29,33 +29,31 @@ namespace Models
             this.scale = scale;
             this.isSolution = isSolution;
             this.isSelected = isSelected;
-            this.colliderCenter = colliderCenter;
-            this.ColliderSize = colliderSize;
+            this.collider = collider;
         }
 
         public int Code { get => code; set => code = value; }
         public string Name { get => name; set => name = value; }
         public string Description { get => description; set => description = value; }
         public string Url { get => url; set => url = value; }
-        public string Position { get => position; set => position = value; }
-        public string Scale { get => scale; set => scale = value; }
+        public Vector3 Position { get => position; set => position = value; }
+        public Vector3 Scale { get => scale; set => scale = value; }
         public bool IsSolution { get => isSolution; set => isSolution = value; }
         public bool IsSelected { get => isSelected; set => isSelected = value; }
-        public string ColliderCenter { get => colliderCenter; set => colliderCenter = value; }
-        public string ColliderSize { get => colliderSize; set => colliderSize = value; }
+        public Collider Collider { get => collider; set => collider = value; }
 
-        public Vector3 GetPosition()
-        {
-            return TransformCoordinate(Position);
-        }
-        public Vector3 GetColliderSize()
-        {
-            return GetPosition() + TransformCoordinate(ColliderSize);
-        }
-        public Vector3 GetColliderCenter()
-        {
-            return TransformCoordinate(ColliderCenter);
-        }
+        // public Vector3 GetPosition()
+        // {
+        //     return TransformCoordinate(Position);
+        // }
+        // public Vector3 GetColliderSize()
+        // {
+        //     return GetPosition() + TransformCoordinate(ColliderSize);
+        // }
+        // public Vector3 GetColliderCenter()
+        // {
+        //     return TransformCoordinate(ColliderCenter);
+        // }
         private Vector3 TransformCoordinate(string position)
         {
             string[] split = position.Split(";");

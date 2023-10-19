@@ -9,7 +9,7 @@ public class ItemsManager : MonoBehaviour
     [SerializeField] private GameObject itemPrefab;
 
     //for level 1,2,3,5,7
-    List<GameObject> items = new List<GameObject>();
+    public static List<GameObject> items = new List<GameObject>();
     //for level 4,6
     //private Gameobject test;
 
@@ -18,53 +18,35 @@ public class ItemsManager : MonoBehaviour
 
     }
 
-    public void addModelUri(string url)
-    {
-        itemPrefab.transform.GetChild(0).gameObject.GetComponent<ImporterManager>().GLTFUri = url;
-    }
-    public void addCollider(Vector3 colliderCenter, Vector3 colliderSize)
-    {
-        itemPrefab.transform.GetChild(0).gameObject.GetComponent<BoxCollider>().center = colliderCenter;
-        itemPrefab.transform.GetChild(0).gameObject.GetComponent<BoxCollider>().size = colliderSize;
-    }
-    public void addIndex(int index)
-    {
-        itemPrefab.transform.GetChild(1).gameObject.GetComponent<SelectableModel>().index = index;
-    }
-    public void addItemsContainer()
-    {
-        itemPrefab.transform.GetChild(1).gameObject.GetComponent<SelectableModel>().Configure(this);
-    }
-    public void unselectModel(int index)
-    {
-        items[index].transform.GetChild(1).gameObject.GetComponent<SelectableModel>().switchModelSelected();
-    }
     public GameObject createItem(Vector3 Position)
     {
-        itemPrefab.transform.GetChild(0).gameObject.GetComponent<ImporterManager>().LoadModel();
-        GameObject instance = Instantiate(itemPrefab, Position, Quaternion.identity);
-        return instance;
+        return Instantiate(itemPrefab, Position, Quaternion.identity);
     }
 
 
-    public void LoadMultipleModels()
+    public async void LoadMultipleModels()
     {
         int i = 0;
         foreach (Item item in Singleton.instance.currentMinigame.Models)
         {
+            GameObject instance = createItem(item.Position);
+            instance.GetComponent<ItemManager>().ItemManagerBuilder(i++,
+                                                                      item.Collider,
+                                                                      item.Url);
 
-            addModelUri(item.Url);
-            addCollider(item.GetColliderCenter(), item.GetColliderSize());
-            addItemsContainer();
-            addIndex(i++);
-            items.Add(createItem(item.GetPosition()));
+            bool verify = await instance.GetComponent<ItemManager>().LoadModel();
+            if (!verify)
+                print("something wrong happens, please make something with this");
+
+            items.Add(instance);
+
 
 
         }
     }
     public void PrepareLevel()
     {
-        SelectableModel.selection = SelectableModel.SelectionType.noSelection;
+        SelectableModel.selection = SelectableModel.SelectionType.MultipleSelection;
         // selection = SelectionType.OneSelection;
         LoadMultipleModels();
     }

@@ -131,7 +131,7 @@ public class ImporterManager : MonoBehaviour
     }
     private void LoadCompleteAction(GameObject obj, ExceptionDispatchInfo exceptionDispatchInfo)
     {
-        print("objeto cargado completamente");
+        //print("objeto cargado completamente");
         onLoadComplete?.Invoke();
     }
 }

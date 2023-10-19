@@ -1038,17 +1038,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ead43c88926f3143bd3b6738698d34e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  title: {fileID: 363779210}
-  modelPrefab: {fileID: 7892396048113865082, guid: 8ce067b150057f34da35052744480ead,
-    type: 3}
-  image: {fileID: 725825963}
-  optionA: {fileID: 686525167}
-  optionB: {fileID: 1883823989}
-  optionC: {fileID: 1112838280}
-  optionD: {fileID: 711744032}
-  counterText: {fileID: 4141738543716538116}
-  minigame2: {fileID: 1081794821}
-  finalizarButton: {fileID: 629748575}
 --- !u!4 &633072110
 Transform:
   m_ObjectHideFlags: 0

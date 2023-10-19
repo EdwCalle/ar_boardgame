@@ -5,10 +5,9 @@ public class SelectableModel : MonoBehaviour
 {
 
     private Item item;
+
     public bool isSolution;
     public int index;
-    [SerializeField] private ItemsManager itemsManager;
-
     public static int lastSelectedItem = -1;
     public enum SelectionType
     {
@@ -21,12 +20,10 @@ public class SelectableModel : MonoBehaviour
     public static SelectionType selection;
     void Start()
     {
+        item = new Item();
+        //itemm
 
 
-    }
-    public void Configure(ItemsManager mediator)
-    {
-        this.itemsManager = mediator;
     }
 
     void OnMouseDown()
@@ -50,7 +47,7 @@ public class SelectableModel : MonoBehaviour
         else if (selection == SelectionType.OneSelection && lastSelectedItem != -1)
         {
 
-            itemsManager.unselectModel(lastSelectedItem);
+            unselectModel(lastSelectedItem);
             switchModelSelected();
             lastSelectedItem = index;
 
@@ -128,6 +125,10 @@ public class SelectableModel : MonoBehaviour
             item.IsSelected = false;
         }
 
+    }
+    public void unselectModel(int index)
+    {
+        ItemsManager.items[index].transform.GetChild(1).gameObject.GetComponent<SelectableModel>().switchModelSelected();
     }
 
 }

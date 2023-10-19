@@ -38,9 +38,9 @@ public class Singleton : MonoBehaviour
         currentMinigame.Timer = 30;
         currentMinigame.Function = "seleccionar el modelo correcto";
 
-        currentMinigame.Models.Add(new Item(1, "pato", "description", "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF/Duck.gltf", "1;-0,5;2", "0.2,0.2,0.2", true, false, "2;1,8;1", "-0,21;0,77;0,05"));
-        currentMinigame.Models.Add(new Item(2, "pato", "description", "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/AntiqueCamera/glTF-Binary/AntiqueCamera.glb", "0;-0,5;2,5", "0.2,0.2,0.2", false, false, "2;1,8;1", "-0,21;0,77;0,05"));
-        currentMinigame.Models.Add(new Item(3, "pato", "description", "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF/Duck.gltf", "-1;-0,5;3", "0,2;0,2;0,2", false, false, "2;1,8;1", "-0,21;0,77;0,05"));
+        currentMinigame.Models.Add(new Item(1, "pato", "description", "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF/Duck.gltf", new Vector3(1, -0.5f, 2), new Vector3(0.2f, 0.2f, 0.2f), true, false, new Models.Collider(new Vector3(-0.1f, 0.8f, 0), new Vector3(1.7f, 1.8f, 1))));
+        currentMinigame.Models.Add(new Item(2, "pato", "description", "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/AntiqueCamera/glTF-Binary/AntiqueCamera.glb", new Vector3(0, -0.5f, 2.5f), new Vector3(0.2f, 0.2f, 0.2f), false, false, new Models.Collider(new Vector3(-0.1f, 0.8f, 0), new Vector3(1.7f, 1.8f, 1))));
+        currentMinigame.Models.Add(new Item(3, "pato", "description", "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF/Duck.gltf", new Vector3(-1, -0.5f, 3), new Vector3(0.2f, 0.2f, 0.2f), false, false, new Models.Collider(new Vector3(-0.1f, 0.8f, 0), new Vector3(1.7f, 1.8f, 1))));
 
         currentMinigame.Questions.Add(new Question("blanco", "negro", "rojo", "verde", "¿De que color es el casco?"));
         currentMinigame.Questions.Add(new Question("una ", "dos ", "tres", "cuatro", "¿Cuántas ruedas tiene el carro?"));
