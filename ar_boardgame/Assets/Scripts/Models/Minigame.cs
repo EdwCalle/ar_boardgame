@@ -17,6 +17,17 @@ namespace Minigames
         private List<Question> questions = new List<Question>();
         private List<Group> groups = new List<Group>();
 
+
+
+        // public enum SelectionState
+        // {
+        //     OneSelection,
+        //     MultipleSelection,
+        //     NoSelection,
+
+        // }
+        //private Se
+
         private ExtraInfo extraInfo;
         //private bool isMultipleSelection;
 
@@ -29,6 +40,6 @@ namespace Minigames
         public List<Question> Questions { get => questions; set => questions = value; }
         public List<Group> Groups { get => groups; set => groups = value; }
         public ExtraInfo ExtraInfo { get => extraInfo; set => extraInfo = value; }
-
+        //public bool ExistSelecction { get => existSelecction; set => existSelecction = value; }
     }
 }

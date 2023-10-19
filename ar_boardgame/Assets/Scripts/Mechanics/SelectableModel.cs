@@ -1,98 +1,133 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Models;
-
+using System.Diagnostics;
 public class SelectableModel : MonoBehaviour
 {
-    public GameObject checkbox;
-    private Item modelObject;
 
-    public GameObject timer;
-
-    string names;
-
+    private Item item;
     public bool isSolution;
-    bool stop = false;
+    public int index;
+    [SerializeField] private ItemsManager itemsManager;
+
+    public static int lastSelectedItem = -1;
+    public enum SelectionType
+    {
+        noSelection,
+        OneSelection,
+        MultipleSelection
+
+
+    };
+    public static SelectionType selection;
     void Start()
     {
-        modelObject = new Item();
-        modelObject.Name = names;
-        modelObject.IsSolution = this.isSolution;
-        // checkbox.SetActive(false);
-        // checkbox.GetComponent<Renderer>().material.SetColor("_Color", Color.red);
+
+
+    }
+    public void Configure(ItemsManager mediator)
+    {
+        this.itemsManager = mediator;
+    }
+
+    void OnMouseDown()
+    {
+
+        //print("index:" + index + " last index:" + lastSelectedItem + " item selected:" + selection);
+        // if the selection type is one selection and  the current item selected is the same that the last selected
+        if (selection == SelectionType.OneSelection && lastSelectedItem == index)
+        {
+            switchModelSelected();
+            lastSelectedItem = -1;
+        }
+        // if the selection type is one selection and  there is no item selected
+        else if (selection == SelectionType.OneSelection && lastSelectedItem == -1)
+        {
+            switchModelSelected();
+            lastSelectedItem = index;
+        }
+
+        // if the selection type is one selection and  there is another selected
+        else if (selection == SelectionType.OneSelection && lastSelectedItem != -1)
+        {
+
+            itemsManager.unselectModel(lastSelectedItem);
+            switchModelSelected();
+            lastSelectedItem = index;
+
+        }
+        if (selection == SelectionType.MultipleSelection)
+            // if the selection is Multyply selection 
+            switchModelSelected();
+
+
 
     }
     void Update()
     {
-        if (timer.GetComponent<CountdownTimer>().isCountingDown)
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
+        // if (timer.GetComponent<CountdownTimer>().isCountingDown)
+        // {
+        //     if (Input.GetMouseButtonDown(0))
+        //     {
+        //         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        //         RaycastHit hit;
 
-                if (Physics.Raycast(ray, out hit))
-                {
-                    if (hit.collider.gameObject == checkbox)
-                    {
-                        // This object was clicked.
-                        // Put your click logic here.
-                        print("selected model" + modelObject.Name);
-                        selectModel();
-                    }
-                }
-            }
-        }
-        else
-        {
-            print("go 1");
-            if (!stop)
-            {
-                print("go 2");
-                if (timer.GetComponent<CountdownTimer>().showResults)
-                {
-                    print("go 3");
-                    setCorrect();
-                }
-            }
+        //         if (Physics.Raycast(ray, out hit))
+        //         {
+        //             if (hit.collider.gameObject == checkbox)
+        //             {
+        //                 // This object was clicked.
+        //                 // Put your click logic here.
+        //                 print("selected model" + item.Name);
+        //                 selectModel();
+        //             }
+        //         }
+        //     }
+        // }
+        // else
+        // {
+        //     print("go 1");
+        //     if (!stop)
+        //     {
+        //         print("go 2");
+        //         if (timer.GetComponent<CountdownTimer>().showResults)
+        //         {
+        //             print("go 3");
+        //             setCorrect();
+        //         }
+        //     }
 
 
-        }
+        // }
 
     }
-
-
     public void setCorrect()
     {
-        if (modelObject.IsSolution == modelObject.IsSelected)
+        if (item.IsSolution == item.IsSelected)
         {
 
-            checkbox.GetComponent<Renderer>().material.SetColor("_Color", Color.green);
+            GetComponent<Renderer>().material.SetColor("_Color", Color.green);
         }
         else
         {
-            checkbox.GetComponent<Renderer>().material.SetColor("_Color", Color.red);
+            GetComponent<Renderer>().material.SetColor("_Color", Color.red);
 
         }
-        stop = true;
-        //  if (se)
+
     }
-    public void selectModel()
+    public void switchModelSelected()
     {
 
-        if (!modelObject.IsSelected)
+        if (!item.IsSelected)
         {
-            checkbox.GetComponent<Renderer>().material.SetColor("_Color", Color.cyan);
-            modelObject.IsSelected = true;
+            GetComponent<Renderer>().material.SetColor("_Color", Color.cyan);
+            item.IsSelected = true;
         }
         else
         {
-            checkbox.GetComponent<Renderer>().material.SetColor("_Color", Color.white);
-            modelObject.IsSelected = false;
+            GetComponent<Renderer>().material.SetColor("_Color", Color.white);
+            item.IsSelected = false;
         }
-        //  if (se)
-    }
 
+    }
 
 }

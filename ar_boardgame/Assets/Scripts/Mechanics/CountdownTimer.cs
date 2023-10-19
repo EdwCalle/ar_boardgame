@@ -16,7 +16,6 @@ namespace Models
 
         public bool showResults; //encapusule this method
 
-        TextMeshPro timerText2;
         private void Start()
         {
             currentTime = totalTime;

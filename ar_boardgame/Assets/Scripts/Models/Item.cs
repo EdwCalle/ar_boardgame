@@ -15,9 +15,6 @@ namespace Models
         private bool isSelected = false;
         private string colliderCenter;
         private string colliderSize;
-
-
-
         public Item()
         {
         }
@@ -51,7 +48,7 @@ namespace Models
         {
             return TransformCoordinate(Position);
         }
-        public Vector3 GetColliderScale()
+        public Vector3 GetColliderSize()
         {
             return GetPosition() + TransformCoordinate(ColliderSize);
         }

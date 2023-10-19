@@ -35,6 +35,8 @@ public class ImporterManager : MonoBehaviour
     [SerializeField]
     private Shader shaderOverride = null;
 
+
+
     // Start is called before the first frame update
 
 
@@ -129,6 +131,7 @@ public class ImporterManager : MonoBehaviour
     }
     private void LoadCompleteAction(GameObject obj, ExceptionDispatchInfo exceptionDispatchInfo)
     {
+        print("objeto cargado completamente");
         onLoadComplete?.Invoke();
     }
 }

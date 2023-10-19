@@ -1,8 +1,5 @@
 using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
-using Unity.VisualScripting;
-using System;
 public class HeaderManager : MonoBehaviour
 {
     [SerializeField] private MediatorMinigame mediator;
@@ -22,6 +19,7 @@ public class HeaderManager : MonoBehaviour
     {
 
     }
+    //usado para referenciar el mediador
     public void Configure(MediatorMinigame mediator)
     {
         this.mediator = mediator;
