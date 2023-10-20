@@ -1,5 +1,6 @@
 
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Models;
 using UnityEngine;
 using UnityGLTF;
@@ -24,7 +25,7 @@ public class ItemsManager : MonoBehaviour
     }
 
 
-    public async void LoadMultipleModels()
+    public async Task LoadMultipleModels()
     {
         int i = 0;
         foreach (Item item in Singleton.instance.currentMinigame.Models)
@@ -44,11 +45,11 @@ public class ItemsManager : MonoBehaviour
 
         }
     }
-    public void PrepareLevel()
+    public async Task PrepareLevel()
     {
         SelectableModel.selection = SelectableModel.SelectionType.MultipleSelection;
         // selection = SelectionType.OneSelection;
-        LoadMultipleModels();
+        await LoadMultipleModels();
     }
 
 
