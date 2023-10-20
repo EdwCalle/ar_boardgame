@@ -1,10 +1,13 @@
+
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Models;
 
 
 public class CountdownTimer : MonoBehaviour
 {
+    [SerializeField] private MediatorMinigame mediatorMinigame;
     private float interactionTime; // Total time for the countdown in seconds
     private float resolveTime;  // Total time for the countdown in seconds
     private float feedbackTime;  // Total time for the countdown in seconds
@@ -12,8 +15,6 @@ public class CountdownTimer : MonoBehaviour
     //public GameObject time;
     //public TextMeshProUGUI timerText; // Reference to a UI Text component to display the timer
     private bool isCountingDown = false; // Start the countdown when true
-    public GameObject countdownFinishedObject; // GameObject to activate when the countdown finishes
-
     public float InteractionTime { get => interactionTime; set => interactionTime = value; }
     public float CurrentTime { get => currentTime; set => currentTime = value; }
     public float ResolveTime { get => resolveTime; set => resolveTime = value; }
@@ -31,7 +32,6 @@ public class CountdownTimer : MonoBehaviour
         //  CurrentTime = TotalTime;
 
     }
-
     private void Update()
     {
         if (isCountingDown)
@@ -43,7 +43,6 @@ public class CountdownTimer : MonoBehaviour
             {
                 time.Label.text = CurrentTime.ToString("0");
             }
-
             // Check if the countdown has finished
             if (CurrentTime <= 0)
             {
@@ -54,41 +53,39 @@ public class CountdownTimer : MonoBehaviour
                 //     countdownFinishedObject.SetActive(true);
                 // }
                 if (sequence == 6)
-                {
-                    EnableMessageState(false);
-                    currentTime = interactionTime;
-                    //Activate resolve mode
-                }
+                    ChangeState(false, TimerState.interaction, interactionTime);
+                //Activate resolve mode
                 if (sequence == 5)
-                {
-                    currentTime = offSet;
-                    EnableMessageState(true);
-                    SetMessage("Hora de Resolver el Juego!!!!!!!");
-                    //Activate offset mode
-                }
-
+                    ChangeState(true, TimerState.offset, offSet, "Hora de Resolver el Juego!!!!!!!");
+                //Activate offset mode
                 if (sequence == 4)
                 {
-                    EnableMessageState(false);
-                    currentTime = resolveTime;
-                    //Activate resolve mode
+                    ChangeState(false, TimerState.resolve, resolveTime);
+                    //activate selectable mode
+                    ItemsManager.ActiveSelectableComponent(true);
                 }
+                //Activate resolve mode
                 if (sequence == 3)
                 {
-                    currentTime = offSet;
-                    EnableMessageState(true);
-                    SetMessage("Se acabó el tiempo, pero te dejo las respuestas ;)");
+                    ChangeState(true, TimerState.offset, offSet, "Se acabó el tiempo, pero te dejo las respuestas");
+
                 }
+
                 if (sequence == 2)
                 {
-                    EnableMessageState(false);
-                    currentTime = feedbackTime;
-                    //Activate resolve mode
+                    ChangeState(false, TimerState.feedback, feedbackTime);
+                    //SHOW Anwser
+                    ItemsManager.ShowFeedback();
+                    // show footer-finish
+                    mediatorMinigame.ActivateFinish(true);
                 }
+
+                //Activate resolve mode
                 if (sequence == 1)
                 {
                     currentTime = 0;
                     isCountingDown = false;
+                    Singleton.instance.currentMinigame.TimerState = TimerState.none;
                     //Activate resolve mode
                 }
 
@@ -100,6 +97,15 @@ public class CountdownTimer : MonoBehaviour
     {
         messageState.Container.SetActive(enable);
         time.Container.SetActive(!enable);
+
+    }
+    void ChangeState(bool enable, TimerState timerState, float currentTime, string message = null)
+    {
+        EnableMessageState(enable);
+        Singleton.instance.currentMinigame.TimerState = timerState;
+        this.currentTime = currentTime;
+        if (message != null)
+            SetMessage(message);
 
     }
     void SetMessage(string text)
@@ -130,10 +136,7 @@ public class CountdownTimer : MonoBehaviour
         BuildTimer(Singleton.instance.currentMinigame.InteractionTime,
                    Singleton.instance.currentMinigame.ResolveTime,
                    Singleton.instance.currentMinigame.FeedbackTime);
-
-        currentTime = offSet;
-        EnableMessageState(true);
-        SetMessage("Enfoca la cámara y exploremos el nivel");
+        ChangeState(true, TimerState.offset, offSet, "Enfoca la cámara y exploremos el nivel");
         StartCountdown();
     }
 

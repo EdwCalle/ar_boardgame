@@ -3,51 +3,52 @@ using Models;
 public class SelectableModel : MonoBehaviour
 {
 
-    private Item item;
 
-    public bool isSolution;
+    private bool isSelected = false;
+    private bool isSolution;
     public int index;
     public static int lastSelectedItem = -1;
+
+    public bool IsSolution { get => isSolution; set => isSolution = value; }
 
     //public static SelectionType selection;
     void Start()
     {
-        item = new Item();
-        //itemm
-        //selection = SimulationMode.s;
-
     }
-
     void OnMouseDown()
     {
-
-        SelectionType selection = Singleton.instance.currentMinigame.Selection;
-        //print("index:" + index + " last index:" + lastSelectedItem + " item selected:" + selection);
-        // if the selection type is one selection and  the current item selected is the same that the last selected
-        if (selection == SelectionType.OneSelection && lastSelectedItem == index)
+        // if the mode time is interaction just interact
+        if (Singleton.instance.currentMinigame.TimerState == TimerState.resolve)
         {
-            switchModelSelected();
-            lastSelectedItem = -1;
-        }
-        // if the selection type is one selection and  there is no item selected
-        else if (selection == SelectionType.OneSelection && lastSelectedItem == -1)
-        {
-            switchModelSelected();
-            lastSelectedItem = index;
+            SelectionType selection = Singleton.instance.currentMinigame.Selection;
+            //print("index:" + index + " last index:" + lastSelectedItem + " item selected:" + selection);
+            // if the selection type is one selection and  the current item selected is the same that the last selected
+            if (selection == SelectionType.OneSelection && lastSelectedItem == index)
+            {
+                SwitchModelSelected();
+                lastSelectedItem = -1;
+            }
+            // if the selection type is one selection and  there is no item selected
+            else if (selection == SelectionType.OneSelection && lastSelectedItem == -1)
+            {
+                SwitchModelSelected();
+                lastSelectedItem = index;
+            }
+
+            // if the selection type is one selection and  there is another selected
+            else if (selection == SelectionType.OneSelection && lastSelectedItem != -1)
+            {
+
+                UnselectModel(lastSelectedItem);
+                SwitchModelSelected();
+                lastSelectedItem = index;
+
+            }
+            if (selection == SelectionType.MultipleSelection)
+                // if the selection is Multyply selection 
+                SwitchModelSelected();
         }
 
-        // if the selection type is one selection and  there is another selected
-        else if (selection == SelectionType.OneSelection && lastSelectedItem != -1)
-        {
-
-            unselectModel(lastSelectedItem);
-            switchModelSelected();
-            lastSelectedItem = index;
-
-        }
-        if (selection == SelectionType.MultipleSelection)
-            // if the selection is Multyply selection 
-            switchModelSelected();
     }
     void Update()
     {
@@ -64,7 +65,7 @@ public class SelectableModel : MonoBehaviour
         //             {
         //                 // This object was clicked.
         //                 // Put your click logic here.
-        //                 print("selected model" + item.Name);
+        //                 print("selected model" + Name);
         //                 selectModel();
         //             }
         //         }
@@ -87,9 +88,9 @@ public class SelectableModel : MonoBehaviour
         // }
 
     }
-    public void setCorrect()
+    public void SetCorrect()
     {
-        if (item.IsSolution == item.IsSelected)
+        if (IsSolution == isSelected)
         {
 
             GetComponent<Renderer>().material.SetColor("_Color", Color.green);
@@ -101,24 +102,24 @@ public class SelectableModel : MonoBehaviour
         }
 
     }
-    public void switchModelSelected()
+    public void SwitchModelSelected()
     {
 
-        if (!item.IsSelected)
+        if (!isSelected)
         {
             GetComponent<Renderer>().material.SetColor("_Color", Color.cyan);
-            item.IsSelected = true;
+            isSelected = true;
         }
         else
         {
             GetComponent<Renderer>().material.SetColor("_Color", Color.white);
-            item.IsSelected = false;
+            isSelected = false;
         }
 
     }
-    public void unselectModel(int index)
+    public void UnselectModel(int index)
     {
-        ItemsManager.items[index].transform.GetChild(1).gameObject.GetComponent<SelectableModel>().switchModelSelected();
+        ItemsManager.items[index].transform.GetChild(1).gameObject.GetComponent<SelectableModel>().SwitchModelSelected();
     }
 
 }

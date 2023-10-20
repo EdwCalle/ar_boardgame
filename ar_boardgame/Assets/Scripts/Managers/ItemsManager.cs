@@ -12,7 +12,7 @@ public class ItemsManager : MonoBehaviour
     //for level 1,2,3,5,7
     public static List<GameObject> items = new List<GameObject>();
     //for level 4,6
-    //private Gameobject test;
+    // [SerializeField] private MediatorMinigame mediatorMinigame;
 
     void Start()
     {
@@ -23,8 +23,21 @@ public class ItemsManager : MonoBehaviour
     {
         return Instantiate(itemPrefab, Position, Quaternion.identity);
     }
+    public static void ActiveSelectableComponent(bool active)
+    {
+        foreach (GameObject item in items)
+        {
+            item.GetComponent<ItemManager>().SetActive(active);
+        }
 
-
+    }
+    public static void ShowFeedback()
+    {
+        foreach (GameObject item in items)
+        {
+            item.GetComponent<ItemManager>().ShowFeedback();
+        }
+    }
     public async Task LoadMultipleModels()
     {
         int i = 0;
@@ -34,7 +47,9 @@ public class ItemsManager : MonoBehaviour
             instance.transform.parent = transform;
             instance.GetComponent<ItemManager>().ItemManagerBuilder(i++,
                                                                       item.Collider,
-                                                                      item.Url);
+                                                                      item.Url,
+                                                                      item.IsSolution,
+                                                                      false);
 
             bool verify = await instance.GetComponent<ItemManager>().LoadModel();
             if (!verify)

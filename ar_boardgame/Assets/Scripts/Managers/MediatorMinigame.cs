@@ -10,6 +10,7 @@ public class MediatorMinigame : MonoBehaviour
     [SerializeField] private LoadingScreenManager loadingScreenManager;
 
     [SerializeField] private CountdownTimer timerManager;
+    [SerializeField] private FooterManager footerManager;
     //[SerializeField] private CountdownTimer countdownTimer;
 
 
@@ -37,7 +38,7 @@ public class MediatorMinigame : MonoBehaviour
         //prepare extra item
 
         //prepare footer
-
+        footerManager.PrepareLevel();
         // prepare timer
 
         // disable resume
@@ -47,6 +48,12 @@ public class MediatorMinigame : MonoBehaviour
         // start timer
         timerManager.PrepareLevel();
     }
+    public void ActivateFinish(bool active)
+    {
+        footerManager.ActivateFinish(active);
+    }
+
+    //right now methods are static, so  mediator pattern design  doesn't applies totally
 
     // Update is called once per frame
     void Update()

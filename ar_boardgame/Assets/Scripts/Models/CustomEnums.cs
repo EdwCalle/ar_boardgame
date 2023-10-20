@@ -22,6 +22,14 @@ namespace Models
         basket, // level 7
         assamble //level 8
     }
+    public enum TimerState
+    {
+        none,
+        offset,
+        interaction,
+        resolve,
+        feedback
+    }
 
 
 

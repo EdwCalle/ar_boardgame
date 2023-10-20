@@ -24,6 +24,8 @@ namespace Models
 
         private ExtraComponentType extraComponent;
 
+        private TimerState timerState;
+
 
 
         public int Code
@@ -41,6 +43,8 @@ namespace Models
         public SelectionType Selection { get => selection; set => selection = value; }
         public ExtraComponentType ExtraComponent { get => extraComponent; set => extraComponent = value; }
         public int Level { get => level; set => level = value; }
+        public TimerState TimerState { get => timerState; set => timerState = value; }
+
 
         public void ConfigureLevel(HeaderType header, SelectionType selection, ExtraComponentType extraComponent)
         {

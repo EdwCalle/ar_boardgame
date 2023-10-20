@@ -30,6 +30,19 @@ public class ItemManager : MonoBehaviour
     {
         transform.GetChild(0).gameObject.GetComponent<GLTFComponent>().GLTFUri = url;
     }
+    public void SetActive(bool active)
+    {
+        transform.GetChild(1).gameObject.SetActive(active);
+    }
+    public void SetSolution(bool solution)
+    {
+        transform.GetChild(1).gameObject.GetComponent<SelectableModel>().IsSolution = solution;
+
+    }
+    public void ShowFeedback()
+    {
+        transform.GetChild(1).gameObject.GetComponent<SelectableModel>().SetCorrect();
+    }
     public async Task<bool> LoadModel()
     {
         try
@@ -46,11 +59,14 @@ public class ItemManager : MonoBehaviour
         }
 
     }
-    public void ItemManagerBuilder(int index, Models.Collider collider, string url)
+    public void ItemManagerBuilder(int index, Models.Collider collider, string url, bool solution, bool active)
     {
         SetIndex(index);
         SetCollider(collider);
         SetModelUri(url);
+        SetSolution(solution);
+        SetActive(active);
+
     }
 
 }
