@@ -23,6 +23,7 @@ public class FooterManager : MonoBehaviour
     }
     public void ChangeScene()
     {
+        Singleton.instance.currentRound++;
         SceneManager.LoadScene("board");
     }
     public void PrepareLevel()

@@ -10,13 +10,13 @@ public class ItemsManager : MonoBehaviour
     [SerializeField] private GameObject itemPrefab;
 
     //for level 1,2,3,5,7
-    public static List<GameObject> items = new List<GameObject>();
+    public static List<GameObject> items;
     //for level 4,6
     // [SerializeField] private MediatorMinigame mediatorMinigame;
 
     void Start()
     {
-
+        items = new List<GameObject>();
     }
 
     public GameObject createItem(Vector3 Position)
@@ -25,17 +25,16 @@ public class ItemsManager : MonoBehaviour
     }
     public static void ActiveSelectableComponent(bool active)
     {
-        foreach (GameObject item in items)
+        for (int i = 0; i < items.Count; i++)
         {
-            item.GetComponent<ItemManager>().SetActive(active);
+            items[i].GetComponent<ItemManager>().SetActive(active); ;
         }
-
     }
     public static void ShowFeedback()
     {
-        foreach (GameObject item in items)
+        for (int i = 0; i < items.Count; i++)
         {
-            item.GetComponent<ItemManager>().ShowFeedback();
+            items[i].GetComponent<ItemManager>().ShowFeedback();
         }
     }
     public async Task LoadMultipleModels()
@@ -66,6 +65,12 @@ public class ItemsManager : MonoBehaviour
         if (Singleton.instance.currentMinigame.ExtraComponent == ExtraComponentType.normal)
             await LoadMultipleModels();
     }
+
+    void OnDestroy()
+    {
+        items = null;
+    }
+
 
 
 

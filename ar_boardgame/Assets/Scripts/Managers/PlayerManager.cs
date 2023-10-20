@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using Models;
 using UnityEngine.SceneManagement;
+using System;
 public class PlayerManager : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -20,7 +21,7 @@ public class PlayerManager : MonoBehaviour
     public GameObject rightButton;
     public GameObject upButton;
     public GameObject downButton;
-    public GameObject selectGame;
+    [SerializeField] public DialogManager selectGame;
     public float velocity;
 
     //Animator animator;
@@ -28,6 +29,9 @@ public class PlayerManager : MonoBehaviour
     private int dice;
     private bool isWaitingClick;
     private bool isActiveDice;
+
+    public TextMeshProUGUI titleRound;
+    public TextMeshProUGUI numberRound;
 
     //public GameObject firstCharacter;
 
@@ -68,7 +72,7 @@ public class PlayerManager : MonoBehaviour
         //   currentMovement = movementDown;
         // it hides arrows which are used when the player has to change map's direction
         HideArrows();
-        selectGame.SetActive(false);
+        //  selectGame.SetActive(false);
         // get the animator for makes animations
         // animator = GetComponent<Animator>();
 
@@ -81,6 +85,23 @@ public class PlayerManager : MonoBehaviour
 
 
         GetComponent<SpriteRenderer>().sprite = Singleton.instance.firstSpritePlayer;
+
+        //
+        if (Singleton.instance.currentGeneralGame.Rounds.Count != Singleton.instance.currentRound)
+        {
+            print("que pasol");
+            // show title round
+            titleRound.text = Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.currentRound].Title;
+            numberRound.text = $"Número de ronda: {Singleton.instance.currentRound}";
+            // show new dialog
+
+
+        }
+        else
+        {
+            selectGame.ShowDialogFinish();
+            // show dialog Finish
+        }
 
     }
 
@@ -138,7 +159,10 @@ public class PlayerManager : MonoBehaviour
                 {
                     isMoving = false;
                     isActiveDice = false;
-                    selectGame.SetActive(true);
+                    print("wtfoco");
+                    selectGame.ShowButtons();
+                    selectGame.SetTextButtons();
+
                 }
             }
         }
@@ -150,7 +174,7 @@ public class PlayerManager : MonoBehaviour
 
         if (!isMoving)
         {
-            dice = Random.Range(1, 7);
+            dice = UnityEngine.Random.Range(1, 7);
             if (!isDice)
                 dice = defaultDice;
             number_dice.text = $"{dice}";
@@ -218,8 +242,7 @@ public class PlayerManager : MonoBehaviour
     public void GoToMinigame(int code)
     {
         Singleton.instance.currentPosition = currentSquare;
-        Singleton.instance.currentMinigame.Level = code;
-
+        Singleton.instance.SetMinigame(code);
         SceneManager.LoadScene("minigames");
     }
 }

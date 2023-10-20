@@ -11,7 +11,7 @@ public class ExtraInfo
     {
         this.type = type;
     }
-    public ExtraInfo(string type, string info)
+    public ExtraInfo(string type, string info = null)
     {
         this.type = type;
         this.info = info;

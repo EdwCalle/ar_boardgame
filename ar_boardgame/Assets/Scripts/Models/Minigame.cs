@@ -7,7 +7,7 @@ namespace Models
 {
     public class Minigame
     {
-        private int code;
+        private int id;
         private int level;
         private string title;
         private string function;
@@ -28,8 +28,8 @@ namespace Models
 
 
 
-        public int Code
-        { get => code; set => code = value; }
+        public int Id
+        { get => id; set => id = value; }
         public string Title { get => title; set => title = value; }
         public string Function { get => function; set => function = value; }
         public ArrayList Models { get => models; set => models = value; }
@@ -44,8 +44,6 @@ namespace Models
         public ExtraComponentType ExtraComponent { get => extraComponent; set => extraComponent = value; }
         public int Level { get => level; set => level = value; }
         public TimerState TimerState { get => timerState; set => timerState = value; }
-
-
         public void ConfigureLevel(HeaderType header, SelectionType selection, ExtraComponentType extraComponent)
         {
             //  this.level = level;
