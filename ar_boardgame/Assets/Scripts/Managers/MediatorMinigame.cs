@@ -1,5 +1,5 @@
+
 using Models;
-using UnityEditor.Search;
 using UnityEngine;
 
 public class MediatorMinigame : MonoBehaviour
@@ -16,6 +16,15 @@ public class MediatorMinigame : MonoBehaviour
     // Start is called before the first frame update
     async void Start()
     {
+        // setting level from here
+        // level 1
+        // Singleton.instance.currentMinigame.ConfigureLevel(HeaderType.extraInfo, SelectionType.OneSelection, ExtraComponentType.normal);
+        // level 2
+        //Singleton.instance.currentMinigame.ConfigureLevel(HeaderType.normal, SelectionType.OneSelection, ExtraComponentType.normal);
+        // level 3
+        Singleton.instance.currentMinigame.ConfigureLevel(HeaderType.normal, SelectionType.MultipleSelection, ExtraComponentType.normal);
+
+
         // disable ar session
 
         // show resume

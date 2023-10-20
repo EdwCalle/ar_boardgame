@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using Models;
 public class HeaderManager : MonoBehaviour
 {
     [SerializeField] private MediatorMinigame mediator;
@@ -67,10 +68,26 @@ public class HeaderManager : MonoBehaviour
 
     public void PrepareLevel()
     {
-        //este debe ser personalizado desde el mediator
         HideExtraComponents();
-        SetExtraInfoFromSinglenton();
-        SetTitleFromSinglenton();
+        if (Singleton.instance.currentMinigame.Header == HeaderType.extraInfo) // if level 1 
+        {
+            SetExtraInfoFromSinglenton();
+            SetTitleFromSinglenton();
+        }
+        if (Singleton.instance.currentMinigame.Header == HeaderType.normal) // if level 2,3,5,6,7,8,9(special)
+        {
+            SetTitleFromSinglenton();
+        }
+        if (Singleton.instance.currentMinigame.Header == HeaderType.questions) // if level 4
+        {
+            SetTitleFromSinglenton();
+        }
+
+
+        //este debe ser personalizado desde el mediator
+
+
+
     }
 
 

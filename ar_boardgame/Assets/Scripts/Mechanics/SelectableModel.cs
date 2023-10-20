@@ -1,6 +1,5 @@
 using UnityEngine;
 using Models;
-using System.Diagnostics;
 public class SelectableModel : MonoBehaviour
 {
 
@@ -9,26 +8,20 @@ public class SelectableModel : MonoBehaviour
     public bool isSolution;
     public int index;
     public static int lastSelectedItem = -1;
-    public enum SelectionType
-    {
-        noSelection,
-        OneSelection,
-        MultipleSelection
 
-
-    };
-    public static SelectionType selection;
+    //public static SelectionType selection;
     void Start()
     {
         item = new Item();
         //itemm
-
+        //selection = SimulationMode.s;
 
     }
 
     void OnMouseDown()
     {
 
+        SelectionType selection = Singleton.instance.currentMinigame.Selection;
         //print("index:" + index + " last index:" + lastSelectedItem + " item selected:" + selection);
         // if the selection type is one selection and  the current item selected is the same that the last selected
         if (selection == SelectionType.OneSelection && lastSelectedItem == index)
@@ -55,9 +48,6 @@ public class SelectableModel : MonoBehaviour
         if (selection == SelectionType.MultipleSelection)
             // if the selection is Multyply selection 
             switchModelSelected();
-
-
-
     }
     void Update()
     {

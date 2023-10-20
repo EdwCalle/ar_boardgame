@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Models;
 using UnityEngine;
-using UnityGLTF;
+//using UnityGLTF;
 
 public class ItemsManager : MonoBehaviour
 {
@@ -31,6 +31,7 @@ public class ItemsManager : MonoBehaviour
         foreach (Item item in Singleton.instance.currentMinigame.Models)
         {
             GameObject instance = createItem(item.Position);
+            instance.transform.parent = transform;
             instance.GetComponent<ItemManager>().ItemManagerBuilder(i++,
                                                                       item.Collider,
                                                                       item.Url);
@@ -47,9 +48,8 @@ public class ItemsManager : MonoBehaviour
     }
     public async Task PrepareLevel()
     {
-        SelectableModel.selection = SelectableModel.SelectionType.MultipleSelection;
-        // selection = SelectionType.OneSelection;
-        await LoadMultipleModels();
+        if (Singleton.instance.currentMinigame.ExtraComponent == ExtraComponentType.normal)
+            await LoadMultipleModels();
     }
 
 

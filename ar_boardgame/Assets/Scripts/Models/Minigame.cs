@@ -1,28 +1,30 @@
 
 using System.Collections;
 using System.Collections.Generic;
-using Models;
 
-namespace Minigames
+
+namespace Models
 {
-
     public class Minigame
     {
         private int code;
-
-
+        private int level;
         private string title;
         private string function;
         private ArrayList models = new ArrayList();
         private List<Question> questions = new List<Question>();
         private List<Group> groups = new List<Group>();
         private ExtraInfo extraInfo;
-
-
         private float interactionTime;
         private float resolveTime;
         private float feedbackTime;
-        //private bool isMultipleSelection;
+        private HeaderType header;
+
+        private SelectionType selection;
+
+        private ExtraComponentType extraComponent;
+
+
 
         public int Code
         { get => code; set => code = value; }
@@ -35,7 +37,25 @@ namespace Minigames
         public float InteractionTime { get => interactionTime; set => interactionTime = value; }
         public float ResolveTime { get => resolveTime; set => resolveTime = value; }
         public float FeedbackTime { get => feedbackTime; set => feedbackTime = value; }
+        public HeaderType Header { get => header; set => header = value; }
+        public SelectionType Selection { get => selection; set => selection = value; }
+        public ExtraComponentType ExtraComponent { get => extraComponent; set => extraComponent = value; }
+        public int Level { get => level; set => level = value; }
+
+        public void ConfigureLevel(HeaderType header, SelectionType selection, ExtraComponentType extraComponent)
+        {
+            //  this.level = level;
+            this.header = header;
+            this.selection = selection;
+            this.extraComponent = extraComponent;
+
+
+        }
         //public bool ExistSelecction { get => existSelecction; set => existSelecction = value; }
+
+
+
+
 
 
 

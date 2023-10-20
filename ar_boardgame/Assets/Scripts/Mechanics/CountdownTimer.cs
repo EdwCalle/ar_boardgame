@@ -1,8 +1,6 @@
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.XR.InteractionSubsystems;
 
 
 public class CountdownTimer : MonoBehaviour
