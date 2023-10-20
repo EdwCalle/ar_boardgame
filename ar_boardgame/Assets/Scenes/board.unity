@@ -3674,13 +3674,13 @@ MonoBehaviour:
       - m_Target: {fileID: 681340491}
         m_TargetAssemblyTypeName: PlayerManager, Assembly-CSharp
         m_MethodName: GoToMinigame
-        m_Mode: 5
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 2
           m_FloatArgument: 0
-          m_StringArgument: 4
+          m_StringArgument: 2
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &853656188
@@ -4898,7 +4898,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1120768916}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 681340491}
+        m_TargetAssemblyTypeName: PlayerManager, Assembly-CSharp
+        m_MethodName: GoToMinigame
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1120768916
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5493,6 +5505,80 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1162758077}
   m_CullTransparentMesh: 1
+--- !u!1001 &1181242286
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1177760313930652538, guid: f5069c7f6027cf34992037c962c99fda,
+        type: 3}
+      propertyPath: firstSpritePlayer
+      value: 
+      objectReference: {fileID: -1338459492, guid: 4fd4a6dc25cc84d83be0006ad3082414,
+        type: 3}
+    - target: {fileID: 2469942812086968723, guid: f5069c7f6027cf34992037c962c99fda,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2469942812086968723, guid: f5069c7f6027cf34992037c962c99fda,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2469942812086968723, guid: f5069c7f6027cf34992037c962c99fda,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2469942812086968723, guid: f5069c7f6027cf34992037c962c99fda,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2469942812086968723, guid: f5069c7f6027cf34992037c962c99fda,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2469942812086968723, guid: f5069c7f6027cf34992037c962c99fda,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2469942812086968723, guid: f5069c7f6027cf34992037c962c99fda,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2469942812086968723, guid: f5069c7f6027cf34992037c962c99fda,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2469942812086968723, guid: f5069c7f6027cf34992037c962c99fda,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2469942812086968723, guid: f5069c7f6027cf34992037c962c99fda,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8271837561937935048, guid: f5069c7f6027cf34992037c962c99fda,
+        type: 3}
+      propertyPath: m_Name
+      value: singlenton
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f5069c7f6027cf34992037c962c99fda, type: 3}
 --- !u!1001 &1187045479
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9286,13 +9372,13 @@ MonoBehaviour:
       - m_Target: {fileID: 681340491}
         m_TargetAssemblyTypeName: PlayerManager, Assembly-CSharp
         m_MethodName: GoToMinigame
-        m_Mode: 5
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
-          m_StringArgument: 1
+          m_StringArgument: 0
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1892195302
@@ -10698,3 +10784,4 @@ SceneRoots:
   - {fileID: 1474991316}
   - {fileID: 374821131}
   - {fileID: 1195104305}
+  - {fileID: 1181242286}

@@ -20,11 +20,11 @@ public class ImporterManager : MonoBehaviour
 #endif
 
     [SerializeField]
-    private bool loadOnStart = true;
+    //private bool loadOnStart = true;
 
-    [SerializeField] private int RetryCount = 10;
-    [SerializeField] private float RetryTimeout = 2.0f;
-    private int numRetries = 0;
+    // [SerializeField] private int RetryCount = 10;
+    //[SerializeField] private float RetryTimeout = 2.0f;
+    // private int numRetries = 0;
 
 
     public int MaximumLod = 300;

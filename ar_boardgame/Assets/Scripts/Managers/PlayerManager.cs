@@ -8,8 +8,8 @@ public class PlayerManager : MonoBehaviour
     //[SerializeField]
     public GameObject[] boxes;
     private int currentSquare = 0;
-    private int maxRounds = 0;
-    private int currentRound = 0;
+    //private int maxRounds = 0;
+    //private int currentRound = 0;
     public bool isDice;
     public int defaultDice;
 
@@ -23,7 +23,7 @@ public class PlayerManager : MonoBehaviour
     public GameObject selectGame;
     public float velocity;
 
-    Animator animator;
+    //Animator animator;
     Vector3 nextPosition;
     private int dice;
     private bool isWaitingClick;
@@ -215,11 +215,11 @@ public class PlayerManager : MonoBehaviour
         MoveToNextSquare();
         isWaitingClick = false;
     }
-    public void GoToMinigame(string codeMinigame)
+    public void GoToMinigame(int code)
     {
         Singleton.instance.currentPosition = currentSquare;
-        Singleton.instance.currentMinigame.Code = int.Parse(codeMinigame);
-        Debug.Log("go to minigame:" + codeMinigame);
-        SceneManager.LoadScene("minigame1");
+        Singleton.instance.currentMinigame.Level = code;
+
+        SceneManager.LoadScene("minigames");
     }
 }

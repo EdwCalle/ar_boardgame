@@ -7,7 +7,7 @@ public class Singleton : MonoBehaviour
 
     [HideInInspector]
     public int currentPosition = 0;
-    [HideInInspector]
+
     public Sprite firstSpritePlayer;
     [HideInInspector]
     public Minigame currentMinigame = new Minigame();

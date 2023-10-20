@@ -19,11 +19,14 @@ public class MediatorMinigame : MonoBehaviour
     {
         // setting level from here
         // level 1
-        // Singleton.instance.currentMinigame.ConfigureLevel(HeaderType.extraInfo, SelectionType.OneSelection, ExtraComponentType.normal);
+        if (Singleton.instance.currentMinigame.Level == 1)
+            Singleton.instance.currentMinigame.ConfigureLevel(HeaderType.extraInfo, SelectionType.OneSelection, ExtraComponentType.normal);
         // level 2
-        //Singleton.instance.currentMinigame.ConfigureLevel(HeaderType.normal, SelectionType.OneSelection, ExtraComponentType.normal);
+        if (Singleton.instance.currentMinigame.Level == 2)
+            Singleton.instance.currentMinigame.ConfigureLevel(HeaderType.normal, SelectionType.OneSelection, ExtraComponentType.normal);
         // level 3
-        Singleton.instance.currentMinigame.ConfigureLevel(HeaderType.normal, SelectionType.MultipleSelection, ExtraComponentType.normal);
+        if (Singleton.instance.currentMinigame.Level == 3)
+            Singleton.instance.currentMinigame.ConfigureLevel(HeaderType.normal, SelectionType.MultipleSelection, ExtraComponentType.normal);
 
 
         // disable ar session
