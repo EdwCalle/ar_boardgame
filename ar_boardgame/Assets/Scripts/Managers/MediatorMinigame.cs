@@ -9,7 +9,7 @@ public class MediatorMinigame : MonoBehaviour
 
     [SerializeField] private LoadingScreenManager loadingScreenManager;
 
-
+    [SerializeField] private CountdownTimer timerManager;
     //[SerializeField] private CountdownTimer countdownTimer;
 
 
@@ -36,6 +36,7 @@ public class MediatorMinigame : MonoBehaviour
         // show ar session
 
         // start timer
+        timerManager.PrepareLevel();
     }
 
     // Update is called once per frame

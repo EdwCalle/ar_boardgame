@@ -35,7 +35,9 @@ public class Singleton : MonoBehaviour
         currentMinigame.Code = 1;
         currentMinigame.ExtraInfo = new ExtraInfo("image", "las aves vuelan");
         currentMinigame.Title = "selecionar el pato correcto";
-        currentMinigame.Timer = 30;
+        currentMinigame.InteractionTime = 15;
+        currentMinigame.ResolveTime = 30;
+        currentMinigame.FeedbackTime = 10;
         currentMinigame.Function = "seleccionar el modelo correcto";
 
         currentMinigame.Models.Add(new Item(1, "pato", "description", "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF/Duck.gltf", new Vector3(1, -0.5f, 2), new Vector3(0.2f, 0.2f, 0.2f), true, false, new Models.Collider(new Vector3(-0.1f, 0.8f, 0), new Vector3(1.7f, 1.8f, 1))));
