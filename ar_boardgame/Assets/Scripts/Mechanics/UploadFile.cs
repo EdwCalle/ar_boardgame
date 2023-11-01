@@ -5,7 +5,7 @@ using UnityGLTF;
 
 public class UploadFile : MonoBehaviour
 {
-    public GameObject Prefab;
+    public GameObject model;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,11 +19,11 @@ public class UploadFile : MonoBehaviour
     }
     public void AbrirArchivo()
     {
-        string filePath = EditorUtility.OpenFilePanel("Select a file", "", "glb|gltf");
+        string filePath = EditorUtility.OpenFilePanel("Select a file", "", "");
         if (!string.IsNullOrEmpty(filePath))
         {
-            Prefab.GetComponent<GLTFComponent>().GLTFUri = filePath;
-            Prefab.GetComponent<GLTFComponent>().Load();
+            model.GetComponent<GLTFComponent>().GLTFUri = filePath;
+            model.GetComponent<GLTFComponent>().Load();
             // Use the selected file path.
         }
 

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CameraMovement : MonoBehaviour
 {
@@ -12,9 +13,12 @@ public class CameraMovement : MonoBehaviour
     private Camera playerCamera;
     private bool isRotating;
 
+    private bool isEnableRotation = false;
+    public GameObject toggle;
 
     void Start()
     {
+        Debug.Log(Cursor.lockState);
         characterController = GetComponent<CharacterController>();
         playerCamera = Camera.main; // Access the main camera in the scene
                                     //  Cursor.lockState = CursorLockMode.Locked; // Lock the cursor to the center of the game window
@@ -22,35 +26,62 @@ public class CameraMovement : MonoBehaviour
 
     void Update()
     {
-        // Player flying
-        float forwardMovement = Input.GetAxis("Vertical") * movementSpeed * Time.deltaTime;
-        float strafeMovement = Input.GetAxis("Horizontal") * movementSpeed * Time.deltaTime;
-        float ascent = Input.GetKey(KeyCode.Space) ? ascentSpeed : 0;
-        float descent = Input.GetKey(KeyCode.LeftShift) ? -descentSpeed : 0;
-
-        Vector3 movement = (transform.forward * forwardMovement) + (transform.right * strafeMovement) + (transform.up * (ascent + descent));
-        characterController.Move(movement);
-
-        // Player rotation (looking around)
-        if (Input.GetMouseButtonDown(0))
+        if (isEnableRotation)
         {
-            isRotating = true;
+            // Player flying
+            float forwardMovement = Input.GetAxis("Vertical") * movementSpeed * Time.deltaTime;
+            float strafeMovement = Input.GetAxis("Horizontal") * movementSpeed * Time.deltaTime;
+            float ascent = Input.GetKey(KeyCode.Space) ? ascentSpeed : 0;
+            float descent = Input.GetKey(KeyCode.LeftShift) ? -descentSpeed : 0;
 
+            Vector3 movement = (transform.forward * forwardMovement) + (transform.right * strafeMovement) + (transform.up * (ascent + descent));
+            characterController.Move(movement);
+
+            // Player rotation (looking around)
+            // if (Input.GetMouseButtonDown(0))
+            // {
+            //     isRotating = true;
+
+            // }
+            // if (Input.GetMouseButtonUp(0))
+            // {
+            //     isRotating = false;
+            // }
+            // if (isRotating)
+            {
+                float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
+                float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
+
+                verticalRotation -= mouseY;
+                verticalRotation = Mathf.Clamp(verticalRotation, -90f, 90f);
+
+                playerCamera.transform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
+                transform.Rotate(Vector3.up * mouseX);
+            }
         }
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            isRotating = false;
-        }
-        if (isRotating)
-        {
-            float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
-            float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
-
-            verticalRotation -= mouseY;
-            verticalRotation = Mathf.Clamp(verticalRotation, -90f, 90f);
-
-            playerCamera.transform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
-            transform.Rotate(Vector3.up * mouseX);
+            Debug.Log("no funciona");
+            toggle.GetComponent<Toggle>().isOn = false;
+            //  enableCameraMovement();
+            // toggleCameraMovement(false);
+            // Debug.Log("why?");
         }
     }
+    public void toggleCameraMovement(bool value)
+    {
+        isEnableRotation = value;
+        if (isEnableRotation)
+            Cursor.lockState = CursorLockMode.Locked;
+        else
+
+            Cursor.lockState = CursorLockMode.None;
+    }
+    public void enableCameraMovement()
+    {
+        GUI.FocusControl(null);
+
+        toggleCameraMovement(toggle.GetComponent<Toggle>().isOn);
+    }
+
 }
