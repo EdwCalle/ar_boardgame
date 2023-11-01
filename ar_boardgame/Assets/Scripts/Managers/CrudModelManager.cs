@@ -1,5 +1,6 @@
 using Models;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CrudModelManager : MonoBehaviour
 {
@@ -64,6 +65,10 @@ public class CrudModelManager : MonoBehaviour
         // model position
         currentModel.Scale = modelScale.getVectorValue();
         model.transform.localScale = currentModel.Scale;
+    }
+    public void SaveModel()
+    {
+        SceneManager.LoadScene("mainPageTeacher");
     }
 
 }
