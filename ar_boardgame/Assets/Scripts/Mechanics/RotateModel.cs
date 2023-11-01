@@ -1,9 +1,11 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class RotateObject : MonoBehaviour
 {
     private bool isRotating = false;
     private Vector3 lastMousePosition;
+    public GameObject hitbox;
 
     // Update is called once per frame
     void Update()
@@ -46,7 +48,7 @@ public class RotateObject : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit))
         {
-            return hit.transform.gameObject == gameObject;
+            return hit.transform.gameObject == hitbox;
         }
 
         return false;

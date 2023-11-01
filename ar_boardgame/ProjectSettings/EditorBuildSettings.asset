@@ -5,9 +5,6 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/BlankAR.unity
-    guid: 6bdce89659816455b9f906fc62d19910
   - enabled: 1
     path: Assets/Scenes/mainPageStudent.unity
     guid: f8b91b4e80007ba4b83ef9b347c91d85
@@ -20,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/minigames.unity
     guid: e0fce61e154878642b87d87ed1da83d3
+  - enabled: 1
+    path: Assets/Scenes/mainPageTeacher.unity
+    guid: 31eeedc310918d54992d1d5ad5aca0cd
   - enabled: 1
     path: Assets/Scenes/crudModels.unity
     guid: ef2e79639bce8094685271b12667cab3

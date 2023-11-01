@@ -70,5 +70,10 @@ public class CrudModelManager : MonoBehaviour
     {
         SceneManager.LoadScene("mainPageTeacher");
     }
+    public void ResetRotation(GameObject gameObject)
+    {
+        // gameObject.transform.Rotate(0f, 0f, 0f);
+        gameObject.transform.rotation = Quaternion.identity;
+    }
 
 }
