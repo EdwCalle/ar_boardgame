@@ -1,11 +1,15 @@
 
+
+using System.IO;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityGLTF;
 
 public class UploadFile : MonoBehaviour
 {
     public GameObject model;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,5 +33,33 @@ public class UploadFile : MonoBehaviour
 
 
     }
+    public void AbrirImagen(RawImage rendererComponent)
+    {
+        string filePath = EditorUtility.OpenFilePanel("Select a file", "", "");
+
+        byte[] fileData = File.ReadAllBytes(filePath);
+        Texture2D texture = new Texture2D(2, 2); // Create a new Texture2D
+
+        // Load the image file data into the Texture2D
+        if (texture.LoadImage(fileData))
+        {
+            if (rendererComponent != null)
+            {
+                // Apply the loaded texture to the Renderer component
+                rendererComponent.GetComponent<RawImage>().texture = texture;
+            }
+            else
+            {
+                Debug.LogError("Renderer component not assigned!");
+            }
+        }
+        else
+        {
+            Debug.LogError("Failed to load image as texture!");
+        }
+
+
+    }
+
 
 }
