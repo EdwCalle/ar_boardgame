@@ -1,4 +1,6 @@
+using JetBrains.Annotations;
 using Models;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -17,6 +19,10 @@ public class CrudModelManager : MonoBehaviour
 
     public GameObject hitbox;
     public GameObject box;
+
+    public GameObject tittle;
+    public GameObject description;
+    public GameObject copyright;
 
 
 
@@ -75,5 +81,18 @@ public class CrudModelManager : MonoBehaviour
         // gameObject.transform.Rotate(0f, 0f, 0f);
         gameObject.transform.rotation = Quaternion.identity;
     }
+    public void UpdateTittle(GameObject gameObject)
+    {
+        tittle.GetComponent<TextMeshPro>().text = gameObject.GetComponent<TMP_InputField>().text;
+    }
+    public void UpdateDescription(GameObject gameObject)
+    {
+        description.GetComponent<TextMeshPro>().text = gameObject.GetComponent<TMP_InputField>().text;
+    }
+    public void UpdateCopy(GameObject gameObject)
+    {
+        copyright.GetComponent<TextMeshPro>().text = gameObject.GetComponent<TMP_InputField>().text;
+    }
+
 
 }
