@@ -28,7 +28,7 @@ namespace Models
 
         public override string ToString()
         {
-            return base.ToString();
+            return $"rounds:{rounds.ToString()}";
         }
     }
 }

@@ -1,6 +1,7 @@
+using System.Collections.Generic;
+using Models;
 using TMPro;
 using UnityEngine;
-
 public class ElementListManager : MonoBehaviour
 {
 
@@ -9,17 +10,20 @@ public class ElementListManager : MonoBehaviour
     public TextMeshProUGUI title;
     public GameObject right;
     //
-    [HideInInspector]
-    public Transform allItemsContainer;
-    [HideInInspector]
-    public Transform SelectedItemsContainer;
+    [SerializeField]
+    Transform allItemsContainer;
+    [SerializeField]
+    Transform selectedItemsContainer;
+
+    public Round round;
+
+    // public static List<Round> selectedRounds;
 
     // Start is called before the first frame update
     void Start()
     {
-        transform.localScale = new Vector3(1, 1, 1);
         transform.SetParent(allItemsContainer);
-
+        transform.localScale = new Vector3(1, 1, 1);
     }
 
     // Update is called once per frame
@@ -31,21 +35,42 @@ public class ElementListManager : MonoBehaviour
     {
         this.title.text = title;
     }
+    public void PrepareData(Round round, Transform allItemsContainer, Transform selectedItemsContainer)
+    {
+        this.round = round;
+        //  this.selectedRounds = selectedRounds;
+        SetTitle(this.round.Title);
+
+        this.allItemsContainer = allItemsContainer;
+        this.selectedItemsContainer = selectedItemsContainer;
+
+    }
     public void GoRight()
     {
-        transform.SetParent(SelectedItemsContainer);
+        transform.SetParent(selectedItemsContainer);
         SwichArrow(true);
+        AddSelectedItem();
     }
     public void GoLeft()
     {
         transform.SetParent(allItemsContainer);
         SwichArrow(false);
+        DeleteSelectedItem();
     }
 
     public void SwichArrow(bool value)
     {
         right.SetActive(!value);
         left.SetActive(value);
+    }
+    void AddSelectedItem()
+    {
+        Pages.GeneralGame.selectedRounds.Add(round);
+    }
+    void DeleteSelectedItem()
+    {
+        //  int pos = selectedRounds.FindIndex(obj => obj.Id == round.Id);
+        Pages.GeneralGame.selectedRounds.Remove(round);
     }
 
 

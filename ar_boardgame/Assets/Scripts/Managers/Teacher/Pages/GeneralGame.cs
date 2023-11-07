@@ -1,42 +1,39 @@
-using System.Collections.Generic;
+using System;
 using Api;
 using Models;
 using TMPro;
 using UnityEngine;
+using System.Collections.Generic;
 namespace Pages
 {
 
-    public class GeneralGame : MonoBehaviour, ICrudPage
+    public class GeneralGame : MonoBehaviour, ICrud
 
     {
         public TMP_InputField title;
         // public TMP_InputField roundNumber;
-        public TMP_Dropdown rounds;
+        public SelectorManager selectorRounds;
         Models.GeneralGame generalGame;
+        public static List<Round> selectedRounds;
         void Start()
         {
             //rounds.options.
-
+            selectedRounds = new List<Round>();
             CrudGeneralGame crud = new CrudGeneralGame();
-
-            foreach (Models.Round item in crud.GetRounds())
-            {
-                //  TMP_Dropdown.OptionData data = new TMP_Dropdown.OptionData();
-
-                //rounds.options.Add(new TMP_Dropdown.OptionData(item.Title));
-            }
-
+            selectorRounds.CreateList(crud.GetRounds());//, selectedRounds);
 
         }
         void Update()
         {
 
         }
-        void ICrudPage.Save()
+        void ICrud.Save()
         {
             generalGame = new Models.GeneralGame
             {
-                Title = title.text
+                Title = title.text,
+                Rounds = selectedRounds
+
             };
             Debug.Log("i'm saving game... " + generalGame.ToString());
 

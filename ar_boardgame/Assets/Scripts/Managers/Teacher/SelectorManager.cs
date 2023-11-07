@@ -1,25 +1,18 @@
-using Api;
+
+using System.Collections.Generic;
+using Models;
 using UnityEngine;
 
 public class SelectorManager : MonoBehaviour
 {
     public Transform allItemsContainer;
-    public Transform SelectedItemsContainer;
+    public Transform selectedItemsContainer;
 
     public GameObject elementSelector; //prefab
     // Start is called before the first frame update
     void Start()
     {
-        CrudGeneralGame crud = new CrudGeneralGame();
 
-        foreach (Models.Round item in crud.GetRounds())
-        {
-
-            elementSelector.GetComponent<ElementListManager>().allItemsContainer = allItemsContainer;
-            elementSelector.GetComponent<ElementListManager>().SelectedItemsContainer = SelectedItemsContainer;
-            elementSelector.GetComponent<ElementListManager>().SetTitle(item.Title);
-            Instantiate(elementSelector);
-        }
     }
 
 
@@ -28,5 +21,20 @@ public class SelectorManager : MonoBehaviour
     {
 
     }
+    public void CreateList(List<Round> allRounds)//, List<Round> selectedRounds)
+    {
+        foreach (Models.Round item in allRounds)
+        {
+            CreateElement(item);//, this.selectedRounds);
+        }
+    }
+    void CreateElement(Round item)//, List<Round> selectedRounds)
+    {
+        elementSelector.GetComponent<ElementListManager>().PrepareData(item, allItemsContainer, selectedItemsContainer);//, selectedRounds);
+
+        Instantiate(elementSelector);
+
+    }
+
 
 }

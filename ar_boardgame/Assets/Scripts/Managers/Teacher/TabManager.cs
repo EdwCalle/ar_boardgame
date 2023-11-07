@@ -1,7 +1,7 @@
 using Models;
 using UnityEngine;
 
-public class TabManager : MonoBehaviour, ICrudPage
+public class TabManager : MonoBehaviour
 {
     public int page;
     public GameObject modal;
@@ -21,11 +21,6 @@ public class TabManager : MonoBehaviour, ICrudPage
 
     }
 
-    void ICrudPage.Add()
-    {
-
-    }
-
     public void ShowModal()
     {
         modalWrapper.SetActive(true);
@@ -38,12 +33,12 @@ public class TabManager : MonoBehaviour, ICrudPage
     }
     public void Acept()
     {
-        modal.GetComponent<ICrudPage>().Save();
+        modal.GetComponent<ICrud>().Save();
         CloseModal();
     }
     public void Cancel()
     {
-        modal.GetComponent<ICrudPage>().Save();
+        modal.GetComponent<ICrud>().Save();
         CloseModal();
     }
 

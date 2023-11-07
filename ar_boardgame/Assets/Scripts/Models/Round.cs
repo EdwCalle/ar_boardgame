@@ -28,6 +28,13 @@ namespace Models
         public Minigame Minigame2 { get => minigame2; set => minigame2 = value; }
         public Minigame Minigame3 { get => minigame3; set => minigame3 = value; }
         public Minigame FinalMinigame { get => finalMinigame; set => finalMinigame = value; }
+
+        public override string ToString()
+        {
+            return $"id:{id}, title:{Title}, NumberRound:{NumberRound},Minigame1:{Minigame1} ";
+        }
+
+
     }
 
 

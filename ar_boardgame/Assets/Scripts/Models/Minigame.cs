@@ -25,9 +25,6 @@ namespace Models
         private ExtraComponentType extraComponent;
 
         private TimerState timerState;
-
-
-
         public int Id
         { get => id; set => id = value; }
         public string Title { get => title; set => title = value; }
@@ -50,8 +47,10 @@ namespace Models
             this.header = header;
             this.selection = selection;
             this.extraComponent = extraComponent;
-
-
+        }
+        public override string ToString()
+        {
+            return $"id:{id}, title:{title}, ";
         }
         //public bool ExistSelecction { get => existSelecction; set => existSelecction = value; }
 
