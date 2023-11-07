@@ -38,12 +38,12 @@ public class TabManager : MonoBehaviour, ICrudPage
     }
     public void Acept()
     {
-        //modal.GetComponent<ICrudPage>().Save();
+        modal.GetComponent<ICrudPage>().Save();
         CloseModal();
     }
     public void Cancel()
     {
-        //modal.GetComponent<ICrudPage>().Save();
+        modal.GetComponent<ICrudPage>().Save();
         CloseModal();
     }
 

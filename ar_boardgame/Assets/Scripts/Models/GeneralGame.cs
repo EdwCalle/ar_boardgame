@@ -25,5 +25,10 @@ namespace Models
         public string Title { get => title; set => title = value; }
         public string Subject { get => subject; set => subject = value; }
         public List<Round> Rounds { get => rounds; set => rounds = value; }
+
+        public override string ToString()
+        {
+            return base.ToString();
+        }
     }
 }
