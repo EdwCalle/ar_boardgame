@@ -1,17 +1,23 @@
+using System.Collections.Generic;
 using Models;
 using UnityEngine;
-
 public class TabManager : MonoBehaviour
 {
     public int page;
     public GameObject modal;
     public GameObject modalWrapper;
 
+    public GameObject table;
+    public GameObject row;
+
+    public List<GameObject> rows;
+
 
     // Start is called before the first frame update
     void Start()
     {
         modal.transform.SetParent(modalWrapper.transform);
+        List();
 
     }
 
@@ -30,6 +36,7 @@ public class TabManager : MonoBehaviour
     {
         modalWrapper.SetActive(false);
         modal.SetActive(false);
+        List();
     }
     public void Acept()
     {
@@ -41,6 +48,24 @@ public class TabManager : MonoBehaviour
         modal.GetComponent<ICrud>().Save();
         CloseModal();
     }
+    public void EditModal()
+    {
+        ShowModal();
+    }
+    public void DeleteMotal()
+    {
+        ShowModal();
+    }
+    public void List()
+    {
+        for (int i = 1; i < table.transform.childCount; i++)
+        {
+            Destroy(table.transform.GetChild(i).gameObject);
+        }
+        modal.GetComponent<ICrud>().List(table, row);
+    }
+
+
 
 
 
