@@ -12,7 +12,7 @@ namespace Api
         }
         public static void Create(GeneralGame generalGame)
         {
-            generalGame.Id = GetGeneralGames().Count;
+            generalGame.Id = GetGeneralGames().Count + 1;
             Singleton.instance.generalGamesT.Add(generalGame);
         }
         public static void Edit(GeneralGame generalGame)

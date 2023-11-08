@@ -16,9 +16,12 @@ namespace Pages
         public TMP_InputField title;
         // public TMP_InputField roundNumber;
         public SelectorManager selectorRounds;
+        public TextMeshProUGUI titleModal;
         Models.GeneralGame generalGame;
         public List<Round> selectedRounds;
         private EditMode editMode;
+
+
 
 
         void Start()
@@ -80,14 +83,17 @@ namespace Pages
             this.editMode = editMode;
             if (this.editMode == EditMode.create)
             {
+                //  titleModal.text = "Crear Partidas";
                 selectedRounds = new List<Round>();
 
                 selectorRounds.CreateList(CrudRounds.GetRounds(), new List<Round>(), selectedRounds);
             }
             if (this.editMode == EditMode.edit)
             {
+
                 generalGame = CrudGeneralGame.GetById(code);
                 title.text = generalGame.Title;
+                //titleModal.text = $"Editar partida:{generalGame.Title}";
                 // selectedRounds.Clear();
                 selectedRounds = generalGame.Rounds.ToList<Round>();
                 selectorRounds.CreateList(CrudGeneralGame.GetNoSelectedRounds(code), generalGame.Rounds, selectedRounds);
