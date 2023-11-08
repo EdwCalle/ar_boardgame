@@ -28,8 +28,8 @@ public class Singleton : MonoBehaviour
     private void Awake()
     {
         CreateSingleton();
-        //  PreLoadDataStudent();
-        PreLoadDataTeacher();
+        PreLoadDataStudent();
+        // PreLoadDataTeacher();
 
     }
 
