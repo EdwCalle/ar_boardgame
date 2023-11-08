@@ -23,6 +23,6 @@ public class MainPageTeacherManager : MonoBehaviour
         lastGameObject.SetActive(false);
         selectedGameObject.SetActive(true);
         lastGameObject = selectedGameObject;
-
+        lastGameObject.GetComponent<TabManager>().List();
     }
 }

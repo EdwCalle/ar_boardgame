@@ -17,7 +17,13 @@ namespace Api
         }
         public static void Edit(GeneralGame generalGame)
         {
-            GetGeneralGames()[generalGame.Id] = generalGame;
+            int i = Singleton.instance.generalGamesT.FindIndex(ob => ob.Id == generalGame.Id);
+            Singleton.instance.generalGamesT[i] = generalGame;
+        }
+        public static void Delete(int id)
+        {
+            // THIS MAY CAUSE ERROR DUE TO IS SAVING DE POSITION AS ID 
+            Singleton.instance.generalGamesT.RemoveAll(ob => ob.Id == id);
 
         }
         public static GeneralGame GetById(int id)

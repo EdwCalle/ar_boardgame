@@ -55,9 +55,11 @@ public class TabManager : MonoBehaviour
     {
         ShowModal(EditMode.edit, rowManager.code);
     }
-    public void DeleteMotal()
+    public void DeleteMotal(RowManager rowManager)
     {
-        ShowModal(EditMode.delete, 0);
+
+        ShowModal(EditMode.delete, rowManager.code);
+        CloseModal();
     }
     public void Acept()
     {

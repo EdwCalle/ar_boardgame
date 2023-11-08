@@ -98,7 +98,7 @@ public class Singleton : MonoBehaviour
         LoadMinigame3(exampleRound);
         roundsT.Add(exampleRound);
 
-        GeneralGame generalGame = new GeneralGame(0, "Unidad 1:Las Plantas", "Ciencias Naturales");
+        GeneralGame generalGame = new GeneralGame(1, "Unidad 1:Las Plantas", "Ciencias Naturales");
         generalGame.Rounds.Add(exampleRound); // example 3
         generalGamesT.Add(generalGame);
 

@@ -7536,7 +7536,7 @@ PrefabInstance:
     - target: {fileID: 6632484234410348251, guid: 26344a0424d47114f88ffc41996bd8e0,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6632484234410348251, guid: 26344a0424d47114f88ffc41996bd8e0,
         type: 3}
@@ -7560,8 +7560,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6632484234410348251, guid: 26344a0424d47114f88ffc41996bd8e0,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 2841308441446277532}
+    - target: {fileID: 6632484234410348251, guid: 26344a0424d47114f88ffc41996bd8e0,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
+      value: RowManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7291732468676237923, guid: 26344a0424d47114f88ffc41996bd8e0,
         type: 3}

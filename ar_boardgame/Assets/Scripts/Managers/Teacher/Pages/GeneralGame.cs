@@ -93,6 +93,10 @@ namespace Pages
                 selectorRounds.CreateList(CrudGeneralGame.GetNoSelectedRounds(code), generalGame.Rounds, selectedRounds);
 
             }
+            if (this.editMode == EditMode.delete)
+            {
+                CrudGeneralGame.Delete(code);
+            }
         }
         void ICrud.ClearModal()
         {
