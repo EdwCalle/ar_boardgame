@@ -3,14 +3,11 @@ using Models;
 using TMPro;
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.UI;
-using UnityEngine.Events;
-using Unity.VisualScripting;
 using System.Linq;
 namespace Pages
 {
 
-    public class GeneralGame : MonoBehaviour, ICrud
+    public class GeneralGamePage : MonoBehaviour, ICrud
 
     {
         public TMP_InputField title;

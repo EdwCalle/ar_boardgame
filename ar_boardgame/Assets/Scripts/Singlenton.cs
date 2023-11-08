@@ -19,6 +19,7 @@ public class Singleton : MonoBehaviour
     // for teacher testing
     public List<GeneralGame> generalGamesT = new List<GeneralGame>();
     public List<Round> roundsT = new List<Round>();
+    public List<Minigame> minigamesT = new List<Minigame>();
     //public List<Round> roundsT = new List<Round>();
 
 
@@ -101,6 +102,14 @@ public class Singleton : MonoBehaviour
         GeneralGame generalGame = new GeneralGame(1, "Unidad 1:Las Plantas", "Ciencias Naturales");
         generalGame.Rounds.Add(exampleRound); // example 3
         generalGamesT.Add(generalGame);
+
+        minigamesT.Add(exampleRound.Minigame1);
+        minigamesT.Add(exampleRound.Minigame2);
+        minigamesT.Add(exampleRound.Minigame3);
+
+        LoadMinigame1_4(exampleRound);
+        minigamesT.Add(exampleRound.Minigame1);
+        //  minigamesT.Add(exampleRound.Minigame4);
 
         // currentMinigame.Id = 1;
         // currentMinigame.ExtraInfo = new ExtraInfo("image", "las aves vuelan");
@@ -185,6 +194,23 @@ public class Singleton : MonoBehaviour
         round.Minigame3.Models.Add(new Item(1, "pato", "description", "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF/Duck.gltf", new Vector3(1, -0.5f, 2), new Vector3(0.2f, 0.2f, 0.2f), true, false, new Models.Collider(new Vector3(-0.1f, 0.8f, 0), new Vector3(1.7f, 1.8f, 1))));
         round.Minigame3.Models.Add(new Item(2, "pato", "description", "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/AntiqueCamera/glTF-Binary/AntiqueCamera.glb", new Vector3(0, -0.5f, 2.5f), new Vector3(0.2f, 0.2f, 0.2f), false, false, new Models.Collider(new Vector3(-0.1f, 0.8f, 0), new Vector3(1.7f, 1.8f, 1))));
         round.Minigame3.Models.Add(new Item(3, "pato", "description", "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF/Duck.gltf", new Vector3(-1, -0.5f, 3), new Vector3(0.2f, 0.2f, 0.2f), false, false, new Models.Collider(new Vector3(-0.1f, 0.8f, 0), new Vector3(1.7f, 1.8f, 1))));
+    }
+    public void LoadMinigame1_4(Round round)
+    {
+        round.Minigame1 = new Minigame();
+        round.Minigame1.Id = 4;
+        round.Minigame1.Level = 1;
+        round.Minigame1.ExtraInfo = new ExtraInfo("image");
+        round.Minigame1.Title = "MG01:selecionar la CASA inCorrecta Según sus hojas";
+        round.Minigame1.InteractionTime = 15;
+        round.Minigame1.ResolveTime = 30;
+        round.Minigame1.FeedbackTime = 10;
+        round.Minigame1.TimerState = TimerState.none;
+        //round.Minigame1.Function = "seleccionar el modelo correcto";
+
+        round.Minigame1.Models.Add(new Item(1, "pato", "description", "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF/Duck.gltf", new Vector3(1, -0.5f, 2), new Vector3(0.2f, 0.2f, 0.2f), true, false, new Models.Collider(new Vector3(-0.1f, 0.8f, 0), new Vector3(1.7f, 1.8f, 1))));
+        round.Minigame1.Models.Add(new Item(2, "pata", "description", "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/AntiqueCamera/glTF-Binary/AntiqueCamera.glb", new Vector3(0, -0.5f, 2.5f), new Vector3(0.2f, 0.2f, 0.2f), false, false, new Models.Collider(new Vector3(-0.1f, 0.8f, 0), new Vector3(1.7f, 1.8f, 1))));
+        round.Minigame1.Models.Add(new Item(3, "perro", "description", "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF/Duck.gltf", new Vector3(-1, -0.5f, 3), new Vector3(0.2f, 0.2f, 0.2f), false, false, new Models.Collider(new Vector3(-0.1f, 0.8f, 0), new Vector3(1.7f, 1.8f, 1))));
     }
 
 
