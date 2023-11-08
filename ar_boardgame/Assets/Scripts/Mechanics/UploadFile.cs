@@ -24,6 +24,12 @@ public class UploadFile : MonoBehaviour
     }
     public void AbrirArchivo()
     {
+#if UNITY_EDITOR
+
+
+
+
+
         string filePath = EditorUtility.OpenFilePanel("Select a file", "", "");
         if (!string.IsNullOrEmpty(filePath))
         {
@@ -31,11 +37,12 @@ public class UploadFile : MonoBehaviour
             model.GetComponent<GLTFComponent>().Load();
             // Use the selected file path.
         }
-
+#endif
 
     }
     public void AbrirImagen(RawImage rendererComponent)
     {
+#if UNITY_EDITOR
         string filePath = EditorUtility.OpenFilePanel("Select a file", "", "");
 
         byte[] fileData = File.ReadAllBytes(filePath);
@@ -59,6 +66,7 @@ public class UploadFile : MonoBehaviour
             Debug.LogError("Failed to load image as texture!");
         }
 
+#endif
 
     }
     public void changeScene()
