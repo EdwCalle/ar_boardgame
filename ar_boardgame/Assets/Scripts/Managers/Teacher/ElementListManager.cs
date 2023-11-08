@@ -14,6 +14,8 @@ public class ElementListManager : MonoBehaviour
     Transform allItemsContainer;
     [SerializeField]
     Transform selectedItemsContainer;
+    [SerializeField]
+
 
     public Round round;
     public List<Round> selectedRounds;
@@ -35,26 +37,36 @@ public class ElementListManager : MonoBehaviour
     }
     public void PrepareData(Round round, Transform allItemsContainer, Transform selectedItemsContainer, List<Round> selectedRounds)
     {
-        this.round = round;
-        this.selectedRounds = selectedRounds;
-        SetTitle(this.round.Title);
 
         this.allItemsContainer = allItemsContainer;
         this.selectedItemsContainer = selectedItemsContainer;
+        this.round = round;
+        this.selectedRounds = selectedRounds;
+
         transform.SetParent(allItemsContainer);
         transform.localScale = new Vector3(1, 1, 1);
+        SetTitle(this.round.Title);
+
 
     }
-    public void GoRight()
+    public void SetRight()
     {
         transform.SetParent(selectedItemsContainer);
         SwichArrow(true);
+    }
+    public void SetLeft()
+    {
+        transform.SetParent(allItemsContainer);
+        SwichArrow(false);
+    }
+    public void GoRight()
+    {
+        SetRight();
         AddSelectedItem();
     }
     public void GoLeft()
     {
-        transform.SetParent(allItemsContainer);
-        SwichArrow(false);
+        SetLeft();
         DeleteSelectedItem();
     }
 

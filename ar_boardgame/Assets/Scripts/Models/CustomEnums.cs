@@ -31,6 +31,12 @@ namespace Models
         feedback
     }
 
+    public enum EditMode
+    {
+        create,
+        edit,
+        delete
+    }
 
 
 

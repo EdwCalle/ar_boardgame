@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Models
@@ -9,6 +8,8 @@ namespace Models
         {
 
         }
+        public void PrepareModal(EditMode editMode, int code);
+        public void ClearModal();
         void List(GameObject table, GameObject row);
 
         //    public int GetSizeList();
