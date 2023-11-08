@@ -10,6 +10,8 @@ public class SelectorManager : MonoBehaviour
 
     public GameObject elementSelector; //prefab
     // Start is called before the first frame update
+
+    public List<GameObject> items;
     void Start()
     {
 
@@ -21,18 +23,19 @@ public class SelectorManager : MonoBehaviour
     {
 
     }
-    public void CreateList(List<Round> allRounds)//, List<Round> selectedRounds)
+    public void CreateList(List<Round> allRounds, List<Round> selectedRounds)
     {
         foreach (Models.Round item in allRounds)
         {
-            CreateElement(item);//, this.selectedRounds);
+            CreateElement(item, selectedRounds);
         }
     }
-    void CreateElement(Round item)//, List<Round> selectedRounds)
+    void CreateElement(Round item, List<Round> selectedRounds)
     {
-        elementSelector.GetComponent<ElementListManager>().PrepareData(item, allItemsContainer, selectedItemsContainer);//, selectedRounds);
 
-        Instantiate(elementSelector);
+        GameObject gameObject = Instantiate(elementSelector);
+        gameObject.GetComponent<ElementListManager>().PrepareData(item, allItemsContainer, selectedItemsContainer, selectedRounds);
+        //  items.Add(gameObject);
 
     }
 

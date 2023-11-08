@@ -14,13 +14,13 @@ namespace Pages
         // public TMP_InputField roundNumber;
         public SelectorManager selectorRounds;
         Models.GeneralGame generalGame;
-        public static List<Round> selectedRounds;
+        public List<Round> selectedRounds;
         void Start()
         {
             //rounds.options.
             selectedRounds = new List<Round>();
             CrudGeneralGame crud = new CrudGeneralGame();
-            selectorRounds.CreateList(crud.GetRounds());//, selectedRounds);
+            selectorRounds.CreateList(crud.GetRounds(), selectedRounds);
 
         }
         void Update()

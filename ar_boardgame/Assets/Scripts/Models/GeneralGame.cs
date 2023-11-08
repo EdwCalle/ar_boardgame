@@ -28,7 +28,7 @@ namespace Models
 
         public override string ToString()
         {
-            return $"rounds:{rounds.ToString()}";
+            return $"Title:{title},rounds:{string.Join("; ", rounds)}" + "";
         }
     }
 }

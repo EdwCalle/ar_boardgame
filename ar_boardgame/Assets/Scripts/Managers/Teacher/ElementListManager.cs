@@ -16,14 +16,12 @@ public class ElementListManager : MonoBehaviour
     Transform selectedItemsContainer;
 
     public Round round;
-
-    // public static List<Round> selectedRounds;
+    public List<Round> selectedRounds;
 
     // Start is called before the first frame update
     void Start()
     {
-        transform.SetParent(allItemsContainer);
-        transform.localScale = new Vector3(1, 1, 1);
+
     }
 
     // Update is called once per frame
@@ -35,14 +33,16 @@ public class ElementListManager : MonoBehaviour
     {
         this.title.text = title;
     }
-    public void PrepareData(Round round, Transform allItemsContainer, Transform selectedItemsContainer)
+    public void PrepareData(Round round, Transform allItemsContainer, Transform selectedItemsContainer, List<Round> selectedRounds)
     {
         this.round = round;
-        //  this.selectedRounds = selectedRounds;
+        this.selectedRounds = selectedRounds;
         SetTitle(this.round.Title);
 
         this.allItemsContainer = allItemsContainer;
         this.selectedItemsContainer = selectedItemsContainer;
+        transform.SetParent(allItemsContainer);
+        transform.localScale = new Vector3(1, 1, 1);
 
     }
     public void GoRight()
@@ -65,12 +65,13 @@ public class ElementListManager : MonoBehaviour
     }
     void AddSelectedItem()
     {
-        Pages.GeneralGame.selectedRounds.Add(round);
+        selectedRounds.Add(round);
     }
     void DeleteSelectedItem()
     {
         //  int pos = selectedRounds.FindIndex(obj => obj.Id == round.Id);
-        Pages.GeneralGame.selectedRounds.Remove(round);
+        // Pages.GeneralGame.
+        selectedRounds.Remove(round);
     }
 
 
