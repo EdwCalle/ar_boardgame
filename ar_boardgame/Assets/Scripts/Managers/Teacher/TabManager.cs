@@ -1,8 +1,5 @@
-using System.Collections.Generic;
-using System.Diagnostics;
 using Models;
 using UnityEngine;
-using UnityEngine.UIElements;
 public class TabManager : MonoBehaviour
 {
     public int page;

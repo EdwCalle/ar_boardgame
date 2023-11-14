@@ -2,7 +2,6 @@ using UnityEngine;
 using TMPro;
 using Models;
 using UnityEngine.SceneManagement;
-using System;
 public class PlayerManager : MonoBehaviour
 {
     // Start is called before the first frame update
