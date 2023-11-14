@@ -84,7 +84,7 @@ public class PlayerManager : MonoBehaviour
             transform.position = boxes[currentSquare].transform.position;
 
 
-        GetComponent<SpriteRenderer>().sprite = Singleton.instance.firstSpritePlayer;
+        // GetComponent<SpriteRenderer>().sprite = Singleton.instance.firstSpritePlayer;
 
         //
         if (Singleton.instance.currentGeneralGame.Rounds.Count != Singleton.instance.currentRound)
@@ -130,6 +130,7 @@ public class PlayerManager : MonoBehaviour
         // }
         if (isMoving)
         {
+            // GetComponent<RectTransform>().position=;
             transform.position = Vector3.MoveTowards(transform.position, nextPosition, Time.deltaTime * velocity);
             if (transform.position.Equals(nextPosition))
             {
@@ -149,6 +150,7 @@ public class PlayerManager : MonoBehaviour
                         showArrows();
                     else
                     {
+                        //
                         currentSquare = boardSquares[currentSquare].NextSquare;
                         nextPosition.x = boxes[currentSquare].transform.position.x;
                         nextPosition.y = boxes[currentSquare].transform.position.y;

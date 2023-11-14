@@ -41,3 +41,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: capa 1 (sprites)
+    uniqueID: 2361503613
+    locked: 0
+  - name: capa 2 (ui over sprites)
+    uniqueID: 1483346085
+    locked: 0
