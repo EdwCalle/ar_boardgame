@@ -88,7 +88,7 @@ public class PlayerManager : MonoBehaviour
         //
         if (Singleton.instance.currentGeneralGame.Rounds.Count != Singleton.instance.currentRound)
         {
-            print("que pasol");
+
             // show title round
             titleRound.text = Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.currentRound].Title;
             numberRound.text = $"Número de ronda: {Singleton.instance.currentRound}";
@@ -160,9 +160,10 @@ public class PlayerManager : MonoBehaviour
                 {
                     isMoving = false;
                     isActiveDice = false;
-                    print("wtfoco");
-                    selectGame.ShowButtons();
-                    selectGame.SetTextButtons();
+                    print("al fin llegue");
+                    selectGame.ShowQuestion();
+                    //  selectGame.ShowButtons();
+                    //  selectGame.SetTextButtons();
 
                 }
             }

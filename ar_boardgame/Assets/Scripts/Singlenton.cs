@@ -30,7 +30,7 @@ public class Singleton : MonoBehaviour
         CreateSingleton();
         PreLoadDataStudent();
         // PreLoadDataTeacher();
-
+        GetComponent<Transform>();
     }
 
     void CreateSingleton()
@@ -47,37 +47,41 @@ public class Singleton : MonoBehaviour
 
         currentGeneralGame = new GeneralGame(01, "Bloque 1:Las Plantas", "Ciencias Naturales");
 
-        Round exampleRound;
-        exampleRound = new Round(1, "Unidad 1: Las partes de la planta", 1);
+        Round exampleRound = new Round
+        {
+            Id = 1,
+            Title = "Tema 1: Órganos del Cuerpo Humano",
+            QuestionForA = new Question("¿Cuál de las siguientes opciones es una parte del cuerpo humano?", "gato", "perro", "cerebro", "cabeza"),
+            QuestionForB = new Question("¿Cuál de las siguientes opciones es una parte del cuerpo humano?", "árbol", "manzana", "cerebro", "garras"),
+            QuestionForC = new Question("¿Cuál de las siguientes opciones es una parte del cuerpo humano?", "brazo", "perro", "pata", "cajón"),
+            QuestionForD = new Question("¿Cuál de las siguientes opciones es una parte del cuerpo humano?", "pierna", "zapatos", "camiseta", "garra"),
+            NumberRound = 1
+        };
         LoadMinigame1(exampleRound);
         LoadMinigame2(exampleRound);
         LoadMinigame3(exampleRound);
         currentGeneralGame.Rounds.Add(exampleRound);
+        exampleRound = new Round
+        {
+            Id = 2,
+            Title = "Tema 2: Cuerpo saludable",
+            QuestionForA = new Question("¿Cuál de las siguientes opciones es un carbohidrato?", "cereál", "hamburguesa", "manzana", "cabeza"),
+            QuestionForB = new Question("¿Cuál de las siguientes opciones es un carbohidrato?", "pan", "lechuga", "papas fritas", "vino"),
+            QuestionForC = new Question("¿Cuál de las siguientes opciones es una fruta?", "manzana", "perro", "pata", "cajón"),
+            QuestionForD = new Question("¿Cuál de las siguientes opciones es una fruta?", "pan", "hamburguesa", "sandia", "queso"),
+            NumberRound = 2
+        };
         exampleRound = new Round(2, "Unidad 2: El ciclo de vida la planta", 2);
         LoadMinigame1(exampleRound);
         LoadMinigame2(exampleRound);
         LoadMinigame3(exampleRound);
-        // currentGeneralGame.Rounds.Add(exampleRound);
-        // exampleRound = new Round(3, "Unidad 3: Tipos de plantas", 3);
 
         currentGeneralGame.Rounds.Add(exampleRound);
+        // exampleRound = new Round(3, "Unidad 3: Tipos de plantas", 3);
+        //currentGeneralGame.Rounds.Add(exampleRound);
 
-        // currentMinigame.Id = 1;
-        // currentMinigame.ExtraInfo = new ExtraInfo("image", "las aves vuelan");
-        // currentMinigame.Title = "selecionar el pato correcto";
-        // currentMinigame.InteractionTime = 15;
-        // currentMinigame.ResolveTime = 30;
-        // currentMinigame.FeedbackTime = 10;
-        // currentMinigame.TimerState = TimerState.none;
-        // currentMinigame.Function = "seleccionar el modelo correcto";
 
-        // currentMinigame.Models.Add(new Item(1, "pato", "description", "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF/Duck.gltf", new Vector3(1, -0.5f, 2), new Vector3(0.2f, 0.2f, 0.2f), true, false, new Models.Collider(new Vector3(-0.1f, 0.8f, 0), new Vector3(1.7f, 1.8f, 1))));
-        // currentMinigame.Models.Add(new Item(2, "pato", "description", "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/AntiqueCamera/glTF-Binary/AntiqueCamera.glb", new Vector3(0, -0.5f, 2.5f), new Vector3(0.2f, 0.2f, 0.2f), false, false, new Models.Collider(new Vector3(-0.1f, 0.8f, 0), new Vector3(1.7f, 1.8f, 1))));
-        // currentMinigame.Models.Add(new Item(3, "pato", "description", "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF/Duck.gltf", new Vector3(-1, -0.5f, 3), new Vector3(0.2f, 0.2f, 0.2f), false, false, new Models.Collider(new Vector3(-0.1f, 0.8f, 0), new Vector3(1.7f, 1.8f, 1))));
 
-        // currentMinigame.Questions.Add(new Question("blanco", "negro", "rojo", "verde", "¿De que color es el casco?"));
-        // currentMinigame.Questions.Add(new Question("una ", "dos ", "tres", "cuatro", "¿Cuántas ruedas tiene el carro?"));
-        // currentMinigame.Questions.Add(new Question("blanco", "amarillo", "rojo", "verde", "¿De que color es el pato?"));
     }
     public void PreLoadDataTeacher()
     {
@@ -109,24 +113,9 @@ public class Singleton : MonoBehaviour
 
         LoadMinigame1_4(exampleRound);
         minigamesT.Add(exampleRound.Minigame1);
-        //  minigamesT.Add(exampleRound.Minigame4);
 
-        // currentMinigame.Id = 1;
-        // currentMinigame.ExtraInfo = new ExtraInfo("image", "las aves vuelan");
-        // currentMinigame.Title = "selecionar el pato correcto";
-        // currentMinigame.InteractionTime = 15;
-        // currentMinigame.ResolveTime = 30;
-        // currentMinigame.FeedbackTime = 10;
-        // currentMinigame.TimerState = TimerState.none;
-        // currentMinigame.Function = "seleccionar el modelo correcto";
 
-        // currentMinigame.Models.Add(new Item(1, "pato", "description", "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF/Duck.gltf", new Vector3(1, -0.5f, 2), new Vector3(0.2f, 0.2f, 0.2f), true, false, new Models.Collider(new Vector3(-0.1f, 0.8f, 0), new Vector3(1.7f, 1.8f, 1))));
-        // currentMinigame.Models.Add(new Item(2, "pato", "description", "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/AntiqueCamera/glTF-Binary/AntiqueCamera.glb", new Vector3(0, -0.5f, 2.5f), new Vector3(0.2f, 0.2f, 0.2f), false, false, new Models.Collider(new Vector3(-0.1f, 0.8f, 0), new Vector3(1.7f, 1.8f, 1))));
-        // currentMinigame.Models.Add(new Item(3, "pato", "description", "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF/Duck.gltf", new Vector3(-1, -0.5f, 3), new Vector3(0.2f, 0.2f, 0.2f), false, false, new Models.Collider(new Vector3(-0.1f, 0.8f, 0), new Vector3(1.7f, 1.8f, 1))));
 
-        // currentMinigame.Questions.Add(new Question("blanco", "negro", "rojo", "verde", "¿De que color es el casco?"));
-        // currentMinigame.Questions.Add(new Question("una ", "dos ", "tres", "cuatro", "¿Cuántas ruedas tiene el carro?"));
-        // currentMinigame.Questions.Add(new Question("blanco", "amarillo", "rojo", "verde", "¿De que color es el pato?"));
     }
 
     public void SetMinigame(int level)

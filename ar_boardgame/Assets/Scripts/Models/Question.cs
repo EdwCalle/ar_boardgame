@@ -16,7 +16,7 @@ namespace Models
         public string OptionA { get => optionA; set => optionA = value; }
         public string Title { get => title; set => title = value; }
 
-        public Question(string OptionD, string OptionC, string OptionB, string OptionA, string title)
+        public Question(string title, string OptionA, string OptionB, string OptionC, string OptionD)
         {
             this.OptionD = OptionD;
             this.OptionC = OptionC;
