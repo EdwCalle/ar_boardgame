@@ -1984,6 +1984,7 @@ GameObject:
   - component: {fileID: 354565918}
   - component: {fileID: 354565920}
   - component: {fileID: 354565919}
+  - component: {fileID: 354565921}
   m_Layer: 5
   m_Name: modalQuestion
   m_TagString: Untagged
@@ -2047,6 +2048,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 354565917}
   m_CullTransparentMesh: 1
+--- !u!225 &354565921
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 354565917}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &372572717
 GameObject:
   m_ObjectHideFlags: 0
@@ -4493,7 +4506,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.6556604, b: 0.6556604, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -12565,8 +12578,8 @@ MonoBehaviour:
   - {fileID: 1113220188}
   - {fileID: 278887256}
   - {fileID: 1517381264}
-  isDice: 1
-  defaultDice: 5
+  isDice: 0
+  defaultDice: 1
   leftButton: {fileID: 805610172}
   rightButton: {fileID: 1017286282}
   upButton: {fileID: 918086432}

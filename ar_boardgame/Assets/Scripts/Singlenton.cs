@@ -51,10 +51,10 @@ public class Singleton : MonoBehaviour
         {
             Id = 1,
             Title = "Tema 1: Órganos del Cuerpo Humano",
-            QuestionForA = new Question("¿Cuál de las siguientes opciones es una parte del cuerpo humano?", "gato", "perro", "cerebro", "cabeza"),
-            QuestionForB = new Question("¿Cuál de las siguientes opciones es una parte del cuerpo humano?", "árbol", "manzana", "cerebro", "garras"),
-            QuestionForC = new Question("¿Cuál de las siguientes opciones es una parte del cuerpo humano?", "brazo", "perro", "pata", "cajón"),
-            QuestionForD = new Question("¿Cuál de las siguientes opciones es una parte del cuerpo humano?", "pierna", "zapatos", "camiseta", "garra"),
+            QuestionForA = new Question("¿Cuál de las siguientes opciones es una parte del cuerpo humano?", "gato", "perro", "cerebro", "camiseta", 2),
+            QuestionForB = new Question("¿Cuál de las siguientes opciones es una parte del cuerpo humano?", "árbol", "manzana", "cerebro", "garras", 2),
+            QuestionForC = new Question("¿Cuál de las siguientes opciones es una parte del cuerpo humano?", "brazo", "perro", "pata", "cajón", 2),
+            QuestionForD = new Question("¿Cuál de las siguientes opciones es una parte del cuerpo humano?", "pierna", "zapatos", "camiseta", "garra", 0),
             NumberRound = 1
         };
         LoadMinigame1(exampleRound);
@@ -65,10 +65,10 @@ public class Singleton : MonoBehaviour
         {
             Id = 2,
             Title = "Tema 2: Cuerpo saludable",
-            QuestionForA = new Question("¿Cuál de las siguientes opciones es un carbohidrato?", "cereál", "hamburguesa", "manzana", "cabeza"),
-            QuestionForB = new Question("¿Cuál de las siguientes opciones es un carbohidrato?", "pan", "lechuga", "papas fritas", "vino"),
-            QuestionForC = new Question("¿Cuál de las siguientes opciones es una fruta?", "manzana", "perro", "pata", "cajón"),
-            QuestionForD = new Question("¿Cuál de las siguientes opciones es una fruta?", "pan", "hamburguesa", "sandia", "queso"),
+            QuestionForA = new Question("¿Cuál de las siguientes opciones es un carbohidrato?", "cereal", "hamburguesa", "manzana", "cabeza", 0),
+            QuestionForB = new Question("¿Cuál de las siguientes opciones es un carbohidrato?", "pan", "lechuga", "papas fritas", "vino", 0),
+            QuestionForC = new Question("¿Cuál de las siguientes opciones es una fruta?", "manzana", "perro", "pata", "cajón", 0),
+            QuestionForD = new Question("¿Cuál de las siguientes opciones es una fruta?", "pan", "hamburguesa", "sandia", "queso", 2),
             NumberRound = 2
         };
         exampleRound = new Round(2, "Unidad 2: El ciclo de vida la planta", 2);

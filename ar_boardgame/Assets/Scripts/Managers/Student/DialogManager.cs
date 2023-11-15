@@ -1,8 +1,11 @@
 
 using TMPro;
 using UnityEngine;
+using DG.Tweening;
+using System.Threading.Tasks;
 using UnityEngine.UI;
-
+using System;
+using System.Collections;
 public class DialogManager : MonoBehaviour
 {
     public TextMeshProUGUI text1;
@@ -50,12 +53,13 @@ public class DialogManager : MonoBehaviour
     public void PrepareQuestion()
     {
         // GetComponent<>().tex
-
+        EnableOptions(true);
+        FadeIn(modalQuestion);
         question.text = Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.currentRound].QuestionForA.Title;
         SetOption(0, Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.currentRound].QuestionForA.OptionA);
-        SetOption(1, Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.currentRound].QuestionForB.OptionA);
-        SetOption(2, Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.currentRound].QuestionForC.OptionA);
-        SetOption(3, Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.currentRound].QuestionForD.OptionA);
+        SetOption(1, Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.currentRound].QuestionForA.OptionB);
+        SetOption(2, Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.currentRound].QuestionForA.OptionC);
+        SetOption(3, Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.currentRound].QuestionForA.OptionD);
     }
     public void SetOption(int pos, string value)
     {
@@ -63,7 +67,78 @@ public class DialogManager : MonoBehaviour
     }
     public void SelectOption(int value)
     {
-        HideAll();
+        EnableOptions(false);
+        int solution = Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.currentRound].QuestionForA.Solution;
+        if (value == solution)
+        {
+            Blink(options[value], Color.green, 1f);
+            //correect
+        }
+        else
+        {
+            Blink(options[value], Color.red, 1f);
+            Blink(options[solution], Color.green, 1f);
+        }
+        // Invoke(nameof(FadeOut(modalQuestion, 1f)), 1);
+        //  StartCoroutine(DelayedFunction());
+        // gameObject.SetActive(false);
+
+        //   HideAll();
+    }
+
+    void EnableOptions(bool value)
+    {
+        options[0].GetComponent<Button>().interactable = value;
+        options[1].GetComponent<Button>().interactable = value;
+        options[2].GetComponent<Button>().interactable = value;
+        options[3].GetComponent<Button>().interactable = value;
+    }
+    void Blink(GameObject gameObject, Color targetColor, float duration)
+    {
+        Image myRawImage = gameObject.GetComponent<Image>();
+        // Tween the color from the original color to a new color (fully transparent in this case) over the specified duration
+        myRawImage.DOColor(targetColor, duration)
+            .SetLoops(5, LoopType.Yoyo) // SetLoops with 2 and LoopType.Yoyo creates a single cycle of fading in and out
+            .OnComplete(() =>
+            {
+                myRawImage.color = Color.white;
+                modalQuestion.SetActive(false);
+
+            }); // Disable the GameObject after the blinking effect is complete
+    }
+    void FadeIn(GameObject gameObject)
+    {
+        gameObject.SetActive(true);
+        Fade(gameObject, 0f, 1f, 1.0f);
+
+    }
+    async void FadeOut(GameObject gameObject, float duration)
+    {
+        await Fade(gameObject, 1f, 0f, duration);
+        gameObject.SetActive(false);
+
+    }
+    Task Fade(GameObject gameObject, float fromAlpha, float toAlpha, float duration)
+    {
+        CanvasGroup canvasGroup = gameObject.GetComponent<CanvasGroup>();
+        var tcs = new TaskCompletionSource<object>();
+        // Ensure the CanvasGroup exists
+        if (canvasGroup != null)
+        {
+            // Set the starting alpha
+            canvasGroup.alpha = fromAlpha;
+
+            // Use DOTween to tween the alpha property
+            canvasGroup.DOFade(toAlpha, duration)
+                .OnComplete(() => tcs.SetResult(null));
+        }
+        else
+        {
+            // If there's no CanvasGroup, complete the task immediately
+            tcs.SetResult(null);
+        }
+
+        return tcs.Task;
     }
 
     // Update is called once per frame
