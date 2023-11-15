@@ -4,8 +4,6 @@ using UnityEngine;
 using DG.Tweening;
 using System.Threading.Tasks;
 using UnityEngine.UI;
-using System;
-using System.Collections;
 public class DialogManager : MonoBehaviour
 {
     public TextMeshProUGUI text1;

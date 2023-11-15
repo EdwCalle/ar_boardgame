@@ -18,4 +18,8 @@ public class MainPageStudentManager : MonoBehaviour
     {
         SceneManager.LoadScene("selectplayer");
     }
+    public void GoMultiplayer()
+    {
+        SceneManager.LoadScene("multiplayer");
+    }
 }
