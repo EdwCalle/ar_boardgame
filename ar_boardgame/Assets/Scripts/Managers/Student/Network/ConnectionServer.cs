@@ -1,34 +1,39 @@
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.SceneManagement;
+using TMPro;
 public class ConnectionServer : MonoBehaviourPunCallbacks
 {
-    public GameObject modalMessage;
+    public TextMeshProUGUI username;
     // Start is called before the first frame update
     void Start()
     {
+
+
+        Debug.Log("hola me llamo.....");
         //modalMessage.SetActive(true);
-        PhotonNetwork.ConnectUsingSettings();
+
+
     }
     public override void OnConnectedToMaster()
     {
-        PhotonNetwork.JoinLobby();
+        SceneManager.LoadScene("multiplayer");
     }
-    public override void OnJoinedLobby()
+    public void GoLobby()
     {
-        Debug.Log("unido al lobby(room)");
-
-        modalMessage.SetActive(false);
-        //  SceneManager.LoadScene("multiplayer");
+        if (username.text.Length >= 1)
+        {
+            PhotonNetwork.NickName = username.text;
+            PhotonNetwork.ConnectUsingSettings();
+        }
     }
-    public ConnectionServer()
-    {
-        /// show loading page
-    }
+    // public override void OnJoinedLobby()
+    // {
+    //     Debug.Log("unido al lobby");
+
+    //     modalMessage.SetActive(false);
+    //     //  SceneManager.LoadScene("multiplayer");
+    // }
 
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }
