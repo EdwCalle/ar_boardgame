@@ -1,6 +1,5 @@
 using UnityEngine;
 using Photon.Pun;
-using UnityEngine.SceneManagement;
 public class ConnectionServer : MonoBehaviourPunCallbacks
 {
     public GameObject modalMessage;
@@ -19,7 +18,7 @@ public class ConnectionServer : MonoBehaviourPunCallbacks
         Debug.Log("unido al lobby(room)");
 
         modalMessage.SetActive(false);
-        // SceneManager.LoadScene("multiplayer");
+        //  SceneManager.LoadScene("multiplayer");
     }
     public ConnectionServer()
     {
