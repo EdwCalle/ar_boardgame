@@ -2,7 +2,7 @@ using UnityEngine;
 using TMPro;
 using Models;
 using UnityEngine.SceneManagement;
-public class PlayerManager : MonoBehaviour
+public class BoardManager : MonoBehaviour
 {
     // Start is called before the first frame update
     //[SerializeField]
