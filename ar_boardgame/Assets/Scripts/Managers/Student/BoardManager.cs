@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using Models;
 using UnityEngine.SceneManagement;
+using ExitGames.Client.Photon.StructWrapping;
 public class BoardManager : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -35,9 +36,71 @@ public class BoardManager : MonoBehaviour
     //public GameObject firstCharacter;
 
 
+    public int numberPlayers = 1;
+    public int currentPlayer = 0;
+
+    public GameObject[] players;
+
+
     void Start()
     {
+        //Debug.Log($"\npos FirstGame:{boxes[0].transform.localPosition}\npos player:{transform.localPosition}");
         isMoving = false;
+        // preparing boardsquare order
+        PrepareBoard();
+        // it hides arrows which are used when the player has to change map's direction
+        HideArrows();
+
+        for (int i = 0; i < 4; i++)
+        {
+
+            if (i > numberPlayers - 1)
+                players[i].SetActive(false);
+            else
+            {
+                players[i].GetComponent<PlayerManager>().PrepareData($"Player{i}", i);
+            }
+        }
+
+
+
+
+
+        currentSquare = Singleton.instance.currentPosition;
+        if (currentSquare != 0)
+            transform.localPosition = boxes[currentSquare].transform.localPosition;
+
+
+        // GetComponent<SpriteRenderer>().sprite = Singleton.instance.firstSpritePlayer;
+
+        //
+        if (Singleton.instance.currentGeneralGame.Rounds.Count != Singleton.instance.currentRound)
+        {
+
+            // show title round
+            titleRound.text = Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.currentRound].Title;
+            numberRound.text = $"Número de ronda: {Singleton.instance.currentRound}";
+            // show new dialog
+
+
+        }
+        else
+        {
+            selectGame.ShowDialogFinish();
+            // show dialog Finish
+        }
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+
+    }
+
+    void PrepareBoard()
+    {
         // preparing boardsquare order
         // set next direction of a boardsquare
         for (int i = 0; i < 56; i++)
@@ -69,73 +132,21 @@ public class BoardManager : MonoBehaviour
         boardSquares[21].HasAnotherDirection("up");
         // first board-square  points to down
         //   currentMovement = movementDown;
-        // it hides arrows which are used when the player has to change map's direction
-        HideArrows();
-        //  selectGame.SetActive(false);
-        // get the animator for makes animations
-        // animator = GetComponent<Animator>();
-
-
-
-
-        currentSquare = Singleton.instance.currentPosition;
-        if (currentSquare != 0)
-            transform.position = boxes[currentSquare].transform.position;
-
-
-        // GetComponent<SpriteRenderer>().sprite = Singleton.instance.firstSpritePlayer;
-
-        //
-        if (Singleton.instance.currentGeneralGame.Rounds.Count != Singleton.instance.currentRound)
-        {
-
-            // show title round
-            titleRound.text = Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.currentRound].Title;
-            numberRound.text = $"Número de ronda: {Singleton.instance.currentRound}";
-            // show new dialog
-
-
-        }
-        else
-        {
-            selectGame.ShowDialogFinish();
-            // show dialog Finish
-        }
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-
     }
     void FixedUpdate()
     {
-        // if (transform.position.Equals(nextPosition))
-        // {
-        //     isMoving = false;
-
-        //     print($"dice:{dice} {transform.position.ToString()} {nextPosition.ToString()}");
-
-        //     if (dice > 0)
-        //     {
-        //         if (!isWaitingClick)
-        //             MovePlayer();
-        //     }
-        //     else
-        //         stopRunnig();
-
-        // }
+        MoveCurrentPlayer();
+    }
+    void MoveCurrentPlayer()
+    {
         if (isMoving)
         {
-            // GetComponent<RectTransform>().position=;
-            transform.position = Vector3.MoveTowards(transform.position, nextPosition, Time.deltaTime * velocity);
-            if (transform.position.Equals(nextPosition))
+            players[currentPlayer].transform.localPosition = Vector3.MoveTowards(players[currentPlayer].transform.localPosition, nextPosition, Time.deltaTime * velocity);
+            if (players[currentPlayer].transform.localPosition.Equals(nextPosition))
             {
                 isMoving = false;
                 dice--;
-                Debug.Log(dice);
+                Debug.Log("DiceNumber:" + dice + "CurrentSquare:" + currentSquare);
             }
         }
         else
@@ -144,15 +155,15 @@ public class BoardManager : MonoBehaviour
             {
                 if (dice > 0)// if there are more movements, move again
                 {
-                    // ask for if there are directions, stop movments and stop asking for current position
+                    // ask for if there are directions, stop movments and stop asking for current localPosition
                     if (boardSquares[currentSquare].IsSquarePoint)
                         showArrows();
                     else
                     {
                         //
                         currentSquare = boardSquares[currentSquare].NextSquare;
-                        nextPosition.x = boxes[currentSquare].transform.position.x;
-                        nextPosition.y = boxes[currentSquare].transform.position.y;
+                        nextPosition.x = boxes[currentSquare].transform.localPosition.x;
+                        nextPosition.y = boxes[currentSquare].transform.localPosition.y;
                         isMoving = true;
                     }
                 }
@@ -160,54 +171,44 @@ public class BoardManager : MonoBehaviour
                 {
                     isMoving = false;
                     isActiveDice = false;
-                    print("al fin llegue");
+                    print("al fin me toca responder");
+                    players[currentPlayer].GetComponent<PlayerManager>().CurrentSquare = currentSquare;
+                    currentPlayer++;
+                    if (currentPlayer == numberPlayers)
+                        currentPlayer = 0;
+
                     selectGame.ShowQuestion();
-                    //  selectGame.ShowButtons();
-                    //  selectGame.SetTextButtons();
 
                 }
             }
         }
-
-
     }
     public void ThrowDice(TextMeshProUGUI number_dice)
     {
 
         if (!isMoving)
         {
-            dice = UnityEngine.Random.Range(1, 7);
+            currentSquare = players[currentPlayer].GetComponent<PlayerManager>().CurrentSquare;
+            dice = Random.Range(1, 7);
             if (!isDice)
                 dice = defaultDice;
             number_dice.text = $"{dice}";
-            nextPosition.z = transform.position.z;
-            // ask for next position, if yes continue
-            // currentSquare = boardSquares[currentSquare].NextSquare;
-            // nextPosition.x = boxes[currentSquare].transform.position.x;
-            // nextPosition.y = boxes[currentSquare].transform.position.y;
 
-
-            //isMoving = true;
             isActiveDice = true;
-            //MovePlayer();
-
-            //animator.SetBool("isRunning", true);
         }
 
     }
 
     void MoveToNextSquare()
     {
-        // nextPosition.x = transform.position.x + currentMovement.x;
-        //nextPosition.y = transform.position.y + currentMovement.y;
+
         print("move to next square");
-        nextPosition.z = transform.position.z;
-        // dice--;
+        //nextPosition.z = transform.localPosition.z;
         idle = true;
         isMoving = true;
         currentSquare = boardSquares[currentSquare].NextSquare;
-        nextPosition.x = boxes[currentSquare].transform.position.x;
-        nextPosition.y = boxes[currentSquare].transform.position.y;
+        nextPosition.x = boxes[currentSquare].transform.localPosition.x;
+        nextPosition.y = boxes[currentSquare].transform.localPosition.y;
     }
     void showArrows()
     {

@@ -82,6 +82,8 @@ public class DialogManager : MonoBehaviour
         // gameObject.SetActive(false);
 
         //   HideAll();
+
+
     }
 
     void EnableOptions(bool value)
