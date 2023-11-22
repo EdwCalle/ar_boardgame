@@ -4,8 +4,20 @@ using UnityEngine;
 using DG.Tweening;
 using System.Threading.Tasks;
 using UnityEngine.UI;
-public class DialogManager : MonoBehaviour
+public class UIPlayerManager : MonoBehaviour
 {
+    [Header("Directions")]
+    public GameObject leftButton;
+    public GameObject rightButton;
+    public GameObject upButton;
+    public GameObject downButton;
+
+    [Header("Round Information")]
+    public TextMeshProUGUI titleRound;
+    public TextMeshProUGUI numberRound;
+    public GameObject buttonDice;
+    public TextMeshProUGUI titleDice;
+
     public TextMeshProUGUI text1;
     public TextMeshProUGUI text2;
     public TextMeshProUGUI text3;
@@ -37,6 +49,14 @@ public class DialogManager : MonoBehaviour
     {
         HideAll();
         buttons.SetActive(true);
+    }
+    public void ShowDice()
+    {
+        buttonDice.SetActive(true);
+    }
+    public void HideDice()
+    {
+        buttonDice.SetActive(false);
     }
     public void ShowDialogFinish()
     {
@@ -140,6 +160,38 @@ public class DialogManager : MonoBehaviour
 
         return tcs.Task;
     }
+    public void ShowArrows(string directionOne, string directionTwo)
+    {
+        ShowArrow(directionOne);
+        ShowArrow(directionTwo);
+    }
+
+    void ShowArrow(string direction)
+    {
+        switch (direction)
+        {
+            case "left": leftButton.SetActive(true); break;
+            case "right": rightButton.SetActive(true); break;
+            case "up": upButton.SetActive(true); break;
+            case "down": downButton.SetActive(true); break;
+        }
+    }
+    public void HideArrows()
+    {
+        leftButton.SetActive(false);
+        rightButton.SetActive(false);
+        upButton.SetActive(false);
+        downButton.SetActive(false);
+    }
+    // public void ShowDiceCurrentPlayer()
+    // {
+    //     if (Singleton.instance.playerTurn == currentPlayer)
+    //         playerUI.ShowDice();
+    //     else
+    //         playerUI.HideDice();
+    // }
+
+
 
     // Update is called once per frame
     void Update()

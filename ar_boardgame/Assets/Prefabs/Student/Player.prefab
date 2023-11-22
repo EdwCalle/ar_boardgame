@@ -129,7 +129,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5270876592732763944}
-  - component: {fileID: 8303336190622263397}
+  - component: {fileID: 5465660765331071940}
   m_Layer: 5
   m_Name: Player
   m_TagString: Untagged
@@ -158,7 +158,7 @@ RectTransform:
   m_AnchoredPosition: {x: -646.0421, y: 454.6}
   m_SizeDelta: {x: 75, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &8303336190622263397
+--- !u!114 &5465660765331071940
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

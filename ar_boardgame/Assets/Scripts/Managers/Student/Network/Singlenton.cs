@@ -23,8 +23,9 @@ public class Singleton : MonoBehaviour
     //public List<Round> roundsT = new List<Round>();
 
 
-
-
+    //online
+    public int numberPlayers = 4;
+    public int playerTurn = 0;
     private void Awake()
     {
         CreateSingleton();

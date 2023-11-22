@@ -1,5 +1,3 @@
-
-using System.Threading;
 using Photon.Pun;
 using TMPro;
 using UnityEngine;
@@ -14,8 +12,10 @@ public class NetBoardManager : MonoBehaviour
     void Start()
     {
         if (PhotonNetwork.IsConnected && PhotonNetwork.CurrentRoom != null)
-            SendLogMessage($"Number players:{PhotonNetwork.CurrentRoom.Players.Count}\n RoomName:{PhotonNetwork.CurrentRoom.Name}");
-
+        {
+            SendLogMessage($"Number players:{PhotonNetwork.CurrentRoom.Players.Count} RoomName:{PhotonNetwork.CurrentRoom.Name} Nickname:{PhotonNetwork.LocalPlayer.NickName}");
+            // Singleton.instance
+        }
     }
     public void SendLogMessage(string message)
     {
@@ -26,7 +26,7 @@ public class NetBoardManager : MonoBehaviour
 
                 if (LogMessage != null)
                 {
-                    LogMessage.text = $"Log:{message}";
+                    LogMessage.text = $"Log:{message}\n";
                 }
 
                 nextTime = Time.time + offsetTime;
@@ -36,7 +36,7 @@ public class NetBoardManager : MonoBehaviour
     void Update()
     {
         if (PhotonNetwork.IsConnected && PhotonNetwork.CurrentRoom != null)
-            SendLogMessage($"Number players:{PhotonNetwork.CurrentRoom.Players.Count}\n RoomName:{PhotonNetwork.CurrentRoom.Name}");
+            SendLogMessage($"Number players:{PhotonNetwork.CurrentRoom.Players.Count} RoomName:{PhotonNetwork.CurrentRoom.Name} Nickname:{PhotonNetwork.LocalPlayer.NickName} LocalPlayer{PhotonNetwork.CurrentRoom.PlayerCount}");
 
     }
 }

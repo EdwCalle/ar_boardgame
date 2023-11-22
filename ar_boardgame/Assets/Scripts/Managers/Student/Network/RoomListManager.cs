@@ -10,8 +10,8 @@ public class RoomListManager : MonoBehaviourPunCallbacks
     public GameObject[] AllRooms;
     public TextMeshProUGUI message;
 
-    private float skipTime = 2.5f;
-    private float nextTime;
+    // private float skipTime = 2.5f;
+    // private float nextTime;
 
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)

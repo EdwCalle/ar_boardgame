@@ -1,21 +1,15 @@
 using UnityEngine;
-using TMPro;
 using Models;
 using UnityEngine.SceneManagement;
-public class BoardManager : MonoBehaviour
+using Photon.Pun;
+public class BoardManager : MonoBehaviourPunCallbacks
 {
-    [Header("UI Components")]
-    public GameObject leftButton;
-    public GameObject rightButton;
-    public GameObject upButton;
-    public GameObject downButton;
-    public TextMeshProUGUI titleRound;
-    public TextMeshProUGUI numberRound;
-    public DialogManager selectGame;
+    [Header("Board Components")]
+    public UIPlayerManager playerUI;
     public GameObject[] players;
     public GameObject[] boxes;
 
-    [Header("Board Funcionality")]
+    [Header("Board Funcionality/offline")]
     [Range(100, 500)]
     public float velocity;
     public bool isDice;
@@ -35,47 +29,57 @@ public class BoardManager : MonoBehaviour
 
     void Start()
     {
-        //Debug.Log($"\npos FirstGame:{boxes[0].transform.localPosition}\npos player:{transform.localPosition}");
-        isMoving = false;
-        // preparing boardsquare order
-        PrepareBoard();
-        // it hides arrows which are used when the player has to change map's direction
-        HideArrows();
-
-        for (int i = 0; i < 4; i++)
+        if (PhotonNetwork.IsConnected && PhotonNetwork.CurrentRoom != null)
         {
+            // if (photonView.IsMine)
 
-            if (i > numberPlayers - 1)
-                players[i].SetActive(false);
+            UpdateTurn();
+
+            // Singleton.instance
+            //Debug.Log($"\npos FirstGame:{boxes[0].transform.localPosition}\npos player:{transform.localPosition}");
+            isMoving = false;
+            // preparing boardsquare order
+            PrepareBoard();
+            // it hides arrows which are used when the player has to change map's direction
+            playerUI.HideArrows();
+
+            numberPlayers = Singleton.instance.numberPlayers;
+
+            for (int i = 0; i < 4; i++)
+            {
+
+                if (i > numberPlayers - 1)
+                    players[i].SetActive(false);
+                else
+                {
+                    players[i].GetComponent<PlayerManager>().PrepareData($"Player{i}", i);
+                }
+            }
+
+
+            currentSquare = Singleton.instance.currentPosition;
+            if (currentSquare != 0)
+                transform.localPosition = boxes[currentSquare].transform.localPosition;
+
+
+            // GetComponent<SpriteRenderer>().sprite = Singleton.instance.firstSpritePlayer;
+
+            //
+            if (Singleton.instance.currentGeneralGame.Rounds.Count != Singleton.instance.currentRound)
+            {
+
+                // show title round
+                playerUI.titleRound.text = Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.currentRound].Title;
+                playerUI.numberRound.text = $"Número de ronda: {Singleton.instance.currentRound}";
+                // show new dialog
+
+
+            }
             else
             {
-                players[i].GetComponent<PlayerManager>().PrepareData($"Player{i}", i);
+                playerUI.ShowDialogFinish();
+                // show dialog Finish
             }
-        }
-
-
-        currentSquare = Singleton.instance.currentPosition;
-        if (currentSquare != 0)
-            transform.localPosition = boxes[currentSquare].transform.localPosition;
-
-
-        // GetComponent<SpriteRenderer>().sprite = Singleton.instance.firstSpritePlayer;
-
-        //
-        if (Singleton.instance.currentGeneralGame.Rounds.Count != Singleton.instance.currentRound)
-        {
-
-            // show title round
-            titleRound.text = Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.currentRound].Title;
-            numberRound.text = $"Número de ronda: {Singleton.instance.currentRound}";
-            // show new dialog
-
-
-        }
-        else
-        {
-            selectGame.ShowDialogFinish();
-            // show dialog Finish
         }
 
     }
@@ -125,6 +129,8 @@ public class BoardManager : MonoBehaviour
     {
         MoveCurrentPlayer();
     }
+
+
     void MoveCurrentPlayer()
     {
         if (isMoving)
@@ -143,9 +149,9 @@ public class BoardManager : MonoBehaviour
             {
                 if (dice > 0)// if there are more movements, move again
                 {
-                    // ask for if there are directions, stop movments and stop asking for current localPosition
+                    // ask for if there are directions, stop movments and stop asking for current LocalPostion
                     if (boardSquares[currentSquare].IsSquarePoint)
-                        showArrows();
+                        playerUI.ShowArrows(boardSquares[currentSquare].DirectionOne, boardSquares[currentSquare].DirectionTwo);
                     else
                     {
                         MoveToNextSquare();
@@ -163,10 +169,9 @@ public class BoardManager : MonoBehaviour
                     isMoving = false;
                     isActiveDice = false;
                     players[currentPlayer].GetComponent<PlayerManager>().CurrentSquare = currentSquare;
-                    currentPlayer++;
-                    if (currentPlayer == numberPlayers)
-                        currentPlayer = 0;
-                    selectGame.ShowQuestion();
+                    FinishTurn();
+                    UpdateTurn();
+                    playerUI.ShowQuestion();
 
 
                 }
@@ -177,29 +182,47 @@ public class BoardManager : MonoBehaviour
     public void SetOffsetPosition()
     {
         if (currentPlayer == 0)
-            nextPosition += new Vector3(-offsetPlayer, offsetPlayer * 2, 0f);
+            nextPosition += new Vector3(-offsetPlayer, offsetPlayer * 2, 0);
         if (currentPlayer == 1)
-            nextPosition += new Vector3(offsetPlayer, offsetPlayer * 2, 0f);
+            nextPosition += new Vector3(offsetPlayer, offsetPlayer * 2, 0);
         if (currentPlayer == 2)
-            nextPosition += new Vector3(-offsetPlayer, -offsetPlayer, 0f);
+            nextPosition += new Vector3(-offsetPlayer, -offsetPlayer, 0);
         if (currentPlayer == 3)
-            nextPosition += new Vector3(offsetPlayer, -offsetPlayer, 0f);
+            nextPosition += new Vector3(offsetPlayer, -offsetPlayer, 0);
     }
-    public void ThrowDice(TextMeshProUGUI number_dice)
+    public void ThrowDice()
     {
+        photonView.RPC("ThrowDicePUN", RpcTarget.All, Random.Range(1, 7));
 
+    }
+    [PunRPC]
+    void ThrowDicePUN(int randomDice)
+    {
         if (!isMoving)
         {
             currentSquare = players[currentPlayer].GetComponent<PlayerManager>().CurrentSquare;
-            dice = Random.Range(1, 7);
+            dice = randomDice;
             if (!isDice)
                 dice = defaultDice;
-            number_dice.text = $"{dice}";
+            playerUI.titleDice.text = $"{dice}";
             isActiveDice = true;
         }
+    }
+    // [PunRPC]
+    void FinishTurn()
+    {
+        currentPlayer++;
+        if (currentPlayer == numberPlayers)
+            currentPlayer = 0;
 
     }
-
+    void UpdateTurn()
+    {
+        if (Singleton.instance.playerTurn == currentPlayer)
+            playerUI.ShowDice();
+        else
+            playerUI.HideDice();
+    }
     void MoveToNextSquare()
     {
         print("move to next square");
@@ -207,39 +230,19 @@ public class BoardManager : MonoBehaviour
         currentSquare = boardSquares[currentSquare].NextSquare;
         nextPosition.x = boxes[currentSquare].transform.localPosition.x;
         nextPosition.y = boxes[currentSquare].transform.localPosition.y;
+        // nextPosition.z = players[currentPlayer].transform.localPosition.z;
         if (dice == 1)
             SetOffsetPosition();
 
     }
-    void showArrows()
-    {
-        ShowArrow(boardSquares[currentSquare].DirectionOne);
-        ShowArrow(boardSquares[currentSquare].DirectionTwo);
-    }
-    void ShowArrow(string direction)
-    {
-        switch (direction)
-        {
-            case "left": leftButton.SetActive(true); break;
-            case "right": rightButton.SetActive(true); break;
-            case "up": upButton.SetActive(true); break;
-            case "down": downButton.SetActive(true); break;
-        }
-    }
-    void HideArrows()
-    {
-        leftButton.SetActive(false);
-        rightButton.SetActive(false);
-        upButton.SetActive(false);
-        downButton.SetActive(false);
-    }
+
     public void Click(string direction)
     {
         if (direction == boardSquares[currentSquare].DirectionOne)
             boardSquares[currentSquare].SwitchToOne();
         else
             boardSquares[currentSquare].SwitchToTwo();
-        HideArrows();
+        playerUI.HideArrows();
         MoveToNextSquare();
 
     }

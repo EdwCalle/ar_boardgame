@@ -1,20 +1,18 @@
 
 using System;
 using Photon.Pun;
-using Photon.Pun.UtilityScripts;
 using Photon.Realtime;
-using TMPro;
-using UnityEngine;
 
 public class AutomaticConnection : MonoBehaviourPunCallbacks
 {
     //public string scene;
-    public TextMeshProUGUI LogMessage;
+    //  public TextMeshProUGUI LogMessage;
     private TypedLobby customLobby = new TypedLobby("customLobby", LobbyType.Default);
     void Start()
     {
         if (!PhotonNetwork.IsConnected)
         {
+            PhotonNetwork.NickName = "";
             PhotonNetwork.ConnectUsingSettings();
         }
         else
@@ -45,6 +43,8 @@ public class AutomaticConnection : MonoBehaviourPunCallbacks
     }
     public override void OnJoinedRoom()
     {
+        PhotonNetwork.NickName = "Player" + PhotonNetwork.CurrentRoom.PlayerCount;
+        Singleton.instance.playerTurn = PhotonNetwork.CurrentRoom.PlayerCount - 1;
         SendLogMessage("Entrando a la sala");
         PhotonNetwork.LoadLevel("board");
 
@@ -55,10 +55,10 @@ public class AutomaticConnection : MonoBehaviourPunCallbacks
     }
     public void SendLogMessage(String message)
     {
-        if (LogMessage != null)
-        {
-            LogMessage.text = $"Log:{message}";
-        }
+        // if (LogMessage != null)
+        // {
+        //     LogMessage.text = $"Log:{message}";
+        // }
     }
 
 

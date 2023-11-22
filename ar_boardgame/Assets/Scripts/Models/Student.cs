@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class Student
 {
     private int turn;
