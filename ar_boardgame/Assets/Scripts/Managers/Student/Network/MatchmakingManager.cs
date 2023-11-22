@@ -1,10 +1,8 @@
 
 using System.Collections.Generic;
-using Models;
 using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
-using UnityEngine;
 
 public class MatchmakingManager : MonoBehaviourPunCallbacks
 {
