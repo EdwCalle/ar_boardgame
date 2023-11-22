@@ -6,39 +6,32 @@ public class BoardManager : MonoBehaviour
 {
     // Start is called before the first frame update
     //[SerializeField]
-    public GameObject[] boxes;
-    private int currentSquare = 0;
-    //private int maxRounds = 0;
-    //private int currentRound = 0;
-    public bool isDice;
-    public int defaultDice;
-
-    bool isMoving;
-    bool idle;
-    BoardSquare[] boardSquares = new BoardSquare[56];
+    [Header("UI Componentes")]
     public GameObject leftButton;
     public GameObject rightButton;
     public GameObject upButton;
     public GameObject downButton;
-    [SerializeField] public DialogManager selectGame;
-    public float velocity;
-
-    //Animator animator;
-    Vector3 nextPosition;
-    private int dice;
-    private bool isWaitingClick;
-    private bool isActiveDice;
-
     public TextMeshProUGUI titleRound;
     public TextMeshProUGUI numberRound;
 
-    //public GameObject firstCharacter;
-
-
-    public int numberPlayers = 1;
-    public int currentPlayer = 0;
-
+    [SerializeField] public DialogManager selectGame;
     public GameObject[] players;
+    public GameObject[] boxes;
+
+    [Header("Board Funcionality")]
+    [Range(100, 500)]
+    public float velocity;
+    public bool isDice;
+    public int defaultDice;
+    public int numberPlayers = 1;
+    private int currentSquare = 0;
+    private bool isMoving;
+    BoardSquare[] boardSquares = new BoardSquare[56];
+    private Vector3 nextPosition;
+    private int dice;
+    private bool isActiveDice;
+    private int currentPlayer = 0;
+
 
 
     void Start()
@@ -60,11 +53,6 @@ public class BoardManager : MonoBehaviour
                 players[i].GetComponent<PlayerManager>().PrepareData($"Player{i}", i);
             }
         }
-
-
-
-
-
         currentSquare = Singleton.instance.currentPosition;
         if (currentSquare != 0)
             transform.localPosition = boxes[currentSquare].transform.localPosition;
@@ -203,7 +191,7 @@ public class BoardManager : MonoBehaviour
 
         print("move to next square");
         //nextPosition.z = transform.localPosition.z;
-        idle = true;
+        // idle = true;
         isMoving = true;
         currentSquare = boardSquares[currentSquare].NextSquare;
         nextPosition.x = boxes[currentSquare].transform.localPosition.x;
@@ -239,7 +227,7 @@ public class BoardManager : MonoBehaviour
             boardSquares[currentSquare].SwitchToTwo();
         HideArrows();
         MoveToNextSquare();
-        isWaitingClick = false;
+
     }
     public void GoToMinigame(int code)
     {
