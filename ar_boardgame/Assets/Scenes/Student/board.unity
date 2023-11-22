@@ -1938,7 +1938,7 @@ PrefabInstance:
     - target: {fileID: 5270876592732763944, guid: 7638ed5972147d2449267fac0ca6e74c,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -662.31
+      value: -663
       objectReference: {fileID: 0}
     - target: {fileID: 5270876592732763944, guid: 7638ed5972147d2449267fac0ca6e74c,
         type: 3}
@@ -12631,7 +12631,7 @@ PrefabInstance:
     - target: {fileID: 5270876592732763944, guid: 7638ed5972147d2449267fac0ca6e74c,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -662.31
+      value: -663
       objectReference: {fileID: 0}
     - target: {fileID: 5270876592732763944, guid: 7638ed5972147d2449267fac0ca6e74c,
         type: 3}
@@ -21416,7 +21416,7 @@ PrefabInstance:
     - target: {fileID: 5270876592732763944, guid: 7638ed5972147d2449267fac0ca6e74c,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -737.30994
+      value: -738
       objectReference: {fileID: 0}
     - target: {fileID: 5270876592732763944, guid: 7638ed5972147d2449267fac0ca6e74c,
         type: 3}
@@ -24148,8 +24148,9 @@ MonoBehaviour:
   - {fileID: 1517381264}
   velocity: 200
   isDice: 0
-  defaultDice: 3
+  defaultDice: 2
   numberPlayers: 4
+  offsetPlayer: 25
 --- !u!1001 &1622697039
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30971,7 +30972,7 @@ PrefabInstance:
     - target: {fileID: 5270876592732763944, guid: 7638ed5972147d2449267fac0ca6e74c,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -737.30994
+      value: -738
       objectReference: {fileID: 0}
     - target: {fileID: 5270876592732763944, guid: 7638ed5972147d2449267fac0ca6e74c,
         type: 3}

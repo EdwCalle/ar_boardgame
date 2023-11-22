@@ -4,17 +4,14 @@ using Models;
 using UnityEngine.SceneManagement;
 public class BoardManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    //[SerializeField]
-    [Header("UI Componentes")]
+    [Header("UI Components")]
     public GameObject leftButton;
     public GameObject rightButton;
     public GameObject upButton;
     public GameObject downButton;
     public TextMeshProUGUI titleRound;
     public TextMeshProUGUI numberRound;
-
-    [SerializeField] public DialogManager selectGame;
+    public DialogManager selectGame;
     public GameObject[] players;
     public GameObject[] boxes;
 
@@ -24,6 +21,8 @@ public class BoardManager : MonoBehaviour
     public bool isDice;
     public int defaultDice;
     public int numberPlayers = 1;
+    public float offsetPlayer = 50f;
+
     private int currentSquare = 0;
     private bool isMoving;
     BoardSquare[] boardSquares = new BoardSquare[56];
@@ -53,6 +52,8 @@ public class BoardManager : MonoBehaviour
                 players[i].GetComponent<PlayerManager>().PrepareData($"Player{i}", i);
             }
         }
+
+
         currentSquare = Singleton.instance.currentPosition;
         if (currentSquare != 0)
             transform.localPosition = boxes[currentSquare].transform.localPosition;
@@ -147,28 +148,42 @@ public class BoardManager : MonoBehaviour
                         showArrows();
                     else
                     {
+                        MoveToNextSquare();
                         //
-                        currentSquare = boardSquares[currentSquare].NextSquare;
-                        nextPosition.x = boxes[currentSquare].transform.localPosition.x;
-                        nextPosition.y = boxes[currentSquare].transform.localPosition.y;
-                        isMoving = true;
+                        // currentSquare = boardSquares[currentSquare].NextSquare;
+                        // nextPosition.x = boxes[currentSquare].transform.localPosition.x;
+                        // nextPosition.y = boxes[currentSquare].transform.localPosition.y;
+                        // isMoving = true;
+
                     }
                 }
                 else // stop moving
                 {
+
                     isMoving = false;
                     isActiveDice = false;
-                    print("al fin me toca responder");
                     players[currentPlayer].GetComponent<PlayerManager>().CurrentSquare = currentSquare;
                     currentPlayer++;
                     if (currentPlayer == numberPlayers)
                         currentPlayer = 0;
-
                     selectGame.ShowQuestion();
+
 
                 }
             }
         }
+    }
+
+    public void SetOffsetPosition()
+    {
+        if (currentPlayer == 0)
+            nextPosition += new Vector3(-offsetPlayer, offsetPlayer * 2, 0f);
+        if (currentPlayer == 1)
+            nextPosition += new Vector3(offsetPlayer, offsetPlayer * 2, 0f);
+        if (currentPlayer == 2)
+            nextPosition += new Vector3(-offsetPlayer, -offsetPlayer, 0f);
+        if (currentPlayer == 3)
+            nextPosition += new Vector3(offsetPlayer, -offsetPlayer, 0f);
     }
     public void ThrowDice(TextMeshProUGUI number_dice)
     {
@@ -180,7 +195,6 @@ public class BoardManager : MonoBehaviour
             if (!isDice)
                 dice = defaultDice;
             number_dice.text = $"{dice}";
-
             isActiveDice = true;
         }
 
@@ -188,14 +202,14 @@ public class BoardManager : MonoBehaviour
 
     void MoveToNextSquare()
     {
-
         print("move to next square");
-        //nextPosition.z = transform.localPosition.z;
-        // idle = true;
         isMoving = true;
         currentSquare = boardSquares[currentSquare].NextSquare;
         nextPosition.x = boxes[currentSquare].transform.localPosition.x;
         nextPosition.y = boxes[currentSquare].transform.localPosition.y;
+        if (dice == 1)
+            SetOffsetPosition();
+
     }
     void showArrows()
     {
