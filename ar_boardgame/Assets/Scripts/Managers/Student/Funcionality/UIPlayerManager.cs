@@ -4,76 +4,116 @@ using UnityEngine;
 using DG.Tweening;
 using System.Threading.Tasks;
 using UnityEngine.UI;
+using System;
 public class UIPlayerManager : MonoBehaviour
 {
-    [Header("Directions")]
-    public GameObject leftButton;
-    public GameObject rightButton;
-    public GameObject upButton;
-    public GameObject downButton;
+    [Serializable]
+    public class Arrows
+    {
+        public GameObject modal;
+        public GameObject leftButton;
+        public GameObject rightButton;
+        public GameObject upButton;
+        public GameObject downButton;
+    }
+    [Serializable]
+    public class MinigameInfo
+    {
+        public GameObject modal;
+        public TextMeshProUGUI MinigameTitle;
+    }
+    [Serializable]
+    public class RoundInfo
+    {
+        public TextMeshProUGUI roundTitle;
+        public TextMeshProUGUI numberRound;
+        public GameObject diceButton;
+        public TextMeshProUGUI diceTitle;
+    }
+    [Serializable]
+    public class QuestionsInfo
+    {
+        public GameObject modal;
+        public TextMeshProUGUI questionTitle;
+        public GameObject[] options;
+    }
+    [Serializable]
+    public class ResultsInfo
+    {
+        public GameObject modal;
+    }
+    public RoundInfo roundInfo;
+    //[Header("Directions")]
+    public Arrows arrows;
+    // [Header("Showing Minigame")]
+    public MinigameInfo minigameInfo;
 
-    [Header("Round Information")]
-    public TextMeshProUGUI titleRound;
-    public TextMeshProUGUI numberRound;
-    public GameObject buttonDice;
-    public TextMeshProUGUI titleDice;
+    // [Header("Round Information")]
 
-    public TextMeshProUGUI text1;
-    public TextMeshProUGUI text2;
-    public TextMeshProUGUI text3;
-    public GameObject buttons;
-    public GameObject dialogFinish;
+    //  [Header("Results")]
+    public ResultsInfo resultsInfo;
+    //  [Header("Questions")]
+    public QuestionsInfo questionsInfo;
 
-    public GameObject modalQuestion;
-    public TextMeshProUGUI question;
-    public GameObject[] options;
+    public GameObject canvasModal;
+
     // Start is called before the first frame update
     void Awake()
     {
-        HideAll();
+
+        canvasModal.SetActive(false);
+        arrows.modal.SetActive(false);
+        questionsInfo.modal.SetActive(false);
+        minigameInfo.modal.SetActive(false);
+        resultsInfo.modal.SetActive(false);
+
     }
-    public void HideAll()
+    public void HideModal(GameObject gameObject)
     {
-        buttons.SetActive(false);
-        dialogFinish.SetActive(false);
-        modalQuestion.SetActive(false);
+        canvasModal.SetActive(false);
+        gameObject.SetActive(false);
     }
-    public void SetTextButtons()
+    public void ShowModal(GameObject gameObject)
     {
-        text1.text = Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.currentRound].Minigame1.Title;
-        text2.text = Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.currentRound].Minigame2.Title;
-        text3.text = Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.currentRound].Minigame3.Title;
+        canvasModal.SetActive(true);
+        gameObject.SetActive(true);
     }
 
-    public void ShowButtons()
+    public void SetTitlteMinigame()
     {
-        HideAll();
-        buttons.SetActive(true);
+        minigameInfo.MinigameTitle.text = Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.currentRound].Minigame1.Title;
+        // text2.text = Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.currentRound].Minigame2.Title;
+        // text3.text = Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.currentRound].Minigame3.Title;
+    }
+
+    public void ShowMinigameInfo()
+    {
+        ShowModal(minigameInfo.modal);
     }
     public void ShowDice()
     {
-        buttonDice.SetActive(true);
+        roundInfo.diceButton.SetActive(true);
     }
     public void HideDice()
     {
-        buttonDice.SetActive(false);
+        roundInfo.diceButton.SetActive(false);
     }
-    public void ShowDialogFinish()
+    public void ShowResultsInfo()
     {
-        HideAll();
-        dialogFinish.SetActive(true);
+        ShowModal(resultsInfo.modal);
     }
-    public void ShowQuestion()
+    public void ShowQuestionsInfo()
     {
-        modalQuestion.SetActive(true);
+        ShowModal(questionsInfo.modal);
+
         PrepareQuestion();
     }
     public void PrepareQuestion()
     {
         // GetComponent<>().tex
         EnableOptions(true);
-        FadeIn(modalQuestion);
-        question.text = Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.currentRound].QuestionForA.Title;
+        FadeIn(questionsInfo.modal);
+        questionsInfo.questionTitle.text = Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.currentRound].QuestionForA.Title;
         SetOption(0, Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.currentRound].QuestionForA.OptionA);
         SetOption(1, Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.currentRound].QuestionForA.OptionB);
         SetOption(2, Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.currentRound].QuestionForA.OptionC);
@@ -81,7 +121,7 @@ public class UIPlayerManager : MonoBehaviour
     }
     public void SetOption(int pos, string value)
     {
-        options[pos].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = value;
+        questionsInfo.options[pos].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = value;
     }
     public void SelectOption(int value)
     {
@@ -89,13 +129,13 @@ public class UIPlayerManager : MonoBehaviour
         int solution = Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.currentRound].QuestionForA.Solution;
         if (value == solution)
         {
-            Blink(options[value], Color.green, 1f);
+            Blink(questionsInfo.options[value], Color.green, 1f);
             //correect
         }
         else
         {
-            Blink(options[value], Color.red, 1f);
-            Blink(options[solution], Color.green, 1f);
+            Blink(questionsInfo.options[value], Color.red, 1f);
+            Blink(questionsInfo.options[solution], Color.green, 1f);
         }
         // Invoke(nameof(FadeOut(modalQuestion, 1f)), 1);
         //  StartCoroutine(DelayedFunction());
@@ -105,13 +145,12 @@ public class UIPlayerManager : MonoBehaviour
 
 
     }
-
     void EnableOptions(bool value)
     {
-        options[0].GetComponent<Button>().interactable = value;
-        options[1].GetComponent<Button>().interactable = value;
-        options[2].GetComponent<Button>().interactable = value;
-        options[3].GetComponent<Button>().interactable = value;
+        questionsInfo.options[0].GetComponent<Button>().interactable = value;
+        questionsInfo.options[1].GetComponent<Button>().interactable = value;
+        questionsInfo.options[2].GetComponent<Button>().interactable = value;
+        questionsInfo.options[3].GetComponent<Button>().interactable = value;
     }
     void Blink(GameObject gameObject, Color targetColor, float duration)
     {
@@ -122,7 +161,8 @@ public class UIPlayerManager : MonoBehaviour
             .OnComplete(() =>
             {
                 myRawImage.color = Color.white;
-                modalQuestion.SetActive(false);
+                HideModal(questionsInfo.modal);
+                //questionsInfo.modal.SetActive(false);
 
             }); // Disable the GameObject after the blinking effect is complete
     }
@@ -162,41 +202,30 @@ public class UIPlayerManager : MonoBehaviour
     }
     public void ShowArrows(string directionOne, string directionTwo)
     {
-        ShowArrow(directionOne);
-        ShowArrow(directionTwo);
-    }
 
-    void ShowArrow(string direction)
-    {
-        switch (direction)
-        {
-            case "left": leftButton.SetActive(true); break;
-            case "right": rightButton.SetActive(true); break;
-            case "up": upButton.SetActive(true); break;
-            case "down": downButton.SetActive(true); break;
-        }
+        ShowModal(arrows.modal);
+        SetActiveArrow(arrows.leftButton, directionOne, directionTwo, "left");
+        SetActiveArrow(arrows.rightButton, directionOne, directionTwo, "right");
+        SetActiveArrow(arrows.upButton, directionOne, directionTwo, "up");
+        SetActiveArrow(arrows.downButton, directionOne, directionTwo, "down");
     }
     public void HideArrows()
     {
-        leftButton.SetActive(false);
-        rightButton.SetActive(false);
-        upButton.SetActive(false);
-        downButton.SetActive(false);
+        HideModal(arrows.modal);
     }
-    // public void ShowDiceCurrentPlayer()
-    // {
-    //     if (Singleton.instance.playerTurn == currentPlayer)
-    //         playerUI.ShowDice();
-    //     else
-    //         playerUI.HideDice();
-    // }
-
-
+    void SetActiveArrow(GameObject arrow, string directionOne, string directionTwo, string direction)
+    {
+        if (directionOne == direction || directionTwo == direction)
+            arrow.SetActive(true);
+        else
+            arrow.SetActive(false);
+    }
 
     // Update is called once per frame
     void Update()
     {
 
     }
+
 
 }

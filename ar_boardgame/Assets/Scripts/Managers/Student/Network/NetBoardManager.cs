@@ -36,7 +36,7 @@ public class NetBoardManager : MonoBehaviour
     void Update()
     {
         if (PhotonNetwork.IsConnected && PhotonNetwork.CurrentRoom != null)
-            SendLogMessage($"Number players:{PhotonNetwork.CurrentRoom.Players.Count} RoomName:{PhotonNetwork.CurrentRoom.Name} Nickname:{PhotonNetwork.LocalPlayer.NickName} LocalPlayer{PhotonNetwork.CurrentRoom.PlayerCount}");
+            SendLogMessage($"Number players:{PhotonNetwork.CurrentRoom.Players.Count} RoomName:{PhotonNetwork.CurrentRoom.Name} Nickname:{PhotonNetwork.LocalPlayer.NickName} LocalPlayer:{PhotonNetwork.CurrentRoom.PlayerCount}");
 
     }
 }

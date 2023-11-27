@@ -12,7 +12,7 @@ public class BoardManager : MonoBehaviourPunCallbacks
     [Header("Board Funcionality/offline")]
     [Range(100, 500)]
     public float velocity;
-    public bool isDice;
+    public bool isDefaultDice;
     public int defaultDice;
     public int numberPlayers = 1;
     public float offsetPlayer = 50f;
@@ -40,8 +40,6 @@ public class BoardManager : MonoBehaviourPunCallbacks
             isMoving = false;
             // preparing boardsquare order
             PrepareBoard();
-            // it hides arrows which are used when the player has to change map's direction
-            playerUI.HideArrows();
 
             numberPlayers = Singleton.instance.numberPlayers;
 
@@ -69,15 +67,15 @@ public class BoardManager : MonoBehaviourPunCallbacks
             {
 
                 // show title round
-                playerUI.titleRound.text = Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.currentRound].Title;
-                playerUI.numberRound.text = $"Número de ronda: {Singleton.instance.currentRound}";
+                playerUI.roundInfo.roundTitle.text = Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.currentRound].Title;
+                playerUI.roundInfo.numberRound.text = $"Número de ronda: {Singleton.instance.currentRound}";
                 // show new dialog
 
 
             }
             else
             {
-                playerUI.ShowDialogFinish();
+                playerUI.ShowResultsInfo();
                 // show dialog Finish
             }
         }
@@ -171,7 +169,7 @@ public class BoardManager : MonoBehaviourPunCallbacks
                     players[currentPlayer].GetComponent<PlayerManager>().CurrentSquare = currentSquare;
                     FinishTurn();
                     UpdateTurn();
-                    playerUI.ShowQuestion();
+                    playerUI.ShowQuestionsInfo();
 
 
                 }
@@ -202,9 +200,9 @@ public class BoardManager : MonoBehaviourPunCallbacks
         {
             currentSquare = players[currentPlayer].GetComponent<PlayerManager>().CurrentSquare;
             dice = randomDice;
-            if (!isDice)
+            if (isDefaultDice)
                 dice = defaultDice;
-            playerUI.titleDice.text = $"{dice}";
+            playerUI.roundInfo.diceTitle.text = $"{dice}";
             isActiveDice = true;
         }
     }
@@ -218,11 +216,16 @@ public class BoardManager : MonoBehaviourPunCallbacks
     }
     void UpdateTurn()
     {
-        if (Singleton.instance.playerTurn == currentPlayer)
+        if (IsMyTurn())
             playerUI.ShowDice();
         else
             playerUI.HideDice();
     }
+    bool IsMyTurn()
+    {
+        return Singleton.instance.playerTurn == currentPlayer;
+    }
+
     void MoveToNextSquare()
     {
         print("move to next square");
