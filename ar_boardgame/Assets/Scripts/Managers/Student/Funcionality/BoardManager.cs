@@ -33,7 +33,7 @@ public class BoardManager : MonoBehaviourPunCallbacks
         {
             // if (photonView.IsMine)
 
-            UpdateTurn();
+            ChangeTurn();
 
             // Singleton.instance
             //Debug.Log($"\npos FirstGame:{boxes[0].transform.localPosition}\npos player:{transform.localPosition}");
@@ -70,8 +70,6 @@ public class BoardManager : MonoBehaviourPunCallbacks
                 playerUI.roundInfo.roundTitle.text = Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.currentRound].Title;
                 playerUI.roundInfo.numberRound.text = $"Número de ronda: {Singleton.instance.currentRound}";
                 // show new dialog
-
-
             }
             else
             {
@@ -81,14 +79,12 @@ public class BoardManager : MonoBehaviourPunCallbacks
         }
 
     }
-
     // Update is called once per frame
     void Update()
     {
 
 
     }
-
     void PrepareBoard()
     {
         // preparing boardsquare order
@@ -127,8 +123,6 @@ public class BoardManager : MonoBehaviourPunCallbacks
     {
         MoveCurrentPlayer();
     }
-
-
     void MoveCurrentPlayer()
     {
         if (isMoving)
@@ -149,29 +143,25 @@ public class BoardManager : MonoBehaviourPunCallbacks
                 {
                     // ask for if there are directions, stop movments and stop asking for current LocalPostion
                     if (boardSquares[currentSquare].IsSquarePoint)
-                        playerUI.ShowArrows(boardSquares[currentSquare].DirectionOne, boardSquares[currentSquare].DirectionTwo);
+                    {
+                        if (IsMyTurn)
+                            playerUI.ShowArrows(boardSquares[currentSquare].DirectionOne, boardSquares[currentSquare].DirectionTwo);
+                    }
                     else
                     {
-                        MoveToNextSquare();
+                        SetNextSquare();
                         //
                         // currentSquare = boardSquares[currentSquare].NextSquare;
                         // nextPosition.x = boxes[currentSquare].transform.localPosition.x;
                         // nextPosition.y = boxes[currentSquare].transform.localPosition.y;
                         // isMoving = true;
-
                     }
                 }
                 else // stop moving
                 {
-
-                    isMoving = false;
-                    isActiveDice = false;
-                    players[currentPlayer].GetComponent<PlayerManager>().CurrentSquare = currentSquare;
-                    FinishTurn();
-                    UpdateTurn();
-                    playerUI.ShowQuestionsInfo();
-
-
+                    isMoving = false;       //this stop moving when player go to their last square
+                    isActiveDice = false; // this used for dont loop everytime when moving is false
+                    playerUI.ShowQuestionsInfo(IsMyTurn);
                 }
             }
         }
@@ -190,11 +180,10 @@ public class BoardManager : MonoBehaviourPunCallbacks
     }
     public void ThrowDice()
     {
-        photonView.RPC("ThrowDicePUN", RpcTarget.All, Random.Range(1, 7));
-
+        photonView.RPC("ThrowDiceRPC", RpcTarget.All, Random.Range(1, 7));
     }
     [PunRPC]
-    void ThrowDicePUN(int randomDice)
+    void ThrowDiceRPC(int randomDice)
     {
         if (!isMoving)
         {
@@ -208,46 +197,59 @@ public class BoardManager : MonoBehaviourPunCallbacks
     }
     // [PunRPC]
     void FinishTurn()
-    {
+    {   //saving current position current player
+        players[currentPlayer].GetComponent<PlayerManager>().CurrentSquare = currentSquare;
+        // changing player
         currentPlayer++;
+        // this verifys if the current player is the last one
         if (currentPlayer == numberPlayers)
             currentPlayer = 0;
-
     }
-    void UpdateTurn()
+    void ChangeTurn()
     {
-        if (IsMyTurn())
+        if (IsMyTurn)
             playerUI.ShowDice();
         else
             playerUI.HideDice();
     }
-    bool IsMyTurn()
+    bool IsMyTurn => Singleton.instance.playerTurn == currentPlayer;
+    void SetNextSquare()
     {
-        return Singleton.instance.playerTurn == currentPlayer;
-    }
+        print("Setting new square....");
 
-    void MoveToNextSquare()
-    {
-        print("move to next square");
-        isMoving = true;
         currentSquare = boardSquares[currentSquare].NextSquare;
         nextPosition.x = boxes[currentSquare].transform.localPosition.x;
         nextPosition.y = boxes[currentSquare].transform.localPosition.y;
         // nextPosition.z = players[currentPlayer].transform.localPosition.z;
+        isMoving = true;
+        // put player in his respective corner when go to last box(square)
         if (dice == 1)
             SetOffsetPosition();
-
     }
-
-    public void Click(string direction)
+    public void SelectOption(int value)
+    {
+        photonView.RPC("SelectOptionRPC", RpcTarget.All, value);
+    }
+    [PunRPC]
+    public void SelectOptionRPC(int value)
+    {
+        playerUI.SelectOption(value);
+        FinishTurn();
+        ChangeTurn();
+    }
+    public void ChangeDirection(string direction)
+    {
+        photonView.RPC("ChangeDirectionRPC", RpcTarget.All, direction);
+    }
+    [PunRPC]
+    public void ChangeDirectionRPC(string direction)
     {
         if (direction == boardSquares[currentSquare].DirectionOne)
             boardSquares[currentSquare].SwitchToOne();
         else
             boardSquares[currentSquare].SwitchToTwo();
         playerUI.HideArrows();
-        MoveToNextSquare();
-
+        SetNextSquare();
     }
     public void GoToMinigame(int code)
     {

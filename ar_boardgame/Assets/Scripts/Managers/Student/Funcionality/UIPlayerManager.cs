@@ -102,16 +102,15 @@ public class UIPlayerManager : MonoBehaviour
     {
         ShowModal(resultsInfo.modal);
     }
-    public void ShowQuestionsInfo()
+    public void ShowQuestionsInfo(bool IsMyTurn)
     {
         ShowModal(questionsInfo.modal);
-
-        PrepareQuestion();
+        PrepareQuestion(IsMyTurn);
     }
-    public void PrepareQuestion()
+    public void PrepareQuestion(bool IsMyTurn)
     {
         // GetComponent<>().tex
-        EnableOptions(true);
+        EnableOptions(IsMyTurn);
         FadeIn(questionsInfo.modal);
         questionsInfo.questionTitle.text = Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.currentRound].QuestionForA.Title;
         SetOption(0, Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.currentRound].QuestionForA.OptionA);

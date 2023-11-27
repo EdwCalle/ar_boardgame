@@ -206,8 +206,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1622390970}
-        m_TargetAssemblyTypeName: DialogManager, Assembly-CSharp
+      - m_Target: {fileID: 1622390972}
+        m_TargetAssemblyTypeName: BoardManager, Assembly-CSharp
         m_MethodName: SelectOption
         m_Mode: 3
         m_Arguments:
@@ -5876,8 +5876,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1622390970}
-        m_TargetAssemblyTypeName: DialogManager, Assembly-CSharp
+      - m_Target: {fileID: 1622390972}
+        m_TargetAssemblyTypeName: BoardManager, Assembly-CSharp
         m_MethodName: SelectOption
         m_Mode: 3
         m_Arguments:
@@ -9724,7 +9724,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1622390972}
         m_TargetAssemblyTypeName: BoardManager, Assembly-CSharp
-        m_MethodName: Click
+        m_MethodName: ChangeDirection
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12087,7 +12087,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1622390972}
         m_TargetAssemblyTypeName: BoardManager, Assembly-CSharp
-        m_MethodName: Click
+        m_MethodName: ChangeDirection
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -14304,7 +14304,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1622390972}
         m_TargetAssemblyTypeName: BoardManager, Assembly-CSharp
-        m_MethodName: Click
+        m_MethodName: ChangeDirection
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -14455,7 +14455,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1622390972}
         m_TargetAssemblyTypeName: BoardManager, Assembly-CSharp
-        m_MethodName: Click
+        m_MethodName: ChangeDirection
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -20803,8 +20803,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1622390970}
-        m_TargetAssemblyTypeName: DialogManager, Assembly-CSharp
+      - m_Target: {fileID: 1622390972}
+        m_TargetAssemblyTypeName: BoardManager, Assembly-CSharp
         m_MethodName: SelectOption
         m_Mode: 3
         m_Arguments:
@@ -30245,8 +30245,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1622390970}
-        m_TargetAssemblyTypeName: DialogManager, Assembly-CSharp
+      - m_Target: {fileID: 1622390972}
+        m_TargetAssemblyTypeName: BoardManager, Assembly-CSharp
         m_MethodName: SelectOption
         m_Mode: 3
         m_Arguments:

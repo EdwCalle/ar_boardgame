@@ -40,6 +40,10 @@ MonoBehaviour:
   - Fire
   - RespawnSpaceship
   - ThrowDicePUN
+  - MoveToNextSquare
+  - SelectOptionRPC
+  - ChangeDirectionRPC
+  - ThrowDiceRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
