@@ -57,9 +57,11 @@ public class UIPlayerManager : MonoBehaviour
 
     public GameObject canvasModal;
 
+
     // Start is called before the first frame update
     void Awake()
     {
+
 
         canvasModal.SetActive(false);
         arrows.modal.SetActive(false);
@@ -81,7 +83,7 @@ public class UIPlayerManager : MonoBehaviour
 
     public void SetTitlteMinigame()
     {
-        minigameInfo.MinigameTitle.text = Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.currentRound].Minigame1.Title;
+        minigameInfo.MinigameTitle.text = Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.CurrentRound].Minigame1.Title;
         // text2.text = Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.currentRound].Minigame2.Title;
         // text3.text = Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.currentRound].Minigame3.Title;
     }
@@ -112,11 +114,16 @@ public class UIPlayerManager : MonoBehaviour
         // GetComponent<>().tex
         EnableOptions(IsMyTurn);
         FadeIn(questionsInfo.modal);
-        questionsInfo.questionTitle.text = Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.currentRound].QuestionForA.Title;
-        SetOption(0, Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.currentRound].QuestionForA.OptionA);
-        SetOption(1, Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.currentRound].QuestionForA.OptionB);
-        SetOption(2, Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.currentRound].QuestionForA.OptionC);
-        SetOption(3, Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.currentRound].QuestionForA.OptionD);
+        SetQuestion(Singleton.instance.CurrentTurn);
+    }
+    public void SetQuestion(int currentTurn)
+    {
+        questionsInfo.questionTitle.text = Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.CurrentRound].Questions[currentTurn].Title;
+        SetOption(0, Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.CurrentRound].Questions[currentTurn].OptionA);
+        SetOption(1, Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.CurrentRound].Questions[currentTurn].OptionB);
+        SetOption(2, Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.CurrentRound].Questions[currentTurn].OptionC);
+        SetOption(3, Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.CurrentRound].Questions[currentTurn].OptionD);
+
     }
     public void SetOption(int pos, string value)
     {
@@ -125,7 +132,7 @@ public class UIPlayerManager : MonoBehaviour
     public void SelectOption(int value)
     {
         EnableOptions(false);
-        int solution = Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.currentRound].QuestionForA.Solution;
+        int solution = Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.CurrentRound].Questions[Singleton.instance.CurrentTurn].Solution;
         if (value == solution)
         {
             Blink(questionsInfo.options[value], Color.green, 1f);

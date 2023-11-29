@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Models;
 using UnityEngine;
@@ -7,8 +8,7 @@ public class Singleton : MonoBehaviour
     public static Singleton instance;
 
     [HideInInspector]
-    public int currentPosition = 0;
-    public int currentRound = 0;
+    // public int currentPosition = 0;
     public Sprite firstSpritePlayer;
     [HideInInspector]
     public Minigame currentMinigame = new Minigame();
@@ -23,9 +23,23 @@ public class Singleton : MonoBehaviour
     //public List<Round> roundsT = new List<Round>();
 
 
-    //online
-    public int numberPlayers = 4;
-    public int playerTurn = 0;
+    [SerializeField]
+    private int numberPlayers = 4;
+    [SerializeField]
+    private int myTurn = 0;
+    [SerializeField]
+    private int currentRound = 0;
+    [SerializeField]
+    private int currentBox = 0;
+    [SerializeField]
+    private int currentTurn = 0;
+
+    public int NumberPlayers { get => numberPlayers; set => numberPlayers = value; }
+    public int MyTurn { get => myTurn; set => myTurn = value; }
+    public int CurrentRound { get => currentRound; set => currentRound = value; }
+    public int CurrentBox { get => currentBox; set => currentBox = value; }
+    public int CurrentTurn { get => currentTurn; set => currentTurn = value; }
+
     private void Awake()
     {
         CreateSingleton();
@@ -52,12 +66,12 @@ public class Singleton : MonoBehaviour
         {
             Id = 1,
             Title = "Tema 1: Órganos del Cuerpo Humano",
-            QuestionForA = new Question("¿Cuál de las siguientes opciones es una parte del cuerpo humano?", "gato", "perro", "cerebro", "camiseta", 2),
-            QuestionForB = new Question("¿Cuál de las siguientes opciones es una parte del cuerpo humano?", "árbol", "manzana", "cerebro", "garras", 2),
-            QuestionForC = new Question("¿Cuál de las siguientes opciones es una parte del cuerpo humano?", "brazo", "perro", "pata", "cajón", 2),
-            QuestionForD = new Question("¿Cuál de las siguientes opciones es una parte del cuerpo humano?", "pierna", "zapatos", "camiseta", "garra", 0),
             NumberRound = 1
         };
+        exampleRound.Questions.Add(new Question("¿Cuál de las siguientes opciones es una parte del cuerpo humano?", "gato", "perro", "cerebro", "camiseta", 2));
+        exampleRound.Questions.Add(new Question("¿Cuál de las siguientes opciones es una parte del cuerpo humano?", "árbol", "manzana", "cerebro", "garras", 2));
+        exampleRound.Questions.Add(new Question("¿Cuál de las siguientes opciones es una parte del cuerpo humano?", "brazo", "perro", "pata", "cajón", 2));
+        exampleRound.Questions.Add(new Question("¿Cuál de las siguientes opciones es una parte del cuerpo humano?", "pierna", "zapatos", "camiseta", "garra", 0));
         LoadMinigame1(exampleRound);
         LoadMinigame2(exampleRound);
         LoadMinigame3(exampleRound);
@@ -66,17 +80,19 @@ public class Singleton : MonoBehaviour
         {
             Id = 2,
             Title = "Tema 2: Cuerpo saludable",
-            QuestionForA = new Question("¿Cuál de las siguientes opciones es un carbohidrato?", "cereal", "hamburguesa", "manzana", "cabeza", 0),
-            QuestionForB = new Question("¿Cuál de las siguientes opciones es un carbohidrato?", "pan", "lechuga", "papas fritas", "vino", 0),
-            QuestionForC = new Question("¿Cuál de las siguientes opciones es una fruta?", "manzana", "perro", "pata", "cajón", 0),
-            QuestionForD = new Question("¿Cuál de las siguientes opciones es una fruta?", "pan", "hamburguesa", "sandia", "queso", 2),
+            // QuestionForA = new Question("¿Cuál de las siguientes opciones es un carbohidrato?", "cereal", "hamburguesa", "manzana", "cabeza", 0),
+            // QuestionForB = new Question("¿Cuál de las siguientes opciones es un carbohidrato?", "pan", "lechuga", "papas fritas", "vino", 0),
+            // QuestionForC = new Question("¿Cuál de las siguientes opciones es una fruta?", "manzana", "perro", "pata", "cajón", 0),
+            // QuestionForD = new Question("¿Cuál de las siguientes opciones es una fruta?", "pan", "hamburguesa", "sandia", "queso", 2),
             NumberRound = 2
         };
-        exampleRound = new Round(2, "Unidad 2: El ciclo de vida la planta", 2);
+        exampleRound.Questions.Add(new Question("¿Cuál de las siguientes opciones es un carbohidrato?", "cereal", "hamburguesa", "manzana", "cabeza", 0));
+        exampleRound.Questions.Add(new Question("¿Cuál de las siguientes opciones es un carbohidrato?", "pan", "lechuga", "papas fritas", "vino", 0));
+        exampleRound.Questions.Add(new Question("¿Cuál de las siguientes opciones es una fruta?", "manzana", "perro", "pata", "cajón", 0));
+        exampleRound.Questions.Add(new Question("¿Cuál de las siguientes opciones es una fruta?", "pan", "hamburguesa", "sandia", "queso", 2));
         LoadMinigame1(exampleRound);
         LoadMinigame2(exampleRound);
         LoadMinigame3(exampleRound);
-
         currentGeneralGame.Rounds.Add(exampleRound);
         // exampleRound = new Round(3, "Unidad 3: Tipos de plantas", 3);
         //currentGeneralGame.Rounds.Add(exampleRound);
@@ -123,15 +139,15 @@ public class Singleton : MonoBehaviour
     {
         if (level == 1)
 
-            currentMinigame = currentGeneralGame.Rounds[currentRound].Minigame1;
+            currentMinigame = currentGeneralGame.Rounds[CurrentRound].Minigame1;
 
         if (level == 2)
 
-            currentMinigame = currentGeneralGame.Rounds[currentRound].Minigame2;
+            currentMinigame = currentGeneralGame.Rounds[CurrentRound].Minigame2;
 
         if (level == 3)
 
-            currentMinigame = currentGeneralGame.Rounds[currentRound].Minigame3;
+            currentMinigame = currentGeneralGame.Rounds[CurrentRound].Minigame3;
 
     }
     public void LoadMinigame1(Round round)

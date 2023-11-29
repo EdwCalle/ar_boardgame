@@ -26,9 +26,9 @@ public class BoardManager : MonoBehaviourPunCallbacks
     private int currentPlayer = 0;
 
 
-
     void Start()
     {
+
         if (PhotonNetwork.IsConnected && PhotonNetwork.CurrentRoom != null)
         {
             // if (photonView.IsMine)
@@ -41,7 +41,7 @@ public class BoardManager : MonoBehaviourPunCallbacks
             // preparing boardsquare order
             PrepareBoard();
 
-            numberPlayers = Singleton.instance.numberPlayers;
+            numberPlayers = Singleton.instance.NumberPlayers;
 
             for (int i = 0; i < 4; i++)
             {
@@ -55,7 +55,7 @@ public class BoardManager : MonoBehaviourPunCallbacks
             }
 
 
-            currentSquare = Singleton.instance.currentPosition;
+            currentSquare = Singleton.instance.CurrentRound;
             if (currentSquare != 0)
                 transform.localPosition = boxes[currentSquare].transform.localPosition;
 
@@ -63,12 +63,12 @@ public class BoardManager : MonoBehaviourPunCallbacks
             // GetComponent<SpriteRenderer>().sprite = Singleton.instance.firstSpritePlayer;
 
             //
-            if (Singleton.instance.currentGeneralGame.Rounds.Count != Singleton.instance.currentRound)
+            if (Singleton.instance.currentGeneralGame.Rounds.Count != Singleton.instance.CurrentRound)
             {
 
                 // show title round
-                playerUI.roundInfo.roundTitle.text = Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.currentRound].Title;
-                playerUI.roundInfo.numberRound.text = $"Número de ronda: {Singleton.instance.currentRound}";
+                playerUI.roundInfo.roundTitle.text = Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.CurrentRound].Title;
+                playerUI.roundInfo.numberRound.text = $"Número de ronda: {Singleton.instance.CurrentRound}";
                 // show new dialog
             }
             else
@@ -127,8 +127,8 @@ public class BoardManager : MonoBehaviourPunCallbacks
     {
         if (isMoving)
         {
-            players[currentPlayer].transform.localPosition = Vector3.MoveTowards(players[currentPlayer].transform.localPosition, nextPosition, Time.deltaTime * velocity);
-            if (players[currentPlayer].transform.localPosition.Equals(nextPosition))
+            players[CurrentPlayer].transform.localPosition = Vector3.MoveTowards(players[CurrentPlayer].transform.localPosition, nextPosition, Time.deltaTime * velocity);
+            if (players[CurrentPlayer].transform.localPosition.Equals(nextPosition))
             {
                 isMoving = false;
                 dice--;
@@ -169,13 +169,13 @@ public class BoardManager : MonoBehaviourPunCallbacks
 
     public void SetOffsetPosition()
     {
-        if (currentPlayer == 0)
+        if (CurrentPlayer == 0)
             nextPosition += new Vector3(-offsetPlayer, offsetPlayer * 2, 0);
-        if (currentPlayer == 1)
+        if (CurrentPlayer == 1)
             nextPosition += new Vector3(offsetPlayer, offsetPlayer * 2, 0);
-        if (currentPlayer == 2)
+        if (CurrentPlayer == 2)
             nextPosition += new Vector3(-offsetPlayer, -offsetPlayer, 0);
-        if (currentPlayer == 3)
+        if (CurrentPlayer == 3)
             nextPosition += new Vector3(offsetPlayer, -offsetPlayer, 0);
     }
     public void ThrowDice()
@@ -187,7 +187,7 @@ public class BoardManager : MonoBehaviourPunCallbacks
     {
         if (!isMoving)
         {
-            currentSquare = players[currentPlayer].GetComponent<PlayerManager>().CurrentSquare;
+            currentSquare = players[CurrentPlayer].GetComponent<PlayerManager>().CurrentSquare;
             dice = randomDice;
             if (isDefaultDice)
                 dice = defaultDice;
@@ -198,12 +198,14 @@ public class BoardManager : MonoBehaviourPunCallbacks
     // [PunRPC]
     void FinishTurn()
     {   //saving current position current player
-        players[currentPlayer].GetComponent<PlayerManager>().CurrentSquare = currentSquare;
+        players[CurrentPlayer].GetComponent<PlayerManager>().CurrentSquare = currentSquare;
         // changing player
-        currentPlayer++;
+        CurrentPlayer++;
         // this verifys if the current player is the last one
-        if (currentPlayer == numberPlayers)
-            currentPlayer = 0;
+        if (CurrentPlayer == numberPlayers)
+            CurrentPlayer = 0;
+
+
     }
     void ChangeTurn()
     {
@@ -212,7 +214,6 @@ public class BoardManager : MonoBehaviourPunCallbacks
         else
             playerUI.HideDice();
     }
-    bool IsMyTurn => Singleton.instance.playerTurn == currentPlayer;
     void SetNextSquare()
     {
         print("Setting new square....");
@@ -253,8 +254,16 @@ public class BoardManager : MonoBehaviourPunCallbacks
     }
     public void GoToMinigame(int code)
     {
-        Singleton.instance.currentPosition = currentSquare;
+        Singleton.instance.CurrentBox = currentSquare;
         Singleton.instance.SetMinigame(code);
         SceneManager.LoadScene("minigames");
+    }
+    bool IsMyTurn => Singleton.instance.MyTurn == CurrentPlayer;
+    public int CurrentPlayer { get => currentPlayer; set => currentPlayer = GetValue(value); }
+
+    private static int GetValue(int value)
+    {
+        Singleton.instance.CurrentTurn = value;
+        return value;
     }
 }

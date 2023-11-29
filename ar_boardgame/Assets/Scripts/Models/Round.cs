@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Models
 {
     public class Round
@@ -9,10 +11,7 @@ namespace Models
         private Minigame minigame2;
         private Minigame minigame3;
         private Minigame finalMinigame;
-        private Question questionForA;
-        private Question questionForB;
-        private Question questionForC;
-        private Question questionForD;
+        private List<Question> questions = new();
 
 
         public Round(int id, string title, int numberRound)
@@ -32,11 +31,7 @@ namespace Models
         public Minigame Minigame2 { get => minigame2; set => minigame2 = value; }
         public Minigame Minigame3 { get => minigame3; set => minigame3 = value; }
         public Minigame FinalMinigame { get => finalMinigame; set => finalMinigame = value; }
-        public Question QuestionForA { get => questionForA; set => questionForA = value; }
-        public Question QuestionForB { get => questionForB; set => questionForB = value; }
-        public Question QuestionForC { get => questionForC; set => questionForC = value; }
-        public Question QuestionForD { get => questionForD; set => questionForD = value; }
-
+        public List<Question> Questions { get => questions; set => questions = value; }
         public override string ToString()
         {
             return $"id:{id}, title:{Title}, NumberRound:{NumberRound},Minigame1:{Minigame1} ";

@@ -44,7 +44,7 @@ public class AutomaticConnection : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         PhotonNetwork.NickName = "Player" + PhotonNetwork.CurrentRoom.PlayerCount;
-        Singleton.instance.playerTurn = PhotonNetwork.CurrentRoom.PlayerCount - 1;
+        Singleton.instance.MyTurn = PhotonNetwork.CurrentRoom.PlayerCount - 1;
         SendLogMessage("Entrando a la sala");
         PhotonNetwork.LoadLevel("board");
 
