@@ -1,9 +1,7 @@
 using UnityEngine;
 using Models;
-using UnityEngine.SceneManagement;
 using Photon.Pun;
 using System.Threading.Tasks;
-using TMPro;
 public class BoardManager : MonoBehaviourPunCallbacks
 {
     [Header("Board Components")]
@@ -20,53 +18,23 @@ public class BoardManager : MonoBehaviourPunCallbacks
     public float offsetPlayer = 50f;
 
     private int currentSquare = 0;
-    private bool isMoving;
+    private bool isMoving = false;
     BoardSquare[] boardSquares = new BoardSquare[56];
     private Vector3 nextPosition;
     private int dice;
     private bool isActiveDice;
     private int currentPlayer = 0;
 
-    //testing
-    // float countdownTimer = 120;
-    // bool countdownActive = true;
-    // public TextMeshProUGUI timer;
     void Start()
     {
-
         if (PhotonNetwork.IsConnected && PhotonNetwork.CurrentRoom != null)
         {
-            // if (photonView.IsMine)
+            // for sync scenes to other players
             PhotonNetwork.AutomaticallySyncScene = true;
-            ChangeTurn();
-
-            // Singleton.instance
-            //Debug.Log($"\npos FirstGame:{boxes[0].transform.localPosition}\npos player:{transform.localPosition}");
-            isMoving = false;
+            //ChangeTurn();
             // preparing boardsquare order
-            PrepareBoard();
-
-            numberPlayers = Singleton.instance.NumberPlayers;
-
-            for (int i = 0; i < 4; i++)
-            {
-
-                if (i > numberPlayers - 1)
-                    players[i].SetActive(false);
-                else
-                {
-                    players[i].GetComponent<PlayerManager>().PrepareData($"Player{i}", i);
-                }
-            }
-
-
-            currentSquare = Singleton.instance.CurrentBox;
-            if (currentSquare != 0)
-                transform.localPosition = boxes[currentSquare].transform.localPosition;
-
-
-            // GetComponent<SpriteRenderer>().sprite = Singleton.instance.firstSpritePlayer;
-
+            PrepareBoxes();
+            PreparePlayers();
             //
             if (Singleton.instance.currentGeneralGame.Rounds.Count != Singleton.instance.CurrentRound)
             {
@@ -84,47 +52,29 @@ public class BoardManager : MonoBehaviourPunCallbacks
         }
 
     }
-    // Update is called once per frame
-    // void Update()
-    // {
-    //     if (photonView.IsMine)
-    //     {
-    //         if (countdownActive)
-    //         {
-    //             countdownTimer -= Time.deltaTime;
-    //             // timer.text = "timer:" + countdownTimer;
-    //             // Synchronize the countdown timer across the network
-    //             photonView.RPC("SyncCountdownTimerRPC", RpcTarget.OthersBuffered, countdownTimer);
-    //         }
+    void PreparePlayers()
+    {
+        //get number players
+        numberPlayers = Singleton.instance.NumberPlayers;
+        for (int i = 0; i < 4; i++)//iterate 4 player
+        {
+            if (i < numberPlayers)  // if local players are the numberplayer
+            {
+                int playerBox = Singleton.instance.CurrentBox[i];
+                if (playerBox != 0)// set to their postion when restart scene
+                {
+                    players[i].transform.localPosition = boxes[playerBox].transform.localPosition;
+                    SetOffsetPosition(i, players[i].transform.localPosition);
+                }
 
-    //         if (countdownTimer <= 0f)
-    //         {
-    //             countdownTimer = 0f;
-    //             countdownActive = false;
-
-    //             // Do something when the countdown reaches zero
-    //             Debug.Log("Countdown reached zero!");
-    //         }
-    //     }
-    //     else
-    //     {
-    //         // Display the synchronized countdown timer for remote players
-    //         // You may want to interpolate or predict the timer value for smoother visuals
-    //         // For simplicity, this example directly sets the timer value
-    //         countdownTimer = Mathf.Max(countdownTimer, 0f);
-    //     }
-
-    // }
-    // [PunRPC]
-    // void SyncCountdownTimerRPC(float newTimerValue)
-    // {
-    //     timer.text = "timer:" + newTimerValue;
-    //     // Update the countdown timer value for remote players
-    //     // countdownTimer = newTimerValue;
-    // }
-
-
-    void PrepareBoard()
+                players[i].GetComponent<PlayerManager>().PrepareData($"Player{i}", i); // set name to players sprite
+            }
+            else
+                players[i].SetActive(false);
+        }
+        currentSquare = Singleton.instance.CurrentBox[0]; // set position to player one 
+    }
+    void PrepareBoxes()
     {
         // preparing boardsquare order
         // set next direction of a boardsquare
@@ -206,15 +156,15 @@ public class BoardManager : MonoBehaviourPunCallbacks
         }
     }
 
-    public void SetOffsetPosition()
+    public void SetOffsetPosition(int currentPlayer, Vector3 nextPosition)
     {
-        if (CurrentPlayer == 0)
+        if (currentPlayer == 0)
             nextPosition += new Vector3(-offsetPlayer, offsetPlayer * 2, 0);
-        if (CurrentPlayer == 1)
+        if (currentPlayer == 1)
             nextPosition += new Vector3(offsetPlayer, offsetPlayer * 2, 0);
-        if (CurrentPlayer == 2)
+        if (currentPlayer == 2)
             nextPosition += new Vector3(-offsetPlayer, -offsetPlayer, 0);
-        if (CurrentPlayer == 3)
+        if (currentPlayer == 3)
             nextPosition += new Vector3(offsetPlayer, -offsetPlayer, 0);
     }
     public void ThrowDice()
@@ -227,7 +177,7 @@ public class BoardManager : MonoBehaviourPunCallbacks
     {
         if (!isMoving)
         {
-            currentSquare = players[CurrentPlayer].GetComponent<PlayerManager>().CurrentSquare;
+            currentSquare = Singleton.instance.CurrentBox[currentPlayer];// players[CurrentPlayer].GetComponent<PlayerManager>().CurrentSquare;
             dice = randomDice;
             if (isDefaultDice)
                 dice = defaultDice;
@@ -238,13 +188,13 @@ public class BoardManager : MonoBehaviourPunCallbacks
     // [PunRPC]
     async void FinishTurn()
     {   //saving current position current player
-        players[CurrentPlayer].GetComponent<PlayerManager>().CurrentSquare = currentSquare;
+        Singleton.instance.CurrentBox[currentPlayer] = currentSquare;//players[CurrentPlayer].GetComponent<PlayerManager>().CurrentSquare = currentSquare;
         // changing player
         CurrentPlayer++;
         // this verifys if the current player is the last one
         if (CurrentPlayer == numberPlayers)
         {
-            CurrentPlayer = 0;
+            // CurrentPlayer = 0;
             playerUI.ShowMinigameInfo();
             await Task.Delay(2000);
             playerUI.HideModal(playerUI.minigameInfo.modal);
@@ -275,14 +225,12 @@ public class BoardManager : MonoBehaviourPunCallbacks
         isMoving = true;
         // put player in his respective corner when go to last box(square)
         if (dice == 1)
-            SetOffsetPosition();
+            SetOffsetPosition(CurrentPlayer, nextPosition);
     }
     public void SelectOption(int value)
     {
         //  if (photonView.IsMine)
-
         photonView.RPC("SelectOptionRPC", RpcTarget.All, value);
-
     }
     [PunRPC]
     public async void SelectOptionRPC(int value)
@@ -310,11 +258,11 @@ public class BoardManager : MonoBehaviourPunCallbacks
     }
     public void GoToMinigame(int code)
     {
-        Singleton.instance.CurrentBox = currentSquare;
         Singleton.instance.SetMinigame(code);
-        //SceneManager.LoadScene("minigames");
         if (PhotonNetwork.IsMasterClient)
             PhotonNetwork.LoadLevel("minigames");
+        // Singleton.instance.CurrentBox = currentSquare;
+        //SceneManager.LoadScene("minigames");
     }
     bool IsMyTurn => Singleton.instance.MyTurn == CurrentPlayer;
     public int CurrentPlayer { get => currentPlayer; set => currentPlayer = GetValue(value); }

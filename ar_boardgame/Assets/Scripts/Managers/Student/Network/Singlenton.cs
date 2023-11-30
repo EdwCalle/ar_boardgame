@@ -30,15 +30,16 @@ public class Singleton : MonoBehaviour
     [SerializeField]
     private int currentRound = 0;
     [SerializeField]
-    private int currentBox = 0;
+    private int[] currentBox = { 0, 0, 0, 0 };
     [SerializeField]
     private int currentTurn = 0;
 
     public int NumberPlayers { get => numberPlayers; set => numberPlayers = value; }
     public int MyTurn { get => myTurn; set => myTurn = value; }
     public int CurrentRound { get => currentRound; set => currentRound = value; }
-    public int CurrentBox { get => currentBox; set => currentBox = value; }
+    public int[] CurrentBox { get => currentBox; set => currentBox = value; }
     public int CurrentTurn { get => currentTurn; set => currentTurn = value; }
+
 
     private void Awake()
     {
