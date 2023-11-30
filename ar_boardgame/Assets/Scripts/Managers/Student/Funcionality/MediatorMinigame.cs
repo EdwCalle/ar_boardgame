@@ -113,6 +113,7 @@ public class MediatorMinigame : MonoBehaviourPunCallbacks
     [PunRPC]
     void FinishGame()
     {
+        Singleton.instance.CurrentRound++;
         if (PhotonNetwork.IsMasterClient)
             PhotonNetwork.LoadLevel("board");
     }
