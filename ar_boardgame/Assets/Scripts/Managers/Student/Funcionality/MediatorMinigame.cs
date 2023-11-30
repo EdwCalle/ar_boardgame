@@ -1,8 +1,9 @@
 
 using Models;
+using Photon.Pun;
 using UnityEngine;
 
-public class MediatorMinigame : MonoBehaviour
+public class MediatorMinigame : MonoBehaviourPunCallbacks
 {
     [SerializeField] private HeaderManager headerManager;
     [SerializeField] private ItemsManager itemsManager;
@@ -13,7 +14,7 @@ public class MediatorMinigame : MonoBehaviour
     [SerializeField] private FooterManager footerManager;
     //[SerializeField] private CountdownTimer countdownTimer;
 
-
+    int playersReady = 0;
     // Start is called before the first frame update
     async void Start()
     {
@@ -38,6 +39,41 @@ public class MediatorMinigame : MonoBehaviour
         headerManager.PrepareLevel();
         // prepare items
         await itemsManager.PrepareLevel();
+        //playersReady++;
+        photonView.RPC("PlayerLoadedScene", RpcTarget.All);
+        // //prepare extra item
+
+        // //prepare footer
+        // footerManager.PrepareLevel();
+        // // prepare timer
+
+        // // disable resume
+        // loadingScreenManager.StopAnimation();
+        // // show ar session
+
+        // // start timer
+        // timerManager.PrepareLevel();
+    }
+    public void ActivateFinish(bool active)
+    {
+        footerManager.ActivateFinish(active);
+    }
+    [PunRPC]
+    void PlayerLoadedScene()
+    {
+        playersReady++;
+        CheckAllPlayersLoadedScene();
+    }
+    void CheckAllPlayersLoadedScene()
+    {
+        if (playersReady == PhotonNetwork.CurrentRoom.PlayerCount)
+        {
+            photonView.RPC("StartGame", RpcTarget.All);
+        }
+    }
+    [PunRPC]
+    void StartGame()
+    {
         //prepare extra item
 
         //prepare footer
@@ -51,10 +87,7 @@ public class MediatorMinigame : MonoBehaviour
         // start timer
         timerManager.PrepareLevel();
     }
-    public void ActivateFinish(bool active)
-    {
-        footerManager.ActivateFinish(active);
-    }
+
 
     //right now methods are static, so  mediator pattern design  doesn't applies totally
 

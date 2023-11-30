@@ -157,9 +157,9 @@ public class Singleton : MonoBehaviour
         round.Minigame1.Level = 1;
         round.Minigame1.ExtraInfo = new ExtraInfo("image");
         round.Minigame1.Title = "MG01:selecionar la planta Correcta Según sus hojas";
-        round.Minigame1.InteractionTime = 15;
-        round.Minigame1.ResolveTime = 30;
-        round.Minigame1.FeedbackTime = 10;
+        round.Minigame1.InteractionTime = 5;
+        round.Minigame1.ResolveTime = 5;
+        round.Minigame1.FeedbackTime = 5;
         round.Minigame1.TimerState = TimerState.none;
         //round.Minigame1.Function = "seleccionar el modelo correcto";
 

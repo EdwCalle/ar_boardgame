@@ -17140,6 +17140,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1177760313930652538, guid: f5069c7f6027cf34992037c962c99fda,
         type: 3}
+      propertyPath: currentTurn
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1177760313930652538, guid: f5069c7f6027cf34992037c962c99fda,
+        type: 3}
       propertyPath: numberPlayers
       value: 2
       objectReference: {fileID: 0}

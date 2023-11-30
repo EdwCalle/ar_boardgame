@@ -248,8 +248,9 @@ public class BoardManager : MonoBehaviourPunCallbacks
             playerUI.ShowMinigameInfo();
             await Task.Delay(2000);
             playerUI.HideModal(playerUI.minigameInfo.modal);
-            // GoToMinigame(1);
             ChangeTurn();
+            GoToMinigame(1);
+
         }
         else
         {
@@ -312,7 +313,8 @@ public class BoardManager : MonoBehaviourPunCallbacks
         Singleton.instance.CurrentBox = currentSquare;
         Singleton.instance.SetMinigame(code);
         //SceneManager.LoadScene("minigames");
-        PhotonNetwork.LoadLevel("minigames");
+        if (PhotonNetwork.IsMasterClient)
+            PhotonNetwork.LoadLevel("minigames");
     }
     bool IsMyTurn => Singleton.instance.MyTurn == CurrentPlayer;
     public int CurrentPlayer { get => currentPlayer; set => currentPlayer = GetValue(value); }

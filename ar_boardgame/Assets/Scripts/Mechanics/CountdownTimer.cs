@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Models;
+using Photon.Pun;
 
 
 public class CountdownTimer : MonoBehaviour
@@ -24,6 +25,7 @@ public class CountdownTimer : MonoBehaviour
     int sequence = 6;
     public Texting messageState;
     public Texting time;
+    private int playersReady = 0;
 
     //public bool showResults; //encapusule this method
 
@@ -86,6 +88,7 @@ public class CountdownTimer : MonoBehaviour
                     currentTime = 0;
                     isCountingDown = false;
                     Singleton.instance.currentMinigame.TimerState = TimerState.none;
+                    PhotonNetwork.LoadLevel("board");
                     //Activate resolve mode
                 }
 
@@ -93,6 +96,7 @@ public class CountdownTimer : MonoBehaviour
             }
         }
     }
+
     void EnableMessageState(bool enable)
     {
         messageState.Container.SetActive(enable);

@@ -1199,6 +1199,7 @@ GameObject:
   m_Component:
   - component: {fileID: 633072110}
   - component: {fileID: 633072111}
+  - component: {fileID: 633072112}
   m_Layer: 0
   m_Name: controller
   m_TagString: Untagged
@@ -1238,6 +1239,28 @@ MonoBehaviour:
   loadingScreenManager: {fileID: 473997962}
   timerManager: {fileID: 1124198420}
   footerManager: {fileID: 1510874903}
+--- !u!114 &633072112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 633072108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 1
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &656880745
 GameObject:
   m_ObjectHideFlags: 0
