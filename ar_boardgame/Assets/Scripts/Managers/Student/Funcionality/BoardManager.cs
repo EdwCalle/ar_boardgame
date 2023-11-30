@@ -64,7 +64,7 @@ public class BoardManager : MonoBehaviourPunCallbacks
                 if (playerBox != 0)// set to their postion when restart scene
                 {
                     players[i].transform.localPosition = boxes[playerBox].transform.localPosition;
-                    SetOffsetPosition(i, players[i].transform.localPosition);
+                    players[i].transform.localPosition += SetOffsetPosition(i);
                 }
 
                 players[i].GetComponent<PlayerManager>().PrepareData($"Player{i}", i); // set name to players sprite
@@ -156,16 +156,21 @@ public class BoardManager : MonoBehaviourPunCallbacks
         }
     }
 
-    public void SetOffsetPosition(int currentPlayer, Vector3 nextPosition)
+    public Vector3 SetOffsetPosition(int playerTurn)
     {
-        if (currentPlayer == 0)
-            nextPosition += new Vector3(-offsetPlayer, offsetPlayer * 2, 0);
-        if (currentPlayer == 1)
-            nextPosition += new Vector3(offsetPlayer, offsetPlayer * 2, 0);
-        if (currentPlayer == 2)
-            nextPosition += new Vector3(-offsetPlayer, -offsetPlayer, 0);
-        if (currentPlayer == 3)
-            nextPosition += new Vector3(offsetPlayer, -offsetPlayer, 0);
+        if (playerTurn == 0)
+            return new Vector3(-offsetPlayer, offsetPlayer * 2, 0);
+
+        if (playerTurn == 1)
+            return new Vector3(offsetPlayer, offsetPlayer * 2, 0);
+
+        if (playerTurn == 2)
+            return new Vector3(-offsetPlayer, -offsetPlayer, 0);
+
+        if (playerTurn == 3)
+            return new Vector3(offsetPlayer, -offsetPlayer, 0);
+
+        return Vector3.zero;
     }
     public void ThrowDice()
     {
@@ -225,7 +230,7 @@ public class BoardManager : MonoBehaviourPunCallbacks
         isMoving = true;
         // put player in his respective corner when go to last box(square)
         if (dice == 1)
-            SetOffsetPosition(CurrentPlayer, nextPosition);
+            nextPosition += SetOffsetPosition(CurrentPlayer);
     }
     public void SelectOption(int value)
     {
