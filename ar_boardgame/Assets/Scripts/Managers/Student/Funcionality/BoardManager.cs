@@ -2,6 +2,8 @@ using UnityEngine;
 using Models;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
+using System.Threading.Tasks;
+using TMPro;
 public class BoardManager : MonoBehaviourPunCallbacks
 {
     [Header("Board Components")]
@@ -25,14 +27,17 @@ public class BoardManager : MonoBehaviourPunCallbacks
     private bool isActiveDice;
     private int currentPlayer = 0;
 
-
+    //testing
+    // float countdownTimer = 120;
+    // bool countdownActive = true;
+    // public TextMeshProUGUI timer;
     void Start()
     {
 
         if (PhotonNetwork.IsConnected && PhotonNetwork.CurrentRoom != null)
         {
             // if (photonView.IsMine)
-
+            PhotonNetwork.AutomaticallySyncScene = true;
             ChangeTurn();
 
             // Singleton.instance
@@ -55,7 +60,7 @@ public class BoardManager : MonoBehaviourPunCallbacks
             }
 
 
-            currentSquare = Singleton.instance.CurrentRound;
+            currentSquare = Singleton.instance.CurrentBox;
             if (currentSquare != 0)
                 transform.localPosition = boxes[currentSquare].transform.localPosition;
 
@@ -80,11 +85,45 @@ public class BoardManager : MonoBehaviourPunCallbacks
 
     }
     // Update is called once per frame
-    void Update()
-    {
+    // void Update()
+    // {
+    //     if (photonView.IsMine)
+    //     {
+    //         if (countdownActive)
+    //         {
+    //             countdownTimer -= Time.deltaTime;
+    //             // timer.text = "timer:" + countdownTimer;
+    //             // Synchronize the countdown timer across the network
+    //             photonView.RPC("SyncCountdownTimerRPC", RpcTarget.OthersBuffered, countdownTimer);
+    //         }
+
+    //         if (countdownTimer <= 0f)
+    //         {
+    //             countdownTimer = 0f;
+    //             countdownActive = false;
+
+    //             // Do something when the countdown reaches zero
+    //             Debug.Log("Countdown reached zero!");
+    //         }
+    //     }
+    //     else
+    //     {
+    //         // Display the synchronized countdown timer for remote players
+    //         // You may want to interpolate or predict the timer value for smoother visuals
+    //         // For simplicity, this example directly sets the timer value
+    //         countdownTimer = Mathf.Max(countdownTimer, 0f);
+    //     }
+
+    // }
+    // [PunRPC]
+    // void SyncCountdownTimerRPC(float newTimerValue)
+    // {
+    //     timer.text = "timer:" + newTimerValue;
+    //     // Update the countdown timer value for remote players
+    //     // countdownTimer = newTimerValue;
+    // }
 
 
-    }
     void PrepareBoard()
     {
         // preparing boardsquare order
@@ -180,6 +219,7 @@ public class BoardManager : MonoBehaviourPunCallbacks
     }
     public void ThrowDice()
     {
+        // if (photonView.IsMine)
         photonView.RPC("ThrowDiceRPC", RpcTarget.All, Random.Range(1, 7));
     }
     [PunRPC]
@@ -196,16 +236,25 @@ public class BoardManager : MonoBehaviourPunCallbacks
         }
     }
     // [PunRPC]
-    void FinishTurn()
+    async void FinishTurn()
     {   //saving current position current player
         players[CurrentPlayer].GetComponent<PlayerManager>().CurrentSquare = currentSquare;
         // changing player
         CurrentPlayer++;
         // this verifys if the current player is the last one
         if (CurrentPlayer == numberPlayers)
+        {
             CurrentPlayer = 0;
-
-
+            playerUI.ShowMinigameInfo();
+            await Task.Delay(2000);
+            playerUI.HideModal(playerUI.minigameInfo.modal);
+            // GoToMinigame(1);
+            ChangeTurn();
+        }
+        else
+        {
+            ChangeTurn();
+        }
     }
     void ChangeTurn()
     {
@@ -229,18 +278,24 @@ public class BoardManager : MonoBehaviourPunCallbacks
     }
     public void SelectOption(int value)
     {
+        //  if (photonView.IsMine)
+
         photonView.RPC("SelectOptionRPC", RpcTarget.All, value);
+
     }
     [PunRPC]
-    public void SelectOptionRPC(int value)
+    public async void SelectOptionRPC(int value)
     {
-        playerUI.SelectOption(value);
+        //playerUI.SelectOption(value);
+
+        await playerUI.SelectOption(value);
         FinishTurn();
-        ChangeTurn();
+        // ChangeTurn();
     }
     public void ChangeDirection(string direction)
     {
         photonView.RPC("ChangeDirectionRPC", RpcTarget.All, direction);
+
     }
     [PunRPC]
     public void ChangeDirectionRPC(string direction)
@@ -256,7 +311,8 @@ public class BoardManager : MonoBehaviourPunCallbacks
     {
         Singleton.instance.CurrentBox = currentSquare;
         Singleton.instance.SetMinigame(code);
-        SceneManager.LoadScene("minigames");
+        //SceneManager.LoadScene("minigames");
+        PhotonNetwork.LoadLevel("minigames");
     }
     bool IsMyTurn => Singleton.instance.MyTurn == CurrentPlayer;
     public int CurrentPlayer { get => currentPlayer; set => currentPlayer = GetValue(value); }

@@ -12,6 +12,7 @@ public class AutomaticConnection : MonoBehaviourPunCallbacks
     {
         if (!PhotonNetwork.IsConnected)
         {
+
             PhotonNetwork.NickName = "";
             PhotonNetwork.ConnectUsingSettings();
         }
@@ -25,6 +26,7 @@ public class AutomaticConnection : MonoBehaviourPunCallbacks
     }
     public override void OnConnectedToMaster()
     {
+
         PhotonNetwork.JoinLobby(customLobby);
 
     }

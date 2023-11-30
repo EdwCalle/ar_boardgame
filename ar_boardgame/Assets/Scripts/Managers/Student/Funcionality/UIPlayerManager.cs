@@ -1,10 +1,9 @@
 
 using TMPro;
 using UnityEngine;
-using DG.Tweening;
-using System.Threading.Tasks;
 using UnityEngine.UI;
 using System;
+using System.Threading.Tasks;
 public class UIPlayerManager : MonoBehaviour
 {
     [Serializable]
@@ -57,13 +56,15 @@ public class UIPlayerManager : MonoBehaviour
 
     public GameObject canvasModal;
 
+    Animator animator;
+
 
     // Start is called before the first frame update
     void Awake()
     {
+        animator = canvasModal.GetComponent<Animator>();
 
-
-        canvasModal.SetActive(false);
+        // canvasModal.SetActive(false);
         arrows.modal.SetActive(false);
         questionsInfo.modal.SetActive(false);
         minigameInfo.modal.SetActive(false);
@@ -72,13 +73,24 @@ public class UIPlayerManager : MonoBehaviour
     }
     public void HideModal(GameObject gameObject)
     {
-        canvasModal.SetActive(false);
+
+        canvasModal.GetComponent<CanvasGroup>().blocksRaycasts = false;
+        animator.SetBool("fade", false);
+        // yield return new WaitForSeconds(4000);
+        // canvasModal.SetActive(false);
         gameObject.SetActive(false);
+        Debug.Log("xq pasa esto..");
+
     }
     public void ShowModal(GameObject gameObject)
     {
-        canvasModal.SetActive(true);
+
+        //  canvasModal.SetActive(true);
+        animator.SetBool("fade", true);
+        canvasModal.GetComponent<CanvasGroup>().blocksRaycasts = true;
         gameObject.SetActive(true);
+
+        // gameObject.GetComponent<Animator>().SetBool("fade", true);
     }
 
     public void SetTitlteMinigame()
@@ -111,9 +123,7 @@ public class UIPlayerManager : MonoBehaviour
     }
     public void PrepareQuestion(bool IsMyTurn)
     {
-        // GetComponent<>().tex
         EnableOptions(IsMyTurn);
-        FadeIn(questionsInfo.modal);
         SetQuestion(Singleton.instance.CurrentTurn);
     }
     public void SetQuestion(int currentTurn)
@@ -129,26 +139,28 @@ public class UIPlayerManager : MonoBehaviour
     {
         questionsInfo.options[pos].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = value;
     }
-    public void SelectOption(int value)
+    public async Task SelectOption(int value)
     {
-        EnableOptions(false);
         int solution = Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.CurrentRound].Questions[Singleton.instance.CurrentTurn].Solution;
         if (value == solution)
         {
-            Blink(questionsInfo.options[value], Color.green, 1f);
+            // Blink(questionsInfo.options[value], Color.green, 1f);
             //correect
+            questionsInfo.options[value].GetComponent<Animator>().SetInteger("optionState", 1);
         }
         else
         {
-            Blink(questionsInfo.options[value], Color.red, 1f);
-            Blink(questionsInfo.options[solution], Color.green, 1f);
+            questionsInfo.options[value].GetComponent<Animator>().SetInteger("optionState", -1);
+            questionsInfo.options[solution].GetComponent<Animator>().SetInteger("optionState", 1);
+            //Blink(questionsInfo.options[value], Color.red, 1f);
+            // Blink(questionsInfo.options[solution], Color.green, 1f);
         }
-        // Invoke(nameof(FadeOut(modalQuestion, 1f)), 1);
-        //  StartCoroutine(DelayedFunction());
-        // gameObject.SetActive(false);
-
-        //   HideAll();
-
+        EnableOptions(false);
+        await Task.Delay(2000);
+        HideModal(questionsInfo.modal);
+        questionsInfo.options[value].GetComponent<Animator>().SetInteger("optionState", 0);
+        questionsInfo.options[solution].GetComponent<Animator>().SetInteger("optionState", 0);
+        await Task.Delay(1050);
 
     }
     void EnableOptions(bool value)
@@ -158,54 +170,54 @@ public class UIPlayerManager : MonoBehaviour
         questionsInfo.options[2].GetComponent<Button>().interactable = value;
         questionsInfo.options[3].GetComponent<Button>().interactable = value;
     }
-    void Blink(GameObject gameObject, Color targetColor, float duration)
-    {
-        Image myRawImage = gameObject.GetComponent<Image>();
-        // Tween the color from the original color to a new color (fully transparent in this case) over the specified duration
-        myRawImage.DOColor(targetColor, duration)
-            .SetLoops(5, LoopType.Yoyo) // SetLoops with 2 and LoopType.Yoyo creates a single cycle of fading in and out
-            .OnComplete(() =>
-            {
-                myRawImage.color = Color.white;
-                HideModal(questionsInfo.modal);
-                //questionsInfo.modal.SetActive(false);
+    // void Blink(GameObject gameObject, Color targetColor, float duration)
+    // {
+    //     Image myRawImage = gameObject.GetComponent<Image>();
+    //     // Tween the color from the original color to a new color (fully transparent in this case) over the specified duration
+    //     myRawImage.DOColor(targetColor, duration)
+    //         .SetLoops(5, LoopType.Yoyo) // SetLoops with 2 and LoopType.Yoyo creates a single cycle of fading in and out
+    //         .OnComplete(() =>
+    //         {
+    //             myRawImage.color = Color.white;
+    //             //  HideModal(questionsInfo.modal);
+    //             //questionsInfo.modal.SetActive(false);
 
-            }); // Disable the GameObject after the blinking effect is complete
-    }
-    void FadeIn(GameObject gameObject)
-    {
-        gameObject.SetActive(true);
-        Fade(gameObject, 0f, 1f, 1.0f);
+    //         }); // Disable the GameObject after the blinking effect is complete
+    // }
+    // // void FadeIn(GameObject gameObject)
+    // // {
+    // //     gameObject.SetActive(true);
+    // //     Fade(gameObject, 0f, 1f, 1.0f);
 
-    }
-    async void FadeOut(GameObject gameObject, float duration)
-    {
-        await Fade(gameObject, 1f, 0f, duration);
-        gameObject.SetActive(false);
+    // // }
+    // // async void FadeOut(GameObject gameObject, float duration)
+    // // {
+    // //     await Fade(gameObject, 1f, 0f, duration);
+    // //     gameObject.SetActive(false);
 
-    }
-    Task Fade(GameObject gameObject, float fromAlpha, float toAlpha, float duration)
-    {
-        CanvasGroup canvasGroup = gameObject.GetComponent<CanvasGroup>();
-        var tcs = new TaskCompletionSource<object>();
-        // Ensure the CanvasGroup exists
-        if (canvasGroup != null)
-        {
-            // Set the starting alpha
-            canvasGroup.alpha = fromAlpha;
+    // // }
+    // // Task Fade(GameObject gameObject, float fromAlpha, float toAlpha, float duration)
+    // //     {
+    // //         CanvasGroup canvasGroup = gameObject.GetComponent<CanvasGroup>();
+    // //     var tcs = new TaskCompletionSource<object>();
+    // //         // Ensure the CanvasGroup exists
+    // //         if (canvasGroup != null)
+    // //         {
+    // //             // Set the starting alpha
+    // //             canvasGroup.alpha = fromAlpha;
 
-            // Use DOTween to tween the alpha property
-            canvasGroup.DOFade(toAlpha, duration)
-                .OnComplete(() => tcs.SetResult(null));
-        }
-        else
-        {
-            // If there's no CanvasGroup, complete the task immediately
-            tcs.SetResult(null);
-        }
+    // //             // Use DOTween to tween the alpha property
+    // //             canvasGroup.DOFade(toAlpha, duration)
+    // //                 .OnComplete(() => tcs.SetResult(null));
+    // //         }
+    // //         else
+    // // {
+    // //     // If there's no CanvasGroup, complete the task immediately
+    // //     tcs.SetResult(null);
+    // // }
 
-        return tcs.Task;
-    }
+    // // return tcs.Task;
+    // //     }
     public void ShowArrows(string directionOne, string directionTwo)
     {
 
@@ -218,6 +230,7 @@ public class UIPlayerManager : MonoBehaviour
     public void HideArrows()
     {
         HideModal(arrows.modal);
+
     }
     void SetActiveArrow(GameObject arrow, string directionOne, string directionTwo, string direction)
     {
