@@ -29,12 +29,14 @@ public class CountdownTimer : MonoBehaviour
 
     //public bool showResults; //encapusule this method
 
-    private void Start()
+    void Start()
     {
+        // if (!PhotonNetwork.IsMasterClient)
+        //     offSet = 1;
         //  CurrentTime = TotalTime;
 
     }
-    private void Update()
+    void Update()
     {
         if (isCountingDown)
         {
@@ -88,7 +90,10 @@ public class CountdownTimer : MonoBehaviour
                     currentTime = 0;
                     isCountingDown = false;
                     Singleton.instance.currentMinigame.TimerState = TimerState.none;
-                    PhotonNetwork.LoadLevel("board");
+                    mediatorMinigame.WaitingFinishGame();
+                    // if (PhotonNetwork.IsMasterClient)
+
+                    //     PhotonNetwork.LoadLevel("board");
                     //Activate resolve mode
                 }
 

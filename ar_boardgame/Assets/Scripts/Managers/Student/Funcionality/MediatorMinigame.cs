@@ -1,4 +1,5 @@
 
+using System;
 using Models;
 using Photon.Pun;
 using UnityEngine;
@@ -18,6 +19,7 @@ public class MediatorMinigame : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     async void Start()
     {
+        PhotonNetwork.AutomaticallySyncScene = true;
         // setting level from here
         // level 1
         if (Singleton.instance.currentMinigame.Level == 1)
@@ -39,6 +41,8 @@ public class MediatorMinigame : MonoBehaviourPunCallbacks
         headerManager.PrepareLevel();
         // prepare items
         await itemsManager.PrepareLevel();
+        // PrepareLevel();
+        Debug.Log("why should i do");
         //playersReady++;
         photonView.RPC("PlayerLoadedScene", RpcTarget.All);
         // //prepare extra item
@@ -53,6 +57,10 @@ public class MediatorMinigame : MonoBehaviourPunCallbacks
 
         // // start timer
         // timerManager.PrepareLevel();
+    }
+    public async void PrepareLevel()
+    {
+        await itemsManager.PrepareLevel();
     }
     public void ActivateFinish(bool active)
     {
@@ -74,6 +82,7 @@ public class MediatorMinigame : MonoBehaviourPunCallbacks
     [PunRPC]
     void StartGame()
     {
+        playersReady = 0;
         //prepare extra item
 
         //prepare footer
@@ -87,6 +96,27 @@ public class MediatorMinigame : MonoBehaviourPunCallbacks
         // start timer
         timerManager.PrepareLevel();
     }
+    public void WaitingFinishGame()
+    {
+        photonView.RPC("PlayerFinishedGame", RpcTarget.All);
+    }
+    [PunRPC]
+    void PlayerFinishedGame()
+    {
+        playersReady++;
+        if (playersReady == PhotonNetwork.CurrentRoom.PlayerCount)
+        {
+            FinishGame();
+            // photonView.RPC("FinishGame", RpcTarget.MasterClient);
+        }
+    }
+    [PunRPC]
+    void FinishGame()
+    {
+        if (PhotonNetwork.IsMasterClient)
+            PhotonNetwork.LoadLevel("board");
+    }
+
 
 
     //right now methods are static, so  mediator pattern design  doesn't applies totally
