@@ -48,6 +48,8 @@ public class SelectableModel : MonoBehaviour
                 // if the selection is Multyply selection 
                 SwitchModelSelected();
         }
+        // if (!GetComponent<RotateModel>().isRotating)
+        //     SwitchModelSelected();
 
     }
     void Update()
@@ -105,16 +107,34 @@ public class SelectableModel : MonoBehaviour
     public void SwitchModelSelected()
     {
 
-        if (!isSelected)
+        // if (!isSelected)
+        // {
+        //     GetComponent<Renderer>().material.color = Color.cyan;
+        //     // GetComponent<Renderer>().material.SetColor("_Color", Color.cyan);
+        //     isSelected = true;
+        // }
+        // else
+        // {
+        //     GetComponent<Renderer>().material.color = Color.white;
+        //     //   GetComponent<Renderer>().material.SetColor("_Color", Color.white);
+        //     isSelected = false;
+        // }
+        Color currentColor = GetComponent<Renderer>().material.color;
+        if (isSelected)
         {
-            GetComponent<Renderer>().material.SetColor("_Color", Color.cyan);
-            isSelected = true;
+            currentColor.a = Mathf.Clamp01(0.3960784f);
+            isSelected = false;
         }
         else
         {
-            GetComponent<Renderer>().material.SetColor("_Color", Color.white);
-            isSelected = false;
+            currentColor.a = Mathf.Clamp01(0f);
+            isSelected = true;
         }
+        GetComponent<Renderer>().material.color = currentColor;
+        // Modify the alpha channel and set it back to the material
+
+
+
 
     }
     public void UnselectModel(int index)

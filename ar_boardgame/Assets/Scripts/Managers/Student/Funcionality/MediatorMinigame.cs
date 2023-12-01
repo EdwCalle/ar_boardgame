@@ -33,7 +33,7 @@ public class MediatorMinigame : MonoBehaviourPunCallbacks
         // setting level from here
         // level 1
         if (Singleton.instance.currentMinigame.Level == 1)
-            Singleton.instance.currentMinigame.ConfigureLevel(HeaderType.extraInfo, SelectionType.OneSelection, ExtraComponentType.normal);
+            Singleton.instance.currentMinigame.ConfigureLevel(HeaderType.extraInfo, SelectionType.MultipleSelection, ExtraComponentType.normal);
         // level 2
         if (Singleton.instance.currentMinigame.Level == 2)
             Singleton.instance.currentMinigame.ConfigureLevel(HeaderType.normal, SelectionType.OneSelection, ExtraComponentType.normal);

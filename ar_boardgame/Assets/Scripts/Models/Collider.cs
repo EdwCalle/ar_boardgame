@@ -4,22 +4,20 @@ namespace Models
 {
     public class Collider
     {
-        private Vector3 center;
-        private Vector3 size;
-
-
+        private Vector3 position;
+        private Vector3 scale;
 
         public Collider()
         {
         }
 
-        public Collider(Vector3 center, Vector3 size)
+        public Collider(Vector3 position, Vector3 scale)
         {
-            this.center = center;
-            this.size = size;
+            this.position = position;
+            this.scale = scale;
         }
 
-        public Vector3 Center { get => center; set => center = value; }
-        public Vector3 Size { get => size; set => size = value; }
+        public Vector3 Center { get => position; set => position = value; }
+        public Vector3 Size { get => scale; set => scale = value; }
     }
 }

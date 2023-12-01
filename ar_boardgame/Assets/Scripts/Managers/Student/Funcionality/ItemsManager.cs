@@ -48,10 +48,11 @@ public class ItemsManager : MonoBehaviour
             GameObject instance = createItem(item.Position);
             instance.transform.parent = transform;
             instance.GetComponent<ItemManager>().ItemManagerBuilder(i++,
-                                                                      item.Collider,
+                                                                      item.ModelInBox,
+                                                                      item.ColliderScale,
                                                                       item.Url,
-                                                                      item.IsSolution,
-                                                                      false);
+                                                                      item.IsSolution
+                                                                      );
 
             bool verify = await instance.GetComponent<ItemManager>().LoadModel();
             if (!verify)

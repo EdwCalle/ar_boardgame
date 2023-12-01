@@ -14,12 +14,13 @@ namespace Models
         private bool isSolution;
         private bool isSelected = false;
 
-        private Models.Collider collider;
+        private ModelInBox modelInBox;
+        private Vector3 colliderScale;
         public Item()
         {
         }
 
-        public Item(int code, string name, string description, string url, Vector3 position, Vector3 scale, bool isSolution, bool isSelected, Models.Collider collider)
+        public Item(int code, string name, string description, string url, Vector3 position, Vector3 scale, bool isSolution, bool isSelected, ModelInBox modelInBox, Vector3 colliderScale)
         {
             this.code = code;
             this.name = name;
@@ -29,7 +30,8 @@ namespace Models
             this.scale = scale;
             this.isSolution = isSolution;
             this.isSelected = isSelected;
-            this.collider = collider;
+            this.modelInBox = modelInBox;
+            this.colliderScale = colliderScale;
         }
 
         public int Code { get => code; set => code = value; }
@@ -40,7 +42,9 @@ namespace Models
         public Vector3 Scale { get => scale; set => scale = value; }
         public bool IsSolution { get => isSolution; set => isSolution = value; }
         public bool IsSelected { get => isSelected; set => isSelected = value; }
-        public Collider Collider { get => collider; set => collider = value; }
+        public ModelInBox ModelInBox { get => modelInBox; set => modelInBox = value; }
+        public Vector3 ColliderScale { get => colliderScale; set => colliderScale = value; }
+        public Collider Collider { get; internal set; }
 
         // public Vector3 GetPosition()
         // {

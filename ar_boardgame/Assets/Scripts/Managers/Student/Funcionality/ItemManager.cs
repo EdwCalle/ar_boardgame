@@ -1,12 +1,14 @@
 using System;
 using System.Threading.Tasks;
+using Models;
 using UnityEngine;
 using UnityGLTF;
 
 public class ItemManager : MonoBehaviour
 {
     // Start is called before the first frame update
-    // public 
+    public GameObject modelCollider;
+    public GameObject model;
 
     void Start()
     {
@@ -17,37 +19,54 @@ public class ItemManager : MonoBehaviour
     {
 
     }
-    public void SetCollider(Models.Collider collider)
+    public void SetModelInBox(ModelInBox modelInBox)
     {
-        transform.GetChild(0).gameObject.GetComponent<BoxCollider>().center = collider.Center;
-        transform.GetChild(0).gameObject.GetComponent<BoxCollider>().size = collider.Size;
+        model.transform.localScale = modelInBox.Scale;
+        model.transform.parent = modelCollider.transform;
+        model.transform.localPosition = modelInBox.Position;
+
+
+
+        // transform.GetChild(0).gameObject.GetComponent<BoxCollider>().center = collider.Center;
+        // transform.GetChild(0).gameObject.GetComponent<BoxCollider>().size = collider.Size;
+    }
+    public void SetColliderScale(Vector3 colliderScale)
+    {
+        model.transform.parent = transform;
+        modelCollider.transform.localScale = colliderScale;
     }
     public void SetIndex(int index)
     {
-        transform.GetChild(1).gameObject.GetComponent<SelectableModel>().index = index;
+        modelCollider.GetComponent<SelectableModel>().index = index;
+        //transform.GetChild(1).gameObject.GetComponent<SelectableModel>().index = index;
     }
     public void SetModelUri(string url)
     {
-        transform.GetChild(0).gameObject.GetComponent<GLTFComponent>().GLTFUri = url;
+        model.GetComponent<GLTFComponent>().GLTFUri = url;
+        // transform.GetChild(0).gameObject.GetComponent<GLTFComponent>().GLTFUri = url;
     }
-    public void SetActive(bool active)
-    {
-        transform.GetChild(1).gameObject.SetActive(active);
-    }
+    // public void SetActive(bool active)
+    // {
+    //     transform.GetChild(1).gameObject.SetActive(active);
+    // }
     public void SetSolution(bool solution)
     {
-        transform.GetChild(1).gameObject.GetComponent<SelectableModel>().IsSolution = solution;
+        modelCollider.GetComponent<SelectableModel>().IsSolution = solution;
+        // transform.GetChild(1).gameObject.GetComponent<SelectableModel>().IsSolution = solution;
 
     }
     public void ShowFeedback()
     {
-        transform.GetChild(1).gameObject.GetComponent<SelectableModel>().SetCorrect();
+        modelCollider.GetComponent<SelectableModel>().SetCorrect();
+        //   transform.GetChild(1).gameObject.GetComponent<SelectableModel>().SetCorrect();
     }
     public async Task<bool> LoadModel()
     {
         try
         {
-            await transform.GetChild(0).gameObject.GetComponent<GLTFComponent>().Load();
+            await model.GetComponent<GLTFComponent>().Load();
+            //model.
+            //  await transform.GetChild(0).gameObject.GetComponent<GLTFComponent>().Load();
             return true;
         }
         catch (Exception a)
@@ -59,13 +78,14 @@ public class ItemManager : MonoBehaviour
         }
 
     }
-    public void ItemManagerBuilder(int index, Models.Collider collider, string url, bool solution, bool active)
+    public void ItemManagerBuilder(int index, ModelInBox modelInBox, Vector3 colliderSize, string url, bool solution)
     {
         SetIndex(index);
-        SetCollider(collider);
+        SetColliderScale(colliderSize);
+        SetModelInBox(modelInBox);
         SetModelUri(url);
         SetSolution(solution);
-        SetActive(active);
+        // SetActive(active);
 
     }
 
