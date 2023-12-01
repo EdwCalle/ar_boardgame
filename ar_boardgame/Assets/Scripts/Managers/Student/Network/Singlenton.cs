@@ -73,12 +73,12 @@ public class Singleton : MonoBehaviour
             Code = 1,
             Name = "pato",
             Description = "some description",
-            Url = "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF/Duck.gltf",
+            Url = "Models3D/margarita.glb",
             Position = new Vector3(1, -0.5f, 2),
             Scale = new Vector3(0.2f, 0.2f, 0.2f),
             IsSolution = true,
             IsSelected = false,
-            ModelInBox = new ModelInBox { Position = new Vector3(0, -0.15f, 0), Scale = new Vector3(0.2f, 0.2f, 0.2f) },
+            ModelInBox = new ModelInBox { Position = new Vector3(0, -0.15f, -0.5f), Scale = new Vector3(1f, 1f, 1f) },
             ColliderScale = new Vector3(0.5f, 0.5f, 0.5f),
         };
         exampleModels[1] = new Item
@@ -86,12 +86,12 @@ public class Singleton : MonoBehaviour
             Code = 2,
             Name = "pato",
             Description = "some description",
-            Url = "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF/Duck.gltf",
+            Url = "Models3D/arbusto.glb",
             Position = new Vector3(0, -0.5f, 2.5f),
             Scale = new Vector3(0.2f, 0.2f, 0.2f),
             IsSolution = true,
             IsSelected = false,
-            ModelInBox = new ModelInBox { Position = new Vector3(0, -0.15f, 0), Scale = new Vector3(0.2f, 0.2f, 0.2f) },
+            ModelInBox = new ModelInBox { Position = new Vector3(0, -0.15f, -0.5f), Scale = new Vector3(1f, 1f, 1f) },
             ColliderScale = new Vector3(0.5f, 0.5f, 0.5f),
         };
         exampleModels[2] = new Item
@@ -99,12 +99,12 @@ public class Singleton : MonoBehaviour
             Code = 3,
             Name = "pato",
             Description = "some description",
-            Url = "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF/Duck.gltf",
+            Url = "Models3D/cactus.glb",
             Position = new Vector3(-1, -0.5f, 3),
             Scale = new Vector3(0.2f, 0.2f, 0.2f),
             IsSolution = true,
             IsSelected = false,
-            ModelInBox = new ModelInBox { Position = new Vector3(0, -0.15f, 0), Scale = new Vector3(0.2f, 0.2f, 0.2f) },
+            ModelInBox = new ModelInBox { Position = new Vector3(0, -0.15f, -0.5f), Scale = new Vector3(1f, 1f, 1f) },
             ColliderScale = new Vector3(0.5f, 0.5f, 0.5f),
         };
 

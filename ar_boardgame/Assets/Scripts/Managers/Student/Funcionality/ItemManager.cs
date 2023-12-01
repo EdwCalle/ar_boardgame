@@ -23,6 +23,7 @@ public class ItemManager : MonoBehaviour
     {
         model.transform.localScale = modelInBox.Scale;
         model.transform.parent = modelCollider.transform;
+        // model.transform.localScale = new Vector3(1f / modelInBox.Scale.x, 1f / modelInBox.Scale.y, 1f / modelInBox.Scale.z);
         model.transform.localPosition = modelInBox.Position;
 
 
