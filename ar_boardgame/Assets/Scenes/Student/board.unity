@@ -17154,6 +17154,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: ce8378157fffd91418a4a026d007d8ab,
         type: 3}
+    - target: {fileID: 1177760313930652538, guid: f5069c7f6027cf34992037c962c99fda,
+        type: 3}
+      propertyPath: isSinglePlayerMode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2469942812086968723, guid: f5069c7f6027cf34992037c962c99fda,
         type: 3}
       propertyPath: m_LocalPosition.x

@@ -29,17 +29,18 @@ public class Singleton : MonoBehaviour
     private int myTurn = 0;
     [SerializeField]
     private int currentRound = 0;
-    [SerializeField]
+    //[SerializeField]
     private int[] currentBox = { 0, 0, 0, 0 };
     [SerializeField]
     private int currentTurn = 0;
-
+    [SerializeField]
+    private bool isSinglePlayerMode = false;
     public int NumberPlayers { get => numberPlayers; set => numberPlayers = value; }
     public int MyTurn { get => myTurn; set => myTurn = value; }
     public int CurrentRound { get => currentRound; set => currentRound = value; }
     public int[] CurrentBox { get => currentBox; set => currentBox = value; }
     public int CurrentTurn { get => currentTurn; set => currentTurn = value; }
-
+    public bool IsSinglePlayerMode { get => isSinglePlayerMode; set => isSinglePlayerMode = value; }
 
     private void Awake()
     {
@@ -97,6 +98,7 @@ public class Singleton : MonoBehaviour
         currentGeneralGame.Rounds.Add(exampleRound);
         // exampleRound = new Round(3, "Unidad 3: Tipos de plantas", 3);
         //currentGeneralGame.Rounds.Add(exampleRound);
+
 
 
 
@@ -158,7 +160,7 @@ public class Singleton : MonoBehaviour
         round.Minigame1.Level = 1;
         round.Minigame1.ExtraInfo = new ExtraInfo("image");
         round.Minigame1.Title = "MG01:selecionar la planta Correcta Según sus hojas";
-        round.Minigame1.InteractionTime = 5;
+        round.Minigame1.InteractionTime = 15;
         round.Minigame1.ResolveTime = 5;
         round.Minigame1.FeedbackTime = 5;
         round.Minigame1.TimerState = TimerState.none;

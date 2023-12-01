@@ -25,7 +25,6 @@ public class CountdownTimer : MonoBehaviour
     int sequence = 6;
     public Texting messageState;
     public Texting time;
-    private int playersReady = 0;
 
     //public bool showResults; //encapusule this method
 
@@ -58,6 +57,9 @@ public class CountdownTimer : MonoBehaviour
                 // }
                 if (sequence == 6)
                     ChangeState(false, TimerState.interaction, interactionTime);
+
+
+
                 //Activate resolve mode
                 if (sequence == 5)
                     ChangeState(true, TimerState.offset, offSet, "Hora de Resolver el Juego!!!!!!!");
@@ -66,7 +68,7 @@ public class CountdownTimer : MonoBehaviour
                 {
                     ChangeState(false, TimerState.resolve, resolveTime);
                     //activate selectable mode
-                    ItemsManager.ActiveSelectableComponent(true);
+                    //mediatorMinigame.ActivateCamera();
                 }
                 //Activate resolve mode
                 if (sequence == 3)
@@ -146,6 +148,7 @@ public class CountdownTimer : MonoBehaviour
                    Singleton.instance.currentMinigame.ResolveTime,
                    Singleton.instance.currentMinigame.FeedbackTime);
         ChangeState(true, TimerState.offset, offSet, "Enfoca la cámara y exploremos el nivel");
+        // mediatorMinigame.ActivateCamera();
         StartCountdown();
     }
 

@@ -16,19 +16,22 @@ public class ItemsManager : MonoBehaviour
 
     void Start()
     {
+
         items = new List<GameObject>();
+        transform.gameObject.SetActive(false);
     }
 
     public GameObject createItem(Vector3 Position)
     {
         return Instantiate(itemPrefab, Position, Quaternion.identity);
     }
-    public static void ActiveSelectableComponent(bool active)
+    public void ActivateItems()
     {
-        for (int i = 0; i < items.Count; i++)
-        {
-            items[i].GetComponent<ItemManager>().SetActive(active); ;
-        }
+        // for (int i = 0; i < items.Count; i++)
+        // {
+        //     items[i].GetComponent<ItemManager>().SetActive(active); ;
+        // }
+        transform.gameObject.SetActive(true);
     }
     public static void ShowFeedback()
     {
@@ -53,12 +56,9 @@ public class ItemsManager : MonoBehaviour
             bool verify = await instance.GetComponent<ItemManager>().LoadModel();
             if (!verify)
                 print("something wrong happens, please make something with this");
-
             items.Add(instance);
-
-
-
         }
+
     }
     public async Task PrepareLevel()
     {

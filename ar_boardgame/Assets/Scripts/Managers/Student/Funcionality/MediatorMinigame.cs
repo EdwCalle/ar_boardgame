@@ -3,6 +3,7 @@ using System;
 using Models;
 using Photon.Pun;
 using UnityEngine;
+using UnityEngine.XR.ARCore;
 
 public class MediatorMinigame : MonoBehaviourPunCallbacks
 {
@@ -13,13 +14,22 @@ public class MediatorMinigame : MonoBehaviourPunCallbacks
 
     [SerializeField] private CountdownTimer timerManager;
     [SerializeField] private FooterManager footerManager;
+
+
+
+    // private DetectPlane;
     //[SerializeField] private CountdownTimer countdownTimer;
 
     int playersReady = 0;
+
+    public ItemsManager ItemsManager { get => itemsManager; set => itemsManager = value; }
+
     // Start is called before the first frame update
     async void Start()
     {
-        PhotonNetwork.AutomaticallySyncScene = true;
+        Singleton.instance.SetMinigame(1);
+        if (!Singleton.instance.IsSinglePlayerMode)
+            PhotonNetwork.AutomaticallySyncScene = true;
         // setting level from here
         // level 1
         if (Singleton.instance.currentMinigame.Level == 1)
@@ -41,10 +51,20 @@ public class MediatorMinigame : MonoBehaviourPunCallbacks
         headerManager.PrepareLevel();
         // prepare items
         await itemsManager.PrepareLevel();
+
         // PrepareLevel();
         Debug.Log("why should i do");
         //playersReady++;
-        photonView.RPC("PlayerLoadedScene", RpcTarget.All);
+        if (Singleton.instance.IsSinglePlayerMode)
+        {
+            StartGame();
+        }
+        else
+        {
+            photonView.RPC("PlayerLoadedScene", RpcTarget.All);
+        }
+
+
         // //prepare extra item
 
         // //prepare footer
@@ -65,6 +85,12 @@ public class MediatorMinigame : MonoBehaviourPunCallbacks
     public void ActivateFinish(bool active)
     {
         footerManager.ActivateFinish(active);
+    }
+    public void ActivateCamera()
+    {
+
+        itemsManager.ActivateItems();
+
     }
     [PunRPC]
     void PlayerLoadedScene()
@@ -95,10 +121,15 @@ public class MediatorMinigame : MonoBehaviourPunCallbacks
 
         // start timer
         timerManager.PrepareLevel();
+        ActivateCamera();
     }
     public void WaitingFinishGame()
     {
-        photonView.RPC("PlayerFinishedGame", RpcTarget.All);
+        if (!Singleton.instance.IsSinglePlayerMode)
+            photonView.RPC("PlayerFinishedGame", RpcTarget.All);
+        //else
+
+
     }
     [PunRPC]
     void PlayerFinishedGame()
