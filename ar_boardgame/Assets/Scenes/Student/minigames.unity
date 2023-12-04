@@ -2649,7 +2649,7 @@ MonoBehaviour:
   messageState:
     container: {fileID: 917361073}
     label: {fileID: 2127729854}
-  time:
+  textTime:
     container: {fileID: 7942837937624799845}
     label: {fileID: 7917266343682119431}
 --- !u!1 &1128268176

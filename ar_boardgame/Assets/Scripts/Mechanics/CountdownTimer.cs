@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Models;
-using Photon.Pun;
+using System.Collections;
 
 
 public class CountdownTimer : MonoBehaviour
@@ -13,101 +13,61 @@ public class CountdownTimer : MonoBehaviour
     private float resolveTime;  // Total time for the countdown in seconds
     private float feedbackTime;  // Total time for the countdown in seconds
     private float currentTime;
-    //public GameObject time;
-    //public TextMeshProUGUI timerText; // Reference to a UI Text component to display the timer
-    private bool isCountingDown = false; // Start the countdown when true
     public float InteractionTime { get => interactionTime; set => interactionTime = value; }
     public float CurrentTime { get => currentTime; set => currentTime = value; }
     public float ResolveTime { get => resolveTime; set => resolveTime = value; }
     public float FeedbackTime { get => feedbackTime; set => feedbackTime = value; }
 
-    float offSet = 4f;
-    int sequence = 6;
+    float offSet = 3f;
     public Texting messageState;
-    public Texting time;
-
-    //public bool showResults; //encapusule this method
+    public Texting textTime;
 
     void Start()
     {
-        // if (!PhotonNetwork.IsMasterClient)
-        //     offSet = 1;
-        //  CurrentTime = TotalTime;
 
+    }
+    IEnumerator MinigameQueqe()
+    {
+
+        ChangeState(true, TimerState.offset, offSet, "Enfoca la cámara y exploremos el nivel");
+        yield return StartCoroutine(CountownTimer(currentTime));
+        ChangeState(false, TimerState.interaction, interactionTime);
+        yield return StartCoroutine(CountownTimer(currentTime));
+        ChangeState(true, TimerState.offset, offSet, "Hora de Resolver el Juego!!!!!!!");
+        yield return StartCoroutine(CountownTimer(currentTime));
+        ChangeState(false, TimerState.resolve, resolveTime);
+        yield return StartCoroutine(CountownTimer(currentTime));
+        ChangeState(true, TimerState.offset, offSet, "Se acabó el tiempo, pero te dejo las respuestas");
+        yield return StartCoroutine(CountownTimer(currentTime));
+        ChangeState(false, TimerState.feedback, feedbackTime);
+        //SHOW Anwser
+        ItemsManager.ShowFeedback();
+        // show footer-finish
+        mediatorMinigame.ActivateFinish(true);
+        yield return StartCoroutine(CountownTimer(currentTime));
+        Singleton.instance.currentMinigame.TimerState = TimerState.none;
+        mediatorMinigame.WaitingFinishGame();
+
+
+    }
+    IEnumerator CountownTimer(float elapsedTime)
+    {
+        while (elapsedTime >= 0)
+        {
+            textTime.Label.text = elapsedTime.ToString("0");
+            elapsedTime -= Time.deltaTime;
+            yield return null;
+        }
     }
     void Update()
     {
-        if (isCountingDown)
-        {
-            CurrentTime -= Time.deltaTime;
 
-            // Update the UI text to display the countdown
-            if (time.Label != null)
-            {
-                time.Label.text = CurrentTime.ToString("0");
-            }
-            // Check if the countdown has finished
-            if (CurrentTime <= 0)
-            {
-                CurrentTime = 0;
-                // Trigger an event or do something when the countdown finishes
-                // if (countdownFinishedObject != null)
-                // {
-                //     countdownFinishedObject.SetActive(true);
-                // }
-                if (sequence == 6)
-                    ChangeState(false, TimerState.interaction, interactionTime);
-
-
-
-                //Activate resolve mode
-                if (sequence == 5)
-                    ChangeState(true, TimerState.offset, offSet, "Hora de Resolver el Juego!!!!!!!");
-                //Activate offset mode
-                if (sequence == 4)
-                {
-                    ChangeState(false, TimerState.resolve, resolveTime);
-                    //activate selectable mode
-                    //mediatorMinigame.ActivateCamera();
-                }
-                //Activate resolve mode
-                if (sequence == 3)
-                {
-                    ChangeState(true, TimerState.offset, offSet, "Se acabó el tiempo, pero te dejo las respuestas");
-
-                }
-
-                if (sequence == 2)
-                {
-                    ChangeState(false, TimerState.feedback, feedbackTime);
-                    //SHOW Anwser
-                    ItemsManager.ShowFeedback();
-                    // show footer-finish
-                    mediatorMinigame.ActivateFinish(true);
-                }
-
-                //Activate resolve mode
-                if (sequence == 1)
-                {
-                    currentTime = 0;
-                    isCountingDown = false;
-                    Singleton.instance.currentMinigame.TimerState = TimerState.none;
-                    mediatorMinigame.WaitingFinishGame();
-                    // if (PhotonNetwork.IsMasterClient)
-
-                    //     PhotonNetwork.LoadLevel("board");
-                    //Activate resolve mode
-                }
-
-                sequence--;
-            }
-        }
     }
 
     void EnableMessageState(bool enable)
     {
         messageState.Container.SetActive(enable);
-        time.Container.SetActive(!enable);
+        textTime.Container.SetActive(!enable);
 
     }
     void ChangeState(bool enable, TimerState timerState, float currentTime, string message = null)
@@ -123,12 +83,6 @@ public class CountdownTimer : MonoBehaviour
     {
         messageState.Label.text = text;
     }
-    // Start the countdown
-    public void StartCountdown()
-    {
-        isCountingDown = true;
-    }
-
     public void GoToMinigame(string codeMinigame)
     {
         Debug.Log("go to minigame:" + codeMinigame);
@@ -140,7 +94,6 @@ public class CountdownTimer : MonoBehaviour
         this.interactionTime = interactionTime;
         this.resolveTime = resolveTime;
         this.feedbackTime = feedbackTime;
-
     }
     public void PrepareLevel()
     {
@@ -149,7 +102,7 @@ public class CountdownTimer : MonoBehaviour
                    Singleton.instance.currentMinigame.FeedbackTime);
         ChangeState(true, TimerState.offset, offSet, "Enfoca la cámara y exploremos el nivel");
         // mediatorMinigame.ActivateCamera();
-        StartCountdown();
+        StartCoroutine(MinigameQueqe());
     }
 
 }
@@ -159,6 +112,8 @@ public class Texting
     [SerializeField] private GameObject container;
     [SerializeField] private TextMeshProUGUI label;
 
+    // [SerializeField] private TextMeshProUGUI testing;
     public GameObject Container { get => container; set => container = value; }
     public TextMeshProUGUI Label { get => label; set => label = value; }
+    //    public TextMeshProUGUI Testing { get => testing; set => testing = value; }
 }
