@@ -15,7 +15,7 @@ public class SelectableModel : MonoBehaviour
     void Start()
     {
     }
-    void OnMouseDown()
+    public void SelectModel()
     {
         // if the mode time is interaction just interact
         if (Singleton.instance.currentMinigame.TimerState == TimerState.resolve)
@@ -48,8 +48,6 @@ public class SelectableModel : MonoBehaviour
                 // if the selection is Multyply selection 
                 SwitchModelSelected();
         }
-        // if (!GetComponent<RotateModel>().isRotating)
-        //     SwitchModelSelected();
 
     }
     void Update()
@@ -92,42 +90,30 @@ public class SelectableModel : MonoBehaviour
     }
     public void SetCorrect()
     {
+
         if (IsSolution == isSelected)
-        {
-
-            GetComponent<Renderer>().material.SetColor("_Color", Color.green);
-        }
+            GetComponent<Renderer>().material.color = Color.green;
         else
-        {
-            GetComponent<Renderer>().material.SetColor("_Color", Color.red);
+            GetComponent<Renderer>().material.color = Color.red;
 
-        }
+        Color currentColor = GetComponent<Renderer>().material.color;
+        currentColor.a = Mathf.Clamp01(0.3960784f);
+        GetComponent<Renderer>().material.color = currentColor;
 
     }
     public void SwitchModelSelected()
     {
 
-        // if (!isSelected)
-        // {
-        //     GetComponent<Renderer>().material.color = Color.cyan;
-        //     // GetComponent<Renderer>().material.SetColor("_Color", Color.cyan);
-        //     isSelected = true;
-        // }
-        // else
-        // {
-        //     GetComponent<Renderer>().material.color = Color.white;
-        //     //   GetComponent<Renderer>().material.SetColor("_Color", Color.white);
-        //     isSelected = false;
-        // }
         Color currentColor = GetComponent<Renderer>().material.color;
         if (isSelected)
         {
-            currentColor.a = Mathf.Clamp01(0.3960784f);
+            currentColor.a = Mathf.Clamp01(0f);
             isSelected = false;
         }
         else
         {
-            currentColor.a = Mathf.Clamp01(0f);
+
+            currentColor.a = Mathf.Clamp01(0.3960784f);
             isSelected = true;
         }
         GetComponent<Renderer>().material.color = currentColor;

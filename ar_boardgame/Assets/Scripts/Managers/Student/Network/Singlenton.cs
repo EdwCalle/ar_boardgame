@@ -102,7 +102,7 @@ public class Singleton : MonoBehaviour
             Url = "Models3D/cactus.glb",
             Position = new Vector3(-1, -0.5f, 3),
             Scale = new Vector3(0.2f, 0.2f, 0.2f),
-            IsSolution = true,
+            IsSolution = false,
             IsSelected = false,
             ModelInBox = new ModelInBox { Position = new Vector3(0, -0.15f, -0.5f), Scale = new Vector3(1f, 1f, 1f) },
             ColliderScale = new Vector3(0.5f, 0.5f, 0.5f),

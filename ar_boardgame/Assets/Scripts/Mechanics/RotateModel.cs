@@ -48,7 +48,7 @@ public class RotateModel : MonoBehaviour
         }
         else
         {
-            GetComponent<SelectableModel>().SwitchModelSelected();
+            GetComponent<SelectableModel>().SelectModel();
             // Handle single click behavior here
             Debug.Log("Single Click!");
         }
