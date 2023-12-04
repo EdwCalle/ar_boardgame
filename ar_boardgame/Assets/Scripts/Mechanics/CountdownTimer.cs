@@ -42,6 +42,7 @@ public class CountdownTimer : MonoBehaviour
         ChangeState(false, TimerState.feedback, feedbackTime);
         //SHOW Anwser
         ItemsManager.ShowFeedback();
+        // ItemsManager.ShowFeedback();
         // show footer-finish
         mediatorMinigame.ActivateFinish(true);
         yield return StartCoroutine(CountownTimer(currentTime));

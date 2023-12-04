@@ -85,6 +85,7 @@ public class MediatorMinigame : MonoBehaviourPunCallbacks
     public void ActivateFinish(bool active)
     {
         footerManager.ActivateFinish(active);
+        footerManager.ShowResults();
     }
     public void ActivateCamera()
     {

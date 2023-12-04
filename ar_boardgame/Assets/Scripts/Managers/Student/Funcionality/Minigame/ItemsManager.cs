@@ -37,8 +37,9 @@ public class ItemsManager : MonoBehaviour
     {
         for (int i = 0; i < items.Count; i++)
         {
-            items[i].GetComponent<ItemManager>().ShowFeedback();
+            items[i].GetComponent<ItemManager>().ShowFeedback(i);
         }
+
     }
     public async Task LoadMultipleModels()
     {

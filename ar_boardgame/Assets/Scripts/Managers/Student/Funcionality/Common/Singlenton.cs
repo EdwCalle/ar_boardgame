@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using ExitGames.Client.Photon.StructWrapping;
 using Models;
 using UnityEngine;
 
@@ -8,24 +6,22 @@ public class Singleton : MonoBehaviour
 {
     public static Singleton instance;
 
-    [HideInInspector]
-    // public int currentPosition = 0;
     public Sprite firstSpritePlayer;
     [HideInInspector]
+    // for game funcionality
     public Minigame currentMinigame = new Minigame();
 
     public GeneralGame currentGeneralGame;
 
     public Item[] exampleModels;
-
-
+    public Score playerScore;
     // for teacher testing
     public List<GeneralGame> generalGamesT = new List<GeneralGame>();
     public List<Round> roundsT = new List<Round>();
     public List<Minigame> minigamesT = new List<Minigame>();
     //public List<Round> roundsT = new List<Round>();
 
-
+    // for board funcionality
     [SerializeField]
     private int numberPlayers = 4;
     [SerializeField]
@@ -74,8 +70,8 @@ public class Singleton : MonoBehaviour
             Name = "pato",
             Description = "some description",
             Url = "Models3D/margarita.glb",
-            Position = new Vector3(1, -0.5f, 2),
-            Scale = new Vector3(0.2f, 0.2f, 0.2f),
+            Position = new Vector3(1f, 0.5f, -1.5f),
+            // Scale = new Vector3(0.2f, 0.2f, 0.2f),
             IsSolution = true,
             IsSelected = false,
             ModelInBox = new ModelInBox { Position = new Vector3(0, -0.15f, -0.5f), Scale = new Vector3(1f, 1f, 1f) },
@@ -87,8 +83,8 @@ public class Singleton : MonoBehaviour
             Name = "pato",
             Description = "some description",
             Url = "Models3D/arbusto.glb",
-            Position = new Vector3(0, -0.5f, 2.5f),
-            Scale = new Vector3(0.2f, 0.2f, 0.2f),
+            Position = new Vector3(0, 0.5f, 0f),
+            // Scale = new Vector3(0.2f, 0.2f, 0.2f),
             IsSolution = true,
             IsSelected = false,
             ModelInBox = new ModelInBox { Position = new Vector3(0, -0.15f, -0.5f), Scale = new Vector3(1f, 1f, 1f) },
@@ -100,8 +96,8 @@ public class Singleton : MonoBehaviour
             Name = "pato",
             Description = "some description",
             Url = "Models3D/cactus.glb",
-            Position = new Vector3(-1, -0.5f, 3),
-            Scale = new Vector3(0.2f, 0.2f, 0.2f),
+            Position = new Vector3(-1.5f, 0.5f, 1.5f),
+            // Scale = new Vector3(0.2f, 0.2f, 0.2f),
             IsSolution = false,
             IsSelected = false,
             ModelInBox = new ModelInBox { Position = new Vector3(0, -0.15f, -0.5f), Scale = new Vector3(1f, 1f, 1f) },

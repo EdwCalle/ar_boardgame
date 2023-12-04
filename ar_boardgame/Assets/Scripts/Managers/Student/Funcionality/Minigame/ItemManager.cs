@@ -56,9 +56,9 @@ public class ItemManager : MonoBehaviour
         // transform.GetChild(1).gameObject.GetComponent<SelectableModel>().IsSolution = solution;
 
     }
-    public void ShowFeedback()
+    public void ShowFeedback(int index)
     {
-        modelCollider.GetComponent<SelectableModel>().SetCorrect();
+        modelCollider.GetComponent<SelectableModel>().SetCorrect(index);
         //   transform.GetChild(1).gameObject.GetComponent<SelectableModel>().SetCorrect();
     }
     public async Task<bool> LoadModel()

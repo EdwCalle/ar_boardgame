@@ -11,7 +11,7 @@ public class CameraMovement : MonoBehaviour
     private CharacterController characterController;
     private float verticalRotation = 0;
     private Camera playerCamera;
-    private bool isRotating;
+    //  private bool isRotating;
 
     private bool isEnableRotation = false;
     public GameObject toggle;

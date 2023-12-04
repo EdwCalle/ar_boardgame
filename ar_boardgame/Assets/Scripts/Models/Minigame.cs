@@ -11,7 +11,7 @@ namespace Models
         private int level;
         private string title;
         private string function;
-        private ArrayList models = new ArrayList();
+        private List<Item> models = new List<Item>();
         private List<Question> questions = new List<Question>();
         private List<Group> groups = new List<Group>();
         private ExtraInfo extraInfo;
@@ -29,7 +29,7 @@ namespace Models
         { get => id; set => id = value; }
         public string Title { get => title; set => title = value; }
         public string Function { get => function; set => function = value; }
-        public ArrayList Models { get => models; set => models = value; }
+        public List<Item> Models { get => models; set => models = value; }
         public List<Question> Questions { get => questions; set => questions = value; }
         public List<Group> Groups { get => groups; set => groups = value; }
         public ExtraInfo ExtraInfo { get => extraInfo; set => extraInfo = value; }

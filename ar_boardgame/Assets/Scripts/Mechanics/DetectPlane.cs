@@ -28,11 +28,11 @@ public class DetectPlane : MonoBehaviour
             if (arRaycastManager.Raycast(touch.position, hits, TrackableType.PlaneWithinPolygon))
             {
                 Pose hitPose = hits[0].pose;
-                isTaped = true;
+                //isTaped = true;
                 transform.localPosition = hitPose.position;
                 transform.rotation = hitPose.rotation;
-                aRPlaneManager.enabled = false;
-                aRPlaneManager.SetTrackablesActive(false);
+                // aRPlaneManager.enabled = false;
+                //aRPlaneManager.SetTrackablesActive(false);
 
                 //  Instantiate(gameObject, hitPose.position, hitPose.rotation);
             }

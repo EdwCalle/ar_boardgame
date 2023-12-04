@@ -88,8 +88,9 @@ public class SelectableModel : MonoBehaviour
         // }
 
     }
-    public void SetCorrect()
+    public void SetCorrect(int index)
     {
+        Singleton.instance.currentMinigame.Models[index].IsSelected = isSelected;
 
         if (IsSolution == isSelected)
             GetComponent<Renderer>().material.color = Color.green;
