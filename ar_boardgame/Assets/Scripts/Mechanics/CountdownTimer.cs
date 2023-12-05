@@ -21,6 +21,9 @@ public class CountdownTimer : MonoBehaviour
     float offSet = 3f;
     public Texting messageState;
     public Texting textTime;
+    public bool gameStart;
+    public bool gameFinish;
+
 
     void Start()
     {
@@ -47,7 +50,7 @@ public class CountdownTimer : MonoBehaviour
         mediatorMinigame.ActivateFinish(true);
         yield return StartCoroutine(CountownTimer(currentTime));
         Singleton.instance.currentMinigame.TimerState = TimerState.none;
-        mediatorMinigame.WaitingFinishGame();
+        gameFinish = true;
 
 
     }
@@ -62,7 +65,16 @@ public class CountdownTimer : MonoBehaviour
     }
     void Update()
     {
-
+        if (gameStart)
+        {
+            StartCoroutine(MinigameQueqe());
+            gameStart = false;
+        }
+        if (gameFinish)
+        {
+            mediatorMinigame.WaitingFinishGame();
+            gameFinish = false;
+        }
     }
 
     void EnableMessageState(bool enable)
@@ -103,7 +115,8 @@ public class CountdownTimer : MonoBehaviour
                    Singleton.instance.currentMinigame.FeedbackTime);
         ChangeState(true, TimerState.offset, offSet, "Enfoca la cámara y exploremos el nivel");
         // mediatorMinigame.ActivateCamera();
-        StartCoroutine(MinigameQueqe());
+        gameStart = true;
+
     }
 
 }

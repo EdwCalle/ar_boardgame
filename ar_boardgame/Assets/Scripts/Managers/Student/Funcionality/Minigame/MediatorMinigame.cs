@@ -26,7 +26,7 @@ public class MediatorMinigame : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     async void Start()
     {
-        Singleton.instance.SetMinigame(1);
+        // Singleton.instance.SetMinigame(1);
         if (!Singleton.instance.IsSinglePlayerMode)
             PhotonNetwork.AutomaticallySyncScene = true;
         // setting level from here
@@ -76,6 +76,7 @@ public class MediatorMinigame : MonoBehaviourPunCallbacks
 
         // // start timer
         // timerManager.PrepareLevel();
+        Debug.Log("finish start");
     }
     public async void PrepareLevel()
     {
@@ -102,7 +103,8 @@ public class MediatorMinigame : MonoBehaviourPunCallbacks
     {
         if (playersReady == PhotonNetwork.CurrentRoom.PlayerCount)
         {
-            photonView.RPC("StartGame", RpcTarget.All);
+            if (PhotonNetwork.IsMasterClient)
+                photonView.RPC("StartGame", RpcTarget.All);
         }
     }
     [PunRPC]
@@ -122,12 +124,17 @@ public class MediatorMinigame : MonoBehaviourPunCallbacks
         // start timer
         timerManager.PrepareLevel();
         ActivateCamera();
+        // Debug.Log("preparing xd");
     }
     public void WaitingFinishGame()
     {
         loadingScreenManager.StartAnimation("Regresando al tablero, esperando al resto de jugadores......");
         if (!Singleton.instance.IsSinglePlayerMode)
+        {
+            //  Debug.Log("una ves ya pues");
             photonView.RPC("PlayerFinishedGame", RpcTarget.All);
+        }
+
         //else
 
 

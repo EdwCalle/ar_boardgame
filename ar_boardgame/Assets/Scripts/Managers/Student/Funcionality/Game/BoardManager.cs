@@ -26,13 +26,23 @@ public class BoardManager : MonoBehaviourPunCallbacks
     private int currentPlayer = 0;
     private int playersReady = 0;
 
+    public bool skipScene;
+
     void Start()
     {
+
         if (PhotonNetwork.IsConnected && PhotonNetwork.CurrentRoom != null)
         {
             // for sync scenes to other players
             PhotonNetwork.AutomaticallySyncScene = true;
+
+
+
+
             photonView.RPC("WaitPlayers", RpcTarget.All);
+
+
+
         }
     }
     [PunRPC]
@@ -40,7 +50,13 @@ public class BoardManager : MonoBehaviourPunCallbacks
     {
         playersReady++;
         if (playersReady == numberPlayers && photonView.IsMine)
-            photonView.RPC("PrepareGame", RpcTarget.All);
+        {
+            if (skipScene)
+                GoToMinigame(1);
+            else
+                photonView.RPC("PrepareGame", RpcTarget.All);
+        }
+
     }
     [PunRPC]
     void PrepareGame()

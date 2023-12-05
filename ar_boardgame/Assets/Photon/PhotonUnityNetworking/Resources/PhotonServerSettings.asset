@@ -34,23 +34,17 @@ MonoBehaviour:
   RunInBackground: 1
   StartInOfflineMode: 0
   RpcList:
+  - ChangeDirectionRPC
   - ClickRpc
   - DestroyRpc
-  - DestroySpaceship
-  - Fire
-  - RespawnSpaceship
-  - ThrowDicePUN
-  - MoveToNextSquare
-  - SelectOptionRPC
-  - ChangeDirectionRPC
-  - ThrowDiceRPC
-  - SyncCountdownTimerRPC
-  - PlayerLoadedScene
-  - StartGame
   - FinishGame
   - PlayerFinishedGame
+  - PlayerLoadedScene
   - PrepareGame
+  - SelectOptionRPC
+  - StartGame
+  - ThrowDiceRPC
   - WaitPlayers
   DisableAutoOpenWizard: 1
-  ShowSettings: 1
+  ShowSettings: 0
   DevRegionSetOnce: 1

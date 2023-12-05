@@ -24097,6 +24097,7 @@ MonoBehaviour:
   defaultDice: 4
   numberPlayers: 2
   offsetPlayer: 25
+  skipScene: 0
 --- !u!114 &1622390973
 MonoBehaviour:
   m_ObjectHideFlags: 0
