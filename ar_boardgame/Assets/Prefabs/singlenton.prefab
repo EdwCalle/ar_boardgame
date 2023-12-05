@@ -44,5 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b8c1597b2ea61c4e971ffc58aac7eb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentPosition: 0
   firstSpritePlayer: {fileID: 0}
+  numberPlayers: 1
+  myTurn: 0
+  currentRound: 0
+  currentTurn: 0
+  isSinglePlayerMode: 1

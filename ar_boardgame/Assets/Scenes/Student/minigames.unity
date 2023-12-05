@@ -1055,6 +1055,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5204c5f1118ce1f4d8c180ad98801f5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  message: {fileID: 233012014}
 --- !u!1 &479757104
 GameObject:
   m_ObjectHideFlags: 0
@@ -1242,6 +1243,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1177760313930652538, guid: f5069c7f6027cf34992037c962c99fda,
+        type: 3}
+      propertyPath: numberPlayers
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 1177760313930652538, guid: f5069c7f6027cf34992037c962c99fda,
         type: 3}
       propertyPath: isSinglePlayerMode

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel;
 using Models;
 using UnityEngine;
 
@@ -23,14 +24,14 @@ public class Singleton : MonoBehaviour
 
     // for board funcionality
     [SerializeField]
-    private int numberPlayers = 4;
-    [SerializeField]
+    private int numberPlayers = 2;
+    // [SerializeField]
     private int myTurn = 0;
-    [SerializeField]
+    //  [SerializeField]
     private int currentRound = 0;
     //[SerializeField]
     private int[] currentBox = { 0, 0, 0, 0 };
-    [SerializeField]
+    //  [SerializeField]
     private int currentTurn = 0;
     [SerializeField]
     private bool isSinglePlayerMode = false;

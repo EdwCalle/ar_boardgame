@@ -45,7 +45,7 @@ public class MediatorMinigame : MonoBehaviourPunCallbacks
         // disable ar session
 
         // show resume
-        loadingScreenManager.StartAnimation();
+        loadingScreenManager.StartAnimation("Cargando Minijuego, prepara tu cámara");
         /// headerManager.Configure(this); is not necessary right now
         // prepara el header, no olvidar implementar personalizadamente
         headerManager.PrepareLevel();
@@ -126,6 +126,7 @@ public class MediatorMinigame : MonoBehaviourPunCallbacks
     }
     public void WaitingFinishGame()
     {
+        loadingScreenManager.StartAnimation("Regresando al tablero, esperando al resto de jugadores......");
         if (!Singleton.instance.IsSinglePlayerMode)
             photonView.RPC("PlayerFinishedGame", RpcTarget.All);
         //else

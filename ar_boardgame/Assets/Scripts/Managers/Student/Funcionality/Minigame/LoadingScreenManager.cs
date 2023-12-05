@@ -1,8 +1,10 @@
+using TMPro;
 using UnityEngine;
 
 
 public class LoadingScreenManager : MonoBehaviour
 {
+    public TextMeshProUGUI message;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,12 +17,15 @@ public class LoadingScreenManager : MonoBehaviour
 
     }
 
-    public void StartAnimation()
+    public void StartAnimation(string message)
     {
+        this.message.text = message;
         gameObject.SetActive(true);
+
     }
     public void StopAnimation()
     {
         gameObject.SetActive(false);
     }
+
 }
