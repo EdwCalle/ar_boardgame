@@ -45,8 +45,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firstSpritePlayer: {fileID: 0}
-  numberPlayers: 1
-  myTurn: 0
-  currentRound: 0
-  currentTurn: 0
-  isSinglePlayerMode: 1
+  numberPlayers: 2
+  isSinglePlayerMode: 0

@@ -11,7 +11,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Student/selectplayer.unity
     guid: 55b4b12cac98f3441b02f29e35ef7b45
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Student/board.unity
     guid: 47b2d007ec1dc459d9ce8933552a96e0
   - enabled: 1

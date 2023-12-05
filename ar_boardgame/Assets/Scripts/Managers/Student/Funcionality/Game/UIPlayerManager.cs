@@ -58,7 +58,7 @@ public class UIPlayerManager : MonoBehaviour
 
     Animator animator;
 
-
+    public GameObject WaitPlayersModal;
     // Start is called before the first frame update
     void Awake()
     {
@@ -75,9 +75,7 @@ public class UIPlayerManager : MonoBehaviour
     {
 
         canvasModal.GetComponent<CanvasGroup>().blocksRaycasts = false;
-        animator.SetBool("fade", false);
-        // yield return new WaitForSeconds(4000);
-        // canvasModal.SetActive(false);
+        animator.SetTrigger("fadeOut");
         gameObject.SetActive(false);
         Debug.Log("xq pasa esto..");
 
@@ -86,12 +84,14 @@ public class UIPlayerManager : MonoBehaviour
     {
 
         //  canvasModal.SetActive(true);
-        animator.SetBool("fade", true);
+        //animator.SetBool("fade", true);
+        animator.SetTrigger("fadeIn");
         canvasModal.GetComponent<CanvasGroup>().blocksRaycasts = true;
         gameObject.SetActive(true);
 
         // gameObject.GetComponent<Animator>().SetBool("fade", true);
     }
+
 
     public void SetTitlteMinigame()
     {
@@ -239,7 +239,16 @@ public class UIPlayerManager : MonoBehaviour
         else
             arrow.SetActive(false);
     }
+    public void WaitPlayersScreen()
+    {
+        HideModal(WaitPlayersModal);
+        // Debug.Log("funciona");
+        // WaitPlayersModal.SetActive(value);
+        // canvasModal.GetComponent<CanvasGroup>().blocksRaycasts = value;
+        // animator.SetBool("Activate", value);
+        // canvasModal.GetComponent<CanvasGroup>().alpha = value ? 1 : 0;
 
+    }
     // Update is called once per frame
     void Update()
     {

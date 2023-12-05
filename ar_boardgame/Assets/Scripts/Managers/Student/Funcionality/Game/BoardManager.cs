@@ -24,6 +24,7 @@ public class BoardManager : MonoBehaviourPunCallbacks
     private int dice;
     private bool isActiveDice;
     private int currentPlayer = 0;
+    private int playersReady = 0;
 
     void Start()
     {
@@ -31,27 +32,43 @@ public class BoardManager : MonoBehaviourPunCallbacks
         {
             // for sync scenes to other players
             PhotonNetwork.AutomaticallySyncScene = true;
-            //ChangeTurn();
+            photonView.RPC("WaitPlayers", RpcTarget.All);
+        }
+    }
+    [PunRPC]
+    void WaitPlayers()
+    {
+        playersReady++;
+        if (playersReady == numberPlayers && photonView.IsMine)
+            photonView.RPC("PrepareGame", RpcTarget.All);
+    }
+    [PunRPC]
+    void PrepareGame()
+    {
+        Debug.Log("Me ejecute");
+        if (Singleton.instance.currentGeneralGame.Rounds.Count != Singleton.instance.CurrentRound)
+        {
             // preparing boardsquare order
             PrepareBoxes();
             PreparePlayers();
-            //
-            if (Singleton.instance.currentGeneralGame.Rounds.Count != Singleton.instance.CurrentRound)
-            {
+            UpdateTurn();
+            // show Round Info
+            playerUI.roundInfo.roundTitle.text = Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.CurrentRound].Title;
+            playerUI.roundInfo.numberRound.text = $"Número de ronda: {Singleton.instance.CurrentRound}";
 
-                // show title round
-                playerUI.roundInfo.roundTitle.text = Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.CurrentRound].Title;
-                playerUI.roundInfo.numberRound.text = $"Número de ronda: {Singleton.instance.CurrentRound}";
-                // show new dialog
-            }
-            else
-            {
-                playerUI.ShowResultsInfo();
-                // show dialog Finish
-            }
+            playerUI.WaitPlayersScreen(); //hide
+                                          // if is new round show partial results
+            if (Singleton.instance.CurrentRound != 0)
+                ShowPartialResults();
+            // show new dialog
+            // ShowDialog();
         }
-
+        else
+            //  finish game 
+            playerUI.ShowResultsInfo();
     }
+
+
     void PreparePlayers()
     {
         //get number players
@@ -108,6 +125,10 @@ public class BoardManager : MonoBehaviourPunCallbacks
         // first board-square  points to down
         //   currentMovement = movementDown;
     }
+    void ShowPartialResults()
+    {
+        Debug.Log("mostrando resultados parciales");
+    }
     void FixedUpdate()
     {
         MoveCurrentPlayer();
@@ -116,7 +137,7 @@ public class BoardManager : MonoBehaviourPunCallbacks
     {
         if (isMoving)
         {
-            players[CurrentPlayer].transform.localPosition = Vector3.MoveTowards(players[CurrentPlayer].transform.localPosition, nextPosition, Time.deltaTime * velocity);
+            players[CurrentPlayer].transform.localPosition = Vector3.MoveTowards(players[CurrentPlayer].transform.localPosition, nextPosition, Time.fixedDeltaTime * velocity);
             if (players[CurrentPlayer].transform.localPosition.Equals(nextPosition))
             {
                 isMoving = false;
@@ -133,6 +154,8 @@ public class BoardManager : MonoBehaviourPunCallbacks
                     // ask for if there are directions, stop movments and stop asking for current LocalPostion
                     if (boardSquares[currentSquare].IsSquarePoint)
                     {
+                        isActiveDice = false;
+                        print("this is not controlled");
                         if (IsMyTurn)
                             playerUI.ShowArrows(boardSquares[currentSquare].DirectionOne, boardSquares[currentSquare].DirectionTwo);
                     }
@@ -155,7 +178,6 @@ public class BoardManager : MonoBehaviourPunCallbacks
             }
         }
     }
-
     public Vector3 SetOffsetPosition(int playerTurn)
     {
         if (playerTurn == 0)
@@ -180,6 +202,7 @@ public class BoardManager : MonoBehaviourPunCallbacks
     [PunRPC]
     void ThrowDiceRPC(int randomDice)
     {
+
         if (!isMoving)
         {
             currentSquare = Singleton.instance.CurrentBox[currentPlayer];// players[CurrentPlayer].GetComponent<PlayerManager>().CurrentSquare;
@@ -194,7 +217,7 @@ public class BoardManager : MonoBehaviourPunCallbacks
     async void FinishTurn()
     {   //saving current position current player
         Singleton.instance.CurrentBox[currentPlayer] = currentSquare;//players[CurrentPlayer].GetComponent<PlayerManager>().CurrentSquare = currentSquare;
-        // changing player
+                                                                     // changing player
         CurrentPlayer++;
         // this verifys if the current player is the last one
         if (CurrentPlayer == numberPlayers)
@@ -203,16 +226,16 @@ public class BoardManager : MonoBehaviourPunCallbacks
             playerUI.ShowMinigameInfo();
             await Task.Delay(2000);
             playerUI.HideModal(playerUI.minigameInfo.modal);
-            ChangeTurn();
+            UpdateTurn();
             GoToMinigame(1);
 
         }
         else
         {
-            ChangeTurn();
+            UpdateTurn();
         }
     }
-    void ChangeTurn()
+    void UpdateTurn()
     {
         if (IsMyTurn)
             playerUI.ShowDice();
@@ -259,6 +282,7 @@ public class BoardManager : MonoBehaviourPunCallbacks
         else
             boardSquares[currentSquare].SwitchToTwo();
         playerUI.HideArrows();
+        isActiveDice = true;
         SetNextSquare();
     }
     public void GoToMinigame(int code)

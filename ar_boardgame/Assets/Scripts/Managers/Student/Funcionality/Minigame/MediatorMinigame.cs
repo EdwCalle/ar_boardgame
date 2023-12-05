@@ -3,7 +3,6 @@ using System;
 using Models;
 using Photon.Pun;
 using UnityEngine;
-using UnityEngine.XR.ARCore;
 
 public class MediatorMinigame : MonoBehaviourPunCallbacks
 {
@@ -150,9 +149,6 @@ public class MediatorMinigame : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
             PhotonNetwork.LoadLevel("board");
     }
-
-
-
     //right now methods are static, so  mediator pattern design  doesn't applies totally
 
     // Update is called once per frame

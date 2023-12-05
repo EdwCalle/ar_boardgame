@@ -41,7 +41,6 @@ public class Singleton : MonoBehaviour
     public int[] CurrentBox { get => currentBox; set => currentBox = value; }
     public int CurrentTurn { get => currentTurn; set => currentTurn = value; }
     public bool IsSinglePlayerMode { get => isSinglePlayerMode; set => isSinglePlayerMode = value; }
-
     private void Awake()
     {
         CreateSingleton();
