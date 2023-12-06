@@ -318,9 +318,9 @@ public class BoardManager : MonoBehaviourPunCallbacks
     }
     public void GoToMinigame(int code)
     {
-        Singleton.instance.SetMinigame(code);
-        if (PhotonNetwork.IsMasterClient)
-            PhotonNetwork.LoadLevel("minigames");
+        Singleton.instance.SetMinigame();
+        //Singleton.instance.currentMinigame = Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.CurrentRound].MyMinigame; ;        if (PhotonNetwork.IsMasterClient)
+        PhotonNetwork.LoadLevel("minigames");
         // Singleton.instance.CurrentBox = currentSquare;
         //SceneManager.LoadScene("minigames");
     }

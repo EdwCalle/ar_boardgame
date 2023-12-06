@@ -28,7 +28,7 @@ public class MediatorMinigame : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     async void Start()
     {
-        Singleton.instance.SetMinigame(3);
+
         if (!Singleton.instance.IsSinglePlayerMode)
             PhotonNetwork.AutomaticallySyncScene = true;
         // setting level from here
@@ -133,7 +133,7 @@ public class MediatorMinigame : MonoBehaviourPunCallbacks
     public void WaitingFinishGame()
     {
 
-        loadingScreenManager.StartAnimation("Regresando al tablero, esperando al resto de jugadores......");
+        loadingScreenManager.StartAnimation("Ingresando al tablero, esperando al resto de jugadores......");
         Score myPartialScore = ScoreManager.GetMinigameResults(Singleton.instance.currentMinigame);
         if (!Singleton.instance.IsSinglePlayerMode)
         {

@@ -55,9 +55,9 @@ namespace Pages
                 round = new Round
                 {
                     Title = title.text,
-                    Minigame1 = minigame1,
-                    Minigame2 = minigame2,
-                    Minigame3 = minigame3,
+                    MyMinigame = minigame1,
+                    //  Minigame2 = minigame2,
+                    //  Minigame3 = minigame3,
                     // FinalMinigame = finalMinigame,
                 };
                 CrudRounds.Create(round);
@@ -65,9 +65,9 @@ namespace Pages
             else
             {
                 round.Title = title.text;
-                round.Minigame1 = minigame1;
-                round.Minigame2 = minigame2;
-                round.Minigame3 = minigame3;
+                round.MyMinigame = minigame1;
+                // round.Minigame2 = minigame2;
+                //round.Minigame3 = minigame3;
                 round.FinalMinigame = finalMinigame;
 
 
@@ -98,9 +98,9 @@ namespace Pages
             Round round = CrudRounds.GetRounds()[pos];
             row.GetComponent<RowManager>().code = round.Id;
             row.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = round.Title;
-            row.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = round.Minigame1.Title;
-            row.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = round.Minigame2.Title;
-            row.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = round.Minigame3.Title;
+            row.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = round.MyMinigame.Title;
+            //  row.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = round.Minigame2.Title;
+            // row.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = round.Minigame3.Title;
             //  row.transform.GetChild(4).GetComponent<TextMeshProUGUI>().text = round.FinalMinigame.Title;
             // row.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = $"{round.Rounds.Count}";
         }

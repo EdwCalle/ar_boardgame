@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.ComponentModel;
 using Models;
 using UnityEngine;
 
@@ -25,8 +24,6 @@ public class Singleton : MonoBehaviour
 
     //for minimage
     private int currentQuestion = 0;
-
-
     // for board funcionality
     [SerializeField]
     private int numberPlayers = 2;
@@ -65,6 +62,73 @@ public class Singleton : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
     }
+    List<Item> exampleModels2 = new List<Item>();
+    List<Round> exampleRounds = new List<Round>();
+    public void models()
+    {
+
+    }
+    public void eRounds()
+    {
+
+        Round round = new Round
+        {
+            Id = 1,
+            Title = "Tema 1: Órganos del Cuerpo Humano",
+            NumberRound = 1
+        };
+        round.Questions.Add(new Question("¿Cuál de las siguientes opciones es una parte del cuerpo humano?", "gato", "perro", "cerebro", "camiseta", 2));
+        round.Questions.Add(new Question("¿Cuál de las siguientes opciones es una parte del cuerpo humano?", "árbol", "manzana", "cerebro", "garras", 2));
+        round.Questions.Add(new Question("¿Cuál de las siguientes opciones es una parte del cuerpo humano?", "brazo", "perro", "pata", "cajón", 2));
+        round.Questions.Add(new Question("¿Cuál de las siguientes opciones es una parte del cuerpo humano?", "pierna", "zapatos", "camiseta", "garra", 0));
+        LoadMinigame1(round);
+        currentGeneralGame.Rounds.Add(round);
+        round = new Round
+        {
+            Id = 2,
+            Title = "Tema 2: Cuerpo saludable",
+            // QuestionForA = new Question("¿Cuál de las siguientes opciones es un carbohidrato?", "cereal", "hamburguesa", "manzana", "cabeza", 0),
+            // QuestionForB = new Question("¿Cuál de las siguientes opciones es un carbohidrato?", "pan", "lechuga", "papas fritas", "vino", 0),
+            // QuestionForC = new Question("¿Cuál de las siguientes opciones es una fruta?", "manzana", "perro", "pata", "cajón", 0),
+            // QuestionForD = new Question("¿Cuál de las siguientes opciones es una fruta?", "pan", "hamburguesa", "sandia", "queso", 2),
+            NumberRound = 2
+        };
+        round.Questions.Add(new Question("¿Cuál de las siguientes opciones es un carbohidrato?", "cereal", "hamburguesa", "manzana", "cabeza", 0));
+        round.Questions.Add(new Question("¿Cuál de las siguientes opciones es un carbohidrato?", "pan", "lechuga", "papas fritas", "vino", 0));
+        round.Questions.Add(new Question("¿Cuál de las siguientes opciones es una fruta?", "manzana", "perro", "pata", "cajón", 0));
+        round.Questions.Add(new Question("¿Cuál de las siguientes opciones es una fruta?", "pan", "hamburguesa", "sandia", "queso", 2));
+        LoadMinigame2(round);
+
+        currentGeneralGame.Rounds.Add(round);
+        round = new Round
+        {
+            Id = 3,
+            Title = "Tema 3: Cuerpo saludable",
+            // QuestionForA = new Question("¿Cuál de las siguientes opciones es un carbohidrato?", "cereal", "hamburguesa", "manzana", "cabeza", 0),
+            // QuestionForB = new Question("¿Cuál de las siguientes opciones es un carbohidrato?", "pan", "lechuga", "papas fritas", "vino", 0),
+            // QuestionForC = new Question("¿Cuál de las siguientes opciones es una fruta?", "manzana", "perro", "pata", "cajón", 0),
+            // QuestionForD = new Question("¿Cuál de las siguientes opciones es una fruta?", "pan", "hamburguesa", "sandia", "queso", 2),
+            NumberRound = 3
+        };
+        round.Questions.Add(new Question("¿Cuál de las siguientes opciones es un carbohidrato?", "cereal", "hamburguesa", "manzana", "cabeza", 0));
+        round.Questions.Add(new Question("¿Cuál de las siguientes opciones es un carbohidrato?", "pan", "lechuga", "papas fritas", "vino", 0));
+        round.Questions.Add(new Question("¿Cuál de las siguientes opciones es una fruta?", "manzana", "perro", "pata", "cajón", 0));
+        round.Questions.Add(new Question("¿Cuál de las siguientes opciones es una fruta?", "pan", "hamburguesa", "sandia", "queso", 2));
+        LoadMinigame3(round);
+        currentGeneralGame.Rounds.Add(round);
+    }
+    public void eQuestionsModel()
+    {
+
+    }
+    public void eQuestionsRounds()
+    {
+
+    }
+    // public Item[] getModels()
+    // {
+    //     //return Item[];
+    // }
     public void PreLoadDataStudent()
     {
         exampleModels = new Item[3];
@@ -116,163 +180,68 @@ public class Singleton : MonoBehaviour
         };
 
         currentGeneralGame = new GeneralGame(01, "Bloque 1:Las Plantas", "Ciencias Naturales");
-        Round exampleRound = new Round
-        {
-            Id = 1,
-            Title = "Tema 1: Órganos del Cuerpo Humano",
-            NumberRound = 1
-        };
-        exampleRound.Questions.Add(new Question("¿Cuál de las siguientes opciones es una parte del cuerpo humano?", "gato", "perro", "cerebro", "camiseta", 2));
-        exampleRound.Questions.Add(new Question("¿Cuál de las siguientes opciones es una parte del cuerpo humano?", "árbol", "manzana", "cerebro", "garras", 2));
-        exampleRound.Questions.Add(new Question("¿Cuál de las siguientes opciones es una parte del cuerpo humano?", "brazo", "perro", "pata", "cajón", 2));
-        exampleRound.Questions.Add(new Question("¿Cuál de las siguientes opciones es una parte del cuerpo humano?", "pierna", "zapatos", "camiseta", "garra", 0));
-        LoadMinigame1(exampleRound);
-        LoadMinigame2(exampleRound);
-        LoadMinigame3(exampleRound);
-        currentGeneralGame.Rounds.Add(exampleRound);
-        exampleRound = new Round
-        {
-            Id = 2,
-            Title = "Tema 2: Cuerpo saludable",
-            // QuestionForA = new Question("¿Cuál de las siguientes opciones es un carbohidrato?", "cereal", "hamburguesa", "manzana", "cabeza", 0),
-            // QuestionForB = new Question("¿Cuál de las siguientes opciones es un carbohidrato?", "pan", "lechuga", "papas fritas", "vino", 0),
-            // QuestionForC = new Question("¿Cuál de las siguientes opciones es una fruta?", "manzana", "perro", "pata", "cajón", 0),
-            // QuestionForD = new Question("¿Cuál de las siguientes opciones es una fruta?", "pan", "hamburguesa", "sandia", "queso", 2),
-            NumberRound = 2
-        };
-        exampleRound.Questions.Add(new Question("¿Cuál de las siguientes opciones es un carbohidrato?", "cereal", "hamburguesa", "manzana", "cabeza", 0));
-        exampleRound.Questions.Add(new Question("¿Cuál de las siguientes opciones es un carbohidrato?", "pan", "lechuga", "papas fritas", "vino", 0));
-        exampleRound.Questions.Add(new Question("¿Cuál de las siguientes opciones es una fruta?", "manzana", "perro", "pata", "cajón", 0));
-        exampleRound.Questions.Add(new Question("¿Cuál de las siguientes opciones es una fruta?", "pan", "hamburguesa", "sandia", "queso", 2));
-        LoadMinigame1(exampleRound);
-        LoadMinigame2(exampleRound);
-        LoadMinigame3(exampleRound);
-        currentGeneralGame.Rounds.Add(exampleRound);
-        exampleRound = new Round(3, "Unidad 3: Caracteristicas de la planta", 3);
-        LoadMinigame3(exampleRound);
+        eRounds();// crear rondas
+
+
         //currentGeneralGame.Rounds.Add(exampleRound);
-
-
-
-
-    }
-    public void PreLoadDataTeacher()
-    {
-
-        Round exampleRound;
-        exampleRound = new Round(1, "tema 1: Las partes de la planta", 1);
-        LoadMinigame1(exampleRound);
-        LoadMinigame2(exampleRound);
-        LoadMinigame3(exampleRound);
-        roundsT.Add(exampleRound);
-        exampleRound = new Round(2, "tema 2: El ciclo de vida la planta", 2);
-        LoadMinigame1(exampleRound);
-        LoadMinigame2(exampleRound);
-        LoadMinigame3(exampleRound);
-        roundsT.Add(exampleRound);
-        exampleRound = new Round(3, "tema 3: La fotosíntesis", 3);
-        LoadMinigame1(exampleRound);
-        LoadMinigame2(exampleRound);
-        LoadMinigame3(exampleRound);
-        roundsT.Add(exampleRound);
-
-        GeneralGame generalGame = new GeneralGame(1, "Unidad 1:Las Plantas", "Ciencias Naturales");
-        generalGame.Rounds.Add(exampleRound); // example 3
-        generalGamesT.Add(generalGame);
-
-        minigamesT.Add(exampleRound.Minigame1);
-        minigamesT.Add(exampleRound.Minigame2);
-        minigamesT.Add(exampleRound.Minigame3);
-
-        LoadMinigame1_4(exampleRound);
-        minigamesT.Add(exampleRound.Minigame1);
-
-
-
     }
 
-    public void SetMinigame(int level)
-    {
-        if (level == 1)
-
-            currentMinigame = currentGeneralGame.Rounds[CurrentRound].Minigame1;
-
-        if (level == 2)
-
-            currentMinigame = currentGeneralGame.Rounds[CurrentRound].Minigame2;
-
-        if (level == 3)
-
-            currentMinigame = currentGeneralGame.Rounds[CurrentRound].Minigame3;
-
+    public void SetMinigame()
+    {  //if (level == 1)
+        currentMinigame = currentGeneralGame.Rounds[CurrentRound].MyMinigame;
+        Debug.Log("Vengo Con:" + currentGeneralGame.Rounds[CurrentRound].ToString());
+        Debug.Log("Vengo Con:" + currentMinigame.ToString());
     }
     public void LoadMinigame1(Round round)
     {
-        round.Minigame1 = new Minigame();
-        round.Minigame1.Id = 1;
-        round.Minigame1.Level = 1;
-        round.Minigame1.ExtraInfo = new ExtraInfo("image");
-        round.Minigame1.Title = "MG01:selecionar la planta Correcta Según sus hojas";
-        round.Minigame1.InteractionTime = 6;
-        round.Minigame1.ResolveTime = 5;
-        round.Minigame1.FeedbackTime = 4;
-        round.Minigame1.TimerState = TimerState.none;
-        //round.Minigame1.Function = "seleccionar el modelo correcto";
-
-        round.Minigame1.Models.Add(exampleModels[0]);
-        round.Minigame1.Models.Add(exampleModels[1]);
-        round.Minigame1.Models.Add(exampleModels[2]);
+        round.MyMinigame = new Minigame
+        {
+            Id = 1,
+            Level = 1,
+            ExtraInfo = new ExtraInfo("image"),
+            Title = "MG01:selecionar la planta Correcta Según sus hojas",
+            InteractionTime = 6,
+            ResolveTime = 5,
+            FeedbackTime = 4,
+            TimerState = TimerState.none
+        };
+        round.MyMinigame.Models.Add(exampleModels[0]);
+        round.MyMinigame.Models.Add(exampleModels[1]);
+        round.MyMinigame.Models.Add(exampleModels[2]);
     }
     public void LoadMinigame2(Round round)
     {
-        round.Minigame2 = new Minigame();
-        round.Minigame2.Id = 2;
-        round.Minigame2.Level = 2;
-        round.Minigame2.ExtraInfo = new ExtraInfo("image");
-        round.Minigame2.Title = "MG02:Explora el area y encuentra todas plantas";
-        round.Minigame2.InteractionTime = 15;
-        round.Minigame2.ResolveTime = 30;
-        round.Minigame2.FeedbackTime = 10;
-        round.Minigame2.TimerState = TimerState.none;
-        //round.Minigame1.Function = "seleccionar el modelo correcto";
-
-        round.Minigame2.Models.Add(exampleModels[0]);
-        round.Minigame2.Models.Add(exampleModels[1]);
-        round.Minigame2.Models.Add(exampleModels[2]);
+        round.MyMinigame = new Minigame
+        {
+            Id = 2,
+            Level = 2,
+            ExtraInfo = new ExtraInfo("image"),
+            Title = "MG02:selecionar la planta Correcta Según sus hojas",
+            InteractionTime = 6,
+            ResolveTime = 5,
+            FeedbackTime = 4,
+            TimerState = TimerState.none
+        };
+        round.MyMinigame.Models.Add(exampleModels[0]);
+        round.MyMinigame.Models.Add(exampleModels[1]);
+        round.MyMinigame.Models.Add(exampleModels[2]);
     }
     public void LoadMinigame3(Round round)
     {
-        round.Minigame3 = new Minigame();
-        round.Minigame3.Id = 3;
-        round.Minigame3.Level = 3;
-        round.Minigame3.ExtraInfo = new ExtraInfo("image");
-        round.Minigame3.Title = "MG03:Caracteristicas de la planta";
-        round.Minigame3.InteractionTime = 5;
-        round.Minigame3.ResolveTime = 5;
-        round.Minigame3.FeedbackTime = 15;
-        round.Minigame3.TimerState = TimerState.none;
-        //round.Minigame1.Function = "seleccionar el modelo correcto";
-
-        round.Minigame3.Models.Add(exampleModels[0]);
-        round.Minigame3.Models.Add(exampleModels[1]);
-        round.Minigame3.Models.Add(exampleModels[2]);
-    }
-    public void LoadMinigame1_4(Round round)
-    {
-        round.Minigame1 = new Minigame();
-        round.Minigame1.Id = 4;
-        round.Minigame1.Level = 1;
-        round.Minigame1.ExtraInfo = new ExtraInfo("image");
-        round.Minigame1.Title = "MG01:selecionar la CASA inCorrecta Según sus hojas";
-        round.Minigame1.InteractionTime = 15;
-        round.Minigame1.ResolveTime = 30;
-        round.Minigame1.FeedbackTime = 10;
-        round.Minigame1.TimerState = TimerState.none;
-        //round.Minigame1.Function = "seleccionar el modelo correcto";
-
-        round.Minigame1.Models.Add(exampleModels[0]);
-        round.Minigame1.Models.Add(exampleModels[1]);
-        round.Minigame1.Models.Add(exampleModels[2]);
+        round.MyMinigame = new Minigame
+        {
+            Id = 3,
+            Level = 3,
+            ExtraInfo = new ExtraInfo("image"),
+            Title = "MG03:selecionar la planta Correcta Según sus hojas",
+            InteractionTime = 6,
+            ResolveTime = 5,
+            FeedbackTime = 4,
+            TimerState = TimerState.none
+        };
+        round.MyMinigame.Models.Add(exampleModels[0]);
+        round.MyMinigame.Models.Add(exampleModels[1]);
+        round.MyMinigame.Models.Add(exampleModels[2]);
     }
 
 
