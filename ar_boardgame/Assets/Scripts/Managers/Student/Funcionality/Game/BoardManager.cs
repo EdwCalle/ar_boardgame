@@ -284,6 +284,10 @@ public class BoardManager : MonoBehaviourPunCallbacks
     }
     public void SelectOption(int value)
     {
+        if (value == Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.CurrentRound].Questions[Singleton.instance.CurrentTurn].Solution)
+        {
+            ScoreManager.addStart(PhotonNetwork.LocalPlayer);
+        }
         //  if (photonView.IsMine)
         photonView.RPC("SelectOptionRPC", RpcTarget.All, value);
     }
@@ -291,7 +295,7 @@ public class BoardManager : MonoBehaviourPunCallbacks
     public async void SelectOptionRPC(int value)
     {
         //playerUI.SelectOption(value);
-
+        UpdatePlayersList();
         await playerUI.SelectOption(value);
         FinishTurn();
         // ChangeTurn();
@@ -330,8 +334,6 @@ public class BoardManager : MonoBehaviourPunCallbacks
     }
     private void UpdatePlayersList()
     {
-
-
         List<Student> students = new();
         foreach (Player player in PhotonNetwork.PlayerList)
         {

@@ -36,5 +36,14 @@ public class ScoreManager
         player.SetCustomProperties(hash);
         return score;
     }
+    public static Score addStart(Player player)
+    {
+        Hashtable hash = player.CustomProperties;
+        Score score = JsonUtility.FromJson<Score>((string)hash["score"]);
+        score.Stars++;
+        hash["score"] = JsonUtility.ToJson(score);
+        player.SetCustomProperties(hash);
+        return score;
+    }
 
 }
