@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using System.Threading.Tasks;
+using System.Collections;
+using System.Collections.Generic;
 public class UIPlayerManager : MonoBehaviour
 {
     [Serializable]
@@ -41,7 +43,16 @@ public class UIPlayerManager : MonoBehaviour
     {
         public GameObject modal;
     }
+    [Serializable]
+    public class PlayerInfo
+    {
+        public TextMeshProUGUI textStars;
+        public TextMeshProUGUI textCaps;
+        public TextMeshProUGUI nickname;
+        public GameObject modal;
+    }
     public RoundInfo roundInfo;
+    public PlayerInfo[] playersList;
     //[Header("Directions")]
     public Arrows arrows;
     // [Header("Showing Minigame")]
@@ -100,6 +111,22 @@ public class UIPlayerManager : MonoBehaviour
         // text3.text = Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.currentRound].Minigame3.Title;
     }
 
+    public void SetPlayersListInfo(List<Student> students)
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            if (i < students.Count)
+            {
+                playersList[i].nickname.text = students[i].NickName;
+                playersList[i].textCaps.text = students[i].Score.Caps + "";
+                playersList[i].textStars.text = students[i].Score.Stars + "";
+            }
+            else
+            {
+                // playersList[i].modal.SetActive(false);
+            }
+        }
+    }
     public void ShowMinigameInfo()
     {
         ShowModal(minigameInfo.modal);
@@ -242,6 +269,7 @@ public class UIPlayerManager : MonoBehaviour
     public void WaitPlayersScreen()
     {
         HideModal(WaitPlayersModal);
+
         // Debug.Log("funciona");
         // WaitPlayersModal.SetActive(value);
         // canvasModal.GetComponent<CanvasGroup>().blocksRaycasts = value;

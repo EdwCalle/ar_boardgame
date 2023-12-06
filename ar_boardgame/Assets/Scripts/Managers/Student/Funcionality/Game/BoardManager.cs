@@ -2,6 +2,9 @@ using UnityEngine;
 using Models;
 using Photon.Pun;
 using System.Threading.Tasks;
+using Photon.Realtime;
+using ExitGames.Client.Photon;
+using System.Collections.Generic;
 public class BoardManager : MonoBehaviourPunCallbacks
 {
     [Header("Board Components")]
@@ -14,7 +17,7 @@ public class BoardManager : MonoBehaviourPunCallbacks
     public float velocity;
     public bool isDefaultDice;
     public int defaultDice;
-    public int numberPlayers = 1;
+    int numberPlayers;
     public float offsetPlayer = 50f;
 
     private int currentSquare = 0;
@@ -30,15 +33,23 @@ public class BoardManager : MonoBehaviourPunCallbacks
 
     void Start()
     {
+        // string json = JsonUtility.ToJson(new Score { Stars = 20 });
+        // string xd = new Score { Stars = 12 }.ToJson();
+        // Debug.Log(new Score().ToJson());
 
+        // Score score = JsonUtility.FromJson<Score>(xd);
+        // {
+        //     Debug.Log(score.ToJson());
+        // }
         if (PhotonNetwork.IsConnected && PhotonNetwork.CurrentRoom != null)
         {
+
             // for sync scenes to other players
             PhotonNetwork.AutomaticallySyncScene = true;
 
 
-
-
+            //get number players
+            numberPlayers = Singleton.instance.NumberPlayers;
             photonView.RPC("WaitPlayers", RpcTarget.All);
 
 
@@ -72,8 +83,9 @@ public class BoardManager : MonoBehaviourPunCallbacks
             playerUI.roundInfo.roundTitle.text = Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.CurrentRound].Title;
             playerUI.roundInfo.numberRound.text = $"Número de ronda: {Singleton.instance.CurrentRound}";
 
-            playerUI.WaitPlayersScreen(); //hide
-                                          // if is new round show partial results
+            playerUI.WaitPlayersScreen();
+            UpdatePlayersList();
+            // if is new round show partial results
             if (Singleton.instance.CurrentRound != 0)
                 ShowPartialResults();
             // show new dialog
@@ -87,8 +99,7 @@ public class BoardManager : MonoBehaviourPunCallbacks
 
     void PreparePlayers()
     {
-        //get number players
-        numberPlayers = Singleton.instance.NumberPlayers;
+
         for (int i = 0; i < 4; i++)//iterate 4 player
         {
             if (i < numberPlayers)  // if local players are the numberplayer
@@ -317,4 +328,23 @@ public class BoardManager : MonoBehaviourPunCallbacks
         Singleton.instance.CurrentTurn = value;
         return value;
     }
+    private void UpdatePlayersList()
+    {
+
+
+        List<Student> students = new();
+        foreach (Player player in PhotonNetwork.PlayerList)
+        {
+
+            Student student = new Student
+            {
+                Score = ScoreManager.UpdatedScore(player).FormatScore(),
+                NickName = player.NickName
+            };
+            students.Add(student);
+        }
+        playerUI.SetPlayersListInfo(students);
+    }
 }
+
+

@@ -1,8 +1,10 @@
 
 using System;
+using ExitGames.Client.Photon;
+using Models;
 using Photon.Pun;
 using Photon.Realtime;
-
+using UnityEngine;
 public class AutomaticConnection : MonoBehaviourPunCallbacks
 {
     //public string scene;
@@ -46,6 +48,7 @@ public class AutomaticConnection : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         PhotonNetwork.NickName = "Player" + PhotonNetwork.CurrentRoom.PlayerCount;
+        ScoreManager.BeginScore(PhotonNetwork.LocalPlayer);
         Singleton.instance.MyTurn = PhotonNetwork.CurrentRoom.PlayerCount - 1;
         SendLogMessage("Entrando a la sala");
         PhotonNetwork.LoadLevel("board");

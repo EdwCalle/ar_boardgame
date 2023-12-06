@@ -1,5 +1,6 @@
 
-using System;
+
+using ExitGames.Client.Photon;
 using Models;
 using Photon.Pun;
 using UnityEngine;
@@ -128,9 +129,12 @@ public class MediatorMinigame : MonoBehaviourPunCallbacks
     }
     public void WaitingFinishGame()
     {
+
         loadingScreenManager.StartAnimation("Regresando al tablero, esperando al resto de jugadores......");
+        Score myPartialScore = Score.GetMinigameResults(Singleton.instance.currentMinigame);
         if (!Singleton.instance.IsSinglePlayerMode)
         {
+            ScoreManager.SetPartialSecore(PhotonNetwork.LocalPlayer, myPartialScore);
             //  Debug.Log("una ves ya pues");
             photonView.RPC("PlayerFinishedGame", RpcTarget.All);
         }
@@ -156,6 +160,8 @@ public class MediatorMinigame : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
             PhotonNetwork.LoadLevel("board");
     }
+
+
     //right now methods are static, so  mediator pattern design  doesn't applies totally
 
     // Update is called once per frame

@@ -50,6 +50,7 @@ public class FooterManager : MonoBehaviour
     }
     public void ShowResults()
     {
+
         Result.Container.SetActive(true);
         Score currentMinigameScore = Score.GetMinigameResults(Singleton.instance.currentMinigame);
         Result.Label.text = $"Ganaste {currentMinigameScore.Stars}";
