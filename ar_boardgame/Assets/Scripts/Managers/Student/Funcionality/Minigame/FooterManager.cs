@@ -52,7 +52,7 @@ public class FooterManager : MonoBehaviour
     {
 
         Result.Container.SetActive(true);
-        Score currentMinigameScore = Score.GetMinigameResults(Singleton.instance.currentMinigame);
+        Score currentMinigameScore = ScoreManager.GetMinigameResults(Singleton.instance.currentMinigame);
         Result.Label.text = $"Ganaste {currentMinigameScore.Stars}";
         Result.Label2.text = $"de {Singleton.instance.currentMinigame.Models.Count} posibles";
 

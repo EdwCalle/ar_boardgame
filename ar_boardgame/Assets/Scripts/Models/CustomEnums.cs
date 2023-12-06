@@ -11,6 +11,7 @@ namespace Models
     {
         noSelection,
         OneSelection,
+        OneTimeSelection,
         MultipleSelection
     }
     public enum ExtraComponentType

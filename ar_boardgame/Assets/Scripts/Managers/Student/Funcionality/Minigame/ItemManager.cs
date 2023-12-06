@@ -58,7 +58,11 @@ public class ItemManager : MonoBehaviour
     }
     public void ShowFeedback(int index)
     {
-        modelCollider.GetComponent<SelectableModel>().SetCorrect(index);
+        if (Singleton.instance.currentMinigame.ExtraComponent != ExtraComponentType.explore)
+        {
+            modelCollider.GetComponent<SelectableModel>().SetCorrect(index);
+        }
+
         //   transform.GetChild(1).gameObject.GetComponent<SelectableModel>().SetCorrect();
     }
     public async Task<bool> LoadModel()

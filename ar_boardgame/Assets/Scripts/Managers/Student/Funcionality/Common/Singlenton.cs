@@ -67,7 +67,7 @@ public class Singleton : MonoBehaviour
         exampleModels[0] = new Item
         {
             Code = 1,
-            Name = "pato",
+            Name = "Margarita",
             Description = "some description",
             Url = "Models3D/margarita.glb",
             Position = new Vector3(1f, 0.5f, -1.5f),
@@ -80,7 +80,7 @@ public class Singleton : MonoBehaviour
         exampleModels[1] = new Item
         {
             Code = 2,
-            Name = "pato",
+            Name = "Arbusto",
             Description = "some description",
             Url = "Models3D/arbusto.glb",
             Position = new Vector3(0, 0.5f, 0f),
@@ -93,7 +93,7 @@ public class Singleton : MonoBehaviour
         exampleModels[2] = new Item
         {
             Code = 3,
-            Name = "pato",
+            Name = "Cactus",
             Description = "some description",
             Url = "Models3D/cactus.glb",
             Position = new Vector3(-1.5f, 0.5f, 1.5f),

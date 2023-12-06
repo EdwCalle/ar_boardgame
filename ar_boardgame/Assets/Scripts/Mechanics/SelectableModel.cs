@@ -3,7 +3,7 @@ using Models;
 public class SelectableModel : MonoBehaviour
 {
 
-
+    public MediatorMinigame mediatorMinigame;
     private bool isSelected = false;
     private bool isSolution;
     public int index;
@@ -44,6 +44,12 @@ public class SelectableModel : MonoBehaviour
                 lastSelectedItem = index;
 
             }
+            else if (selection == SelectionType.OneTimeSelection)
+            {
+                print(index);
+                FindedItem();
+            }
+
             if (selection == SelectionType.MultipleSelection)
                 // if the selection is Multyply selection 
                 SwitchModelSelected();
@@ -101,6 +107,12 @@ public class SelectableModel : MonoBehaviour
         currentColor.a = Mathf.Clamp01(0.3960784f);
         GetComponent<Renderer>().material.color = currentColor;
 
+    }
+    public void FindedItem()
+    {
+        Singleton.instance.currentMinigame.Models[index].IsSelected = true;
+        mediatorMinigame.FoundItem(index);
+        gameObject.SetActive(false);
     }
     public void SwitchModelSelected()
     {

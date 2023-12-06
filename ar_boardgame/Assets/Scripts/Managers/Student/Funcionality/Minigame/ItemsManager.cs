@@ -9,6 +9,8 @@ public class ItemsManager : MonoBehaviour
 {
     [SerializeField] private GameObject itemPrefab;
 
+    [SerializeField] private MediatorMinigame mediatorMinigame;
+
     //for level 1,2,3,5,7
     public static List<GameObject> items;
 
@@ -50,6 +52,8 @@ public class ItemsManager : MonoBehaviour
         foreach (Item item in Singleton.instance.currentMinigame.Models)
         {
             GameObject instance = createItem(item.Position);
+            instance.transform.GetChild(0).GetComponent<SelectableModel>().mediatorMinigame = mediatorMinigame;
+
             instance.transform.parent = transform;
             instance.GetComponent<ItemManager>().ItemManagerBuilder(i++,
                                                                       item.ModelInBox,
@@ -67,7 +71,8 @@ public class ItemsManager : MonoBehaviour
     }
     public async Task PrepareLevel()
     {
-        if (Singleton.instance.currentMinigame.ExtraComponent == ExtraComponentType.normal)
+        ExtraComponentType extraComponentType = Singleton.instance.currentMinigame.ExtraComponent;
+        if (extraComponentType == ExtraComponentType.normal || extraComponentType == ExtraComponentType.explore)
             await LoadMultipleModels();
     }
 

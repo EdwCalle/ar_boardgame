@@ -61,6 +61,7 @@ public class CountdownTimer : MonoBehaviour
         ChangeState(true, TimerState.offset, offSet, "Hora de Resolver el Juego!!!!!!!");
         yield return StartCoroutine(CountownTimer(currentTime));
 
+        mediatorMinigame.ActivateHeader();
         ChangeState(false, TimerState.resolve, resolveTime);
         yield return StartCoroutine(CountownTimer(currentTime));
         ChangeState(true, TimerState.offset, offSet, "Se acabó el tiempo, pero te dejo las respuestas");
@@ -74,7 +75,6 @@ public class CountdownTimer : MonoBehaviour
         yield return StartCoroutine(CountownTimer(currentTime));
         Singleton.instance.currentMinigame.TimerState = TimerState.none;
         gameFinish = true;
-
 
     }
     IEnumerator CountownTimer(float elapsedTime)
@@ -113,6 +113,8 @@ public class CountdownTimer : MonoBehaviour
         this.currentTime = currentTime;
         if (message != null)
             SetMessage(message);
+
+
 
     }
     void SetMessage(string text)

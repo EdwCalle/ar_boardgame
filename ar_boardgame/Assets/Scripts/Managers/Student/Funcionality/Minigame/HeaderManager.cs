@@ -15,6 +15,7 @@ public class HeaderManager : MonoBehaviour
     //level 4:
     [SerializeField] private GameObject numberQuestion;
     [SerializeField] private TextMeshProUGUI numberQuestionText;
+    [SerializeField] private GameObject modal;
     // Start is called before the first frame update
     void Start()
     {
@@ -57,6 +58,10 @@ public class HeaderManager : MonoBehaviour
     public void SetNumberQuestion(int numberQuestion, int max)
     {
         this.numberQuestionText.text = $"{numberQuestion}/{max}";
+    }
+    public void ActivateHeader()
+    {
+        gameObject.SetActive(true);
     }
 
     public void HideExtraComponents()
