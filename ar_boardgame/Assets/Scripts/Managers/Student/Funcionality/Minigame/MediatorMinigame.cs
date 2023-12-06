@@ -124,7 +124,7 @@ public class MediatorMinigame : MonoBehaviourPunCallbacks
 
         // start timer
         timerManager.PrepareLevel();
-        ActivateCamera();
+        //ActivateCamera();
         // Debug.Log("preparing xd");
     }
     public void WaitingFinishGame()

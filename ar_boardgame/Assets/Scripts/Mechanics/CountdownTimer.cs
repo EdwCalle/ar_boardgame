@@ -24,20 +24,43 @@ public class CountdownTimer : MonoBehaviour
     public bool gameStart;
     public bool gameFinish;
 
+    public DetectPlane detectPlane;
 
+    public GameObject scene;
     void Start()
     {
 
     }
     IEnumerator MinigameQueqe()
     {
+        ChangeState(true, TimerState.offset, offSet, "Enfoca tus alrededores para dectectar el escenario");
+        yield return StartCoroutine(CountownTimer(currentTime));
 
-        ChangeState(true, TimerState.offset, offSet, "Enfoca la cámara y exploremos el nivel");
+        ChangeState(false, TimerState.offset, 6f);
+        detectPlane.EnablePlaneDetection(true);
         yield return StartCoroutine(CountownTimer(currentTime));
-        ChangeState(false, TimerState.interaction, interactionTime);
+
+        detectPlane.EnablePlaneDetection(false);
+        scene.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
+        ChangeState(true, TimerState.offset, offSet, "Ahora ubica el escenario acorde a tu espacio");
         yield return StartCoroutine(CountownTimer(currentTime));
+
+        detectPlane.EnableTap(true);
+        ChangeState(false, TimerState.offset, 15f);
+        yield return StartCoroutine(CountownTimer(currentTime));
+
+
+        detectPlane.EnableTap(false);
+        mediatorMinigame.ActivateCamera();
+        // ChangeState(true, TimerState.offset, offSet, "Enfoca la cámara y exploremos el nivel");
+        // yield return StartCoroutine(CountownTimer(currentTime));
+
+        // ChangeState(false, TimerState.interaction, interactionTime);
+        // yield return StartCoroutine(CountownTimer(currentTime));
+
         ChangeState(true, TimerState.offset, offSet, "Hora de Resolver el Juego!!!!!!!");
         yield return StartCoroutine(CountownTimer(currentTime));
+
         ChangeState(false, TimerState.resolve, resolveTime);
         yield return StartCoroutine(CountownTimer(currentTime));
         ChangeState(true, TimerState.offset, offSet, "Se acabó el tiempo, pero te dejo las respuestas");

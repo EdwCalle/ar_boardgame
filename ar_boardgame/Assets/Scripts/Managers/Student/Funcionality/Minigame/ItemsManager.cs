@@ -11,6 +11,8 @@ public class ItemsManager : MonoBehaviour
 
     //for level 1,2,3,5,7
     public static List<GameObject> items;
+
+    public GameObject objects;
     //for level 4,6
     // [SerializeField] private MediatorMinigame mediatorMinigame;
 
@@ -32,6 +34,7 @@ public class ItemsManager : MonoBehaviour
         //     items[i].GetComponent<ItemManager>().SetActive(active); ;
         // }
         transform.gameObject.SetActive(true);
+        objects.SetActive(true);
     }
     public static void ShowFeedback()
     {

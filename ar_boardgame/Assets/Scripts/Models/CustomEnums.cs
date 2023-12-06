@@ -27,6 +27,8 @@ namespace Models
     {
         none,
         offset,
+        detectPlane,
+        configPlane,
         interaction,
         resolve,
         feedback
