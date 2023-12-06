@@ -28,7 +28,7 @@ public class MediatorMinigame : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     async void Start()
     {
-        Singleton.instance.SetMinigame(2);
+        Singleton.instance.SetMinigame(3);
         if (!Singleton.instance.IsSinglePlayerMode)
             PhotonNetwork.AutomaticallySyncScene = true;
         // setting level from here
@@ -40,7 +40,7 @@ public class MediatorMinigame : MonoBehaviourPunCallbacks
             Singleton.instance.currentMinigame.ConfigureLevel(HeaderType.normal, SelectionType.OneTimeSelection, ExtraComponentType.explore);
         // level 3
         if (Singleton.instance.currentMinigame.Level == 3)
-            Singleton.instance.currentMinigame.ConfigureLevel(HeaderType.questions, SelectionType.OneSelection, ExtraComponentType.options);
+            Singleton.instance.currentMinigame.ConfigureLevel(HeaderType.questions, SelectionType.noSelection, ExtraComponentType.options);
 
 
         // disable ar session
@@ -54,9 +54,6 @@ public class MediatorMinigame : MonoBehaviourPunCallbacks
         // prepare items
         await itemsManager.PrepareLevel();
 
-        // PrepareLevel();
-        Debug.Log("why should i do");
-        //playersReady++;
         if (Singleton.instance.IsSinglePlayerMode)
         {
             StartGame();
@@ -88,13 +85,17 @@ public class MediatorMinigame : MonoBehaviourPunCallbacks
     public void ActivateFinish(bool active)
     {
         footerManager.ActivateFinish(active);
+        ItemsManager.ShowFeedback();
+        footerManager.ShowFeedback();
         footerManager.ShowResults();
+
         itemFinderManager.ActiveListFound(false);
     }
-    public void ActivateCamera()
+    public void PrepareMinigame()
     {
 
         itemsManager.ActivateItems();
+        footerManager.PrepareLevel();
 
     }
     [PunRPC]
@@ -118,7 +119,7 @@ public class MediatorMinigame : MonoBehaviourPunCallbacks
         //prepare extra item
 
         //prepare footer
-        footerManager.PrepareLevel();
+        //   footerManager.PrepareLevel();
         // prepare timer
 
         // disable resume
@@ -136,7 +137,7 @@ public class MediatorMinigame : MonoBehaviourPunCallbacks
         Score myPartialScore = ScoreManager.GetMinigameResults(Singleton.instance.currentMinigame);
         if (!Singleton.instance.IsSinglePlayerMode)
         {
-            ScoreManager.SetPartialSecore(PhotonNetwork.LocalPlayer, myPartialScore);
+            ScoreManager.SetPartialScore(PhotonNetwork.LocalPlayer, myPartialScore);
             //  Debug.Log("una ves ya pues");
             photonView.RPC("PlayerFinishedGame", RpcTarget.All);
         }
@@ -175,6 +176,11 @@ public class MediatorMinigame : MonoBehaviourPunCallbacks
     {
         itemFinderManager.CheckItem(index);
     }
+    public void PrepareLevelFooter()
+    {
+        footerManager.PrepareLevel();
+    }
+
 
     //right now methods are static, so  mediator pattern design  doesn't applies totally
 

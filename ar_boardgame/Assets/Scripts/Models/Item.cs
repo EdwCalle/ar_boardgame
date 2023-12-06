@@ -16,6 +16,7 @@ namespace Models
 
         private ModelInBox modelInBox;
         private Vector3 colliderScale;
+        private Question question;
         public Item()
         {
         }
@@ -45,6 +46,7 @@ namespace Models
         public ModelInBox ModelInBox { get => modelInBox; set => modelInBox = value; }
         public Vector3 ColliderScale { get => colliderScale; set => colliderScale = value; }
         public Collider Collider { get; internal set; }
+        public Question Question { get => question; set => question = value; }
 
         // public Vector3 GetPosition()
         // {

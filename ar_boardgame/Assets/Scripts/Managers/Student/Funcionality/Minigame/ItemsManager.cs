@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Models;
 using UnityEngine;
+using UnityEngine.U2D.IK;
 //using UnityGLTF;
 
 public class ItemsManager : MonoBehaviour
@@ -36,8 +37,23 @@ public class ItemsManager : MonoBehaviour
         //     items[i].GetComponent<ItemManager>().SetActive(active); ;
         // }
         transform.gameObject.SetActive(true);
-        objects.SetActive(true);
+
+        ExtraComponentType extraComponentType = Singleton.instance.currentMinigame.ExtraComponent;
+        if (extraComponentType == ExtraComponentType.options)
+        {
+
+        }
+        else
+        {
+            objects.SetActive(true);
+        }
     }
+    public void ActiveCurrentItem(int before, int current)
+    {
+        items[before].SetActive(false);
+        items[current].SetActive(true);
+    }
+
     public static void ShowFeedback()
     {
         for (int i = 0; i < items.Count; i++)
@@ -63,8 +79,15 @@ public class ItemsManager : MonoBehaviour
                                                                       );
 
             bool verify = await instance.GetComponent<ItemManager>().LoadModel();
+
             if (!verify)
                 print("something wrong happens, please make something with this");
+
+            ExtraComponentType extraComponentType = Singleton.instance.currentMinigame.ExtraComponent;
+            if (extraComponentType == ExtraComponentType.options)
+            {
+                instance.SetActive(false);
+            }
             items.Add(instance);
         }
 
@@ -72,8 +95,12 @@ public class ItemsManager : MonoBehaviour
     public async Task PrepareLevel()
     {
         ExtraComponentType extraComponentType = Singleton.instance.currentMinigame.ExtraComponent;
-        if (extraComponentType == ExtraComponentType.normal || extraComponentType == ExtraComponentType.explore)
+        if (extraComponentType == ExtraComponentType.normal || extraComponentType == ExtraComponentType.explore || extraComponentType == ExtraComponentType.options)
+        {
             await LoadMultipleModels();
+
+        }
+
     }
 
     void OnDestroy()

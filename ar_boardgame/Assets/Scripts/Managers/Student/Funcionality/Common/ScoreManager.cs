@@ -18,7 +18,7 @@ public class ScoreManager
         hash["partialScore"] = JsonUtility.ToJson(new Score { stars = 0, caps = 0 });
         player.SetCustomProperties(hash);
     }
-    public static void SetPartialSecore(Player player, Score partialScore)
+    public static void SetPartialScore(Player player, Score partialScore)
     {
         Hashtable hash = player.CustomProperties;
         hash["partialScore"] = JsonUtility.ToJson(partialScore);
@@ -90,7 +90,7 @@ public class ScoreManager
         int stars = 0;
         foreach (Item item in minigame.Models)
         {
-            if (item.IsSolution = item.IsSelected)
+            if (item.Question.IsSelected == item.Question.Solution)
                 stars++;
         }
         return new Score { Stars = stars };

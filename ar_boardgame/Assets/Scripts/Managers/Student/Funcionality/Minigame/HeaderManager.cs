@@ -16,6 +16,8 @@ public class HeaderManager : MonoBehaviour
     [SerializeField] private GameObject numberQuestion;
     [SerializeField] private TextMeshProUGUI numberQuestionText;
     [SerializeField] private GameObject modal;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -70,6 +72,7 @@ public class HeaderManager : MonoBehaviour
         description.SetActive(false);
         numberQuestion.SetActive(false);
     }
+
 
     public void PrepareLevel()
     {

@@ -36,7 +36,7 @@ public class CountdownTimer : MonoBehaviour
         ChangeState(true, TimerState.offset, offSet, "Enfoca tus alrededores para dectectar el escenario");
         yield return StartCoroutine(CountownTimer(currentTime));
 
-        ChangeState(false, TimerState.offset, 6f);
+        ChangeState(false, TimerState.offset, 2f);//6
         detectPlane.EnablePlaneDetection(true);
         yield return StartCoroutine(CountownTimer(currentTime));
 
@@ -46,12 +46,12 @@ public class CountdownTimer : MonoBehaviour
         yield return StartCoroutine(CountownTimer(currentTime));
 
         detectPlane.EnableTap(true);
-        ChangeState(false, TimerState.offset, 15f);
+        ChangeState(false, TimerState.offset, 2f);//15
         yield return StartCoroutine(CountownTimer(currentTime));
 
 
         detectPlane.EnableTap(false);
-        mediatorMinigame.ActivateCamera();
+        mediatorMinigame.PrepareMinigame();
         // ChangeState(true, TimerState.offset, offSet, "Enfoca la cámara y exploremos el nivel");
         // yield return StartCoroutine(CountownTimer(currentTime));
 
@@ -66,13 +66,12 @@ public class CountdownTimer : MonoBehaviour
         yield return StartCoroutine(CountownTimer(currentTime));
         ChangeState(true, TimerState.offset, offSet, "Se acabó el tiempo, pero te dejo las respuestas");
         yield return StartCoroutine(CountownTimer(currentTime));
-        ChangeState(false, TimerState.feedback, feedbackTime);
-        //SHOW Anwser
-        ItemsManager.ShowFeedback();
-        // ItemsManager.ShowFeedback();
-        // show footer-finish
+
+
         mediatorMinigame.ActivateFinish(true);
+        ChangeState(false, TimerState.feedback, feedbackTime);
         yield return StartCoroutine(CountownTimer(currentTime));
+
         Singleton.instance.currentMinigame.TimerState = TimerState.none;
         gameFinish = true;
 

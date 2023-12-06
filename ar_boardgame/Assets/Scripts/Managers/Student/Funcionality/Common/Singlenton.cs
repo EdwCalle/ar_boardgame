@@ -22,6 +22,11 @@ public class Singleton : MonoBehaviour
     public List<Minigame> minigamesT = new List<Minigame>();
     //public List<Round> roundsT = new List<Round>();
 
+
+    //for minimage
+    private int currentQuestion = 0;
+
+
     // for board funcionality
     [SerializeField]
     private int numberPlayers = 2;
@@ -41,6 +46,8 @@ public class Singleton : MonoBehaviour
     public int[] CurrentBox { get => currentBox; set => currentBox = value; }
     public int CurrentTurn { get => currentTurn; set => currentTurn = value; }
     public bool IsSinglePlayerMode { get => isSinglePlayerMode; set => isSinglePlayerMode = value; }
+    public int CurrentQuestion { get => currentQuestion; set => currentQuestion = value; }
+
     private void Awake()
     {
         CreateSingleton();
@@ -76,6 +83,8 @@ public class Singleton : MonoBehaviour
             IsSelected = false,
             ModelInBox = new ModelInBox { Position = new Vector3(0, -0.15f, -0.5f), Scale = new Vector3(1f, 1f, 1f) },
             ColliderScale = new Vector3(0.5f, 0.5f, 0.5f),
+            Question = new Question { Title = "Pregunta 1", OptionA = "1", OptionB = "2", OptionC = "3", OptionD = "4", Solution = 1 }
+
         };
         exampleModels[1] = new Item
         {
@@ -89,6 +98,7 @@ public class Singleton : MonoBehaviour
             IsSelected = false,
             ModelInBox = new ModelInBox { Position = new Vector3(0, -0.15f, -0.5f), Scale = new Vector3(1f, 1f, 1f) },
             ColliderScale = new Vector3(0.5f, 0.5f, 0.5f),
+            Question = new Question { Title = "Pregunta 2", OptionA = "1a", OptionB = "2b", OptionC = "3c", OptionD = "4d", Solution = 2 }
         };
         exampleModels[2] = new Item
         {
@@ -102,6 +112,7 @@ public class Singleton : MonoBehaviour
             IsSelected = false,
             ModelInBox = new ModelInBox { Position = new Vector3(0, -0.15f, -0.5f), Scale = new Vector3(1f, 1f, 1f) },
             ColliderScale = new Vector3(0.5f, 0.5f, 0.5f),
+            Question = new Question { Title = "Pregunta 3", OptionA = "a", OptionB = "b", OptionC = "c", OptionD = "d", Solution = 0 }
         };
 
         currentGeneralGame = new GeneralGame(01, "Bloque 1:Las Plantas", "Ciencias Naturales");
@@ -137,7 +148,8 @@ public class Singleton : MonoBehaviour
         LoadMinigame2(exampleRound);
         LoadMinigame3(exampleRound);
         currentGeneralGame.Rounds.Add(exampleRound);
-        // exampleRound = new Round(3, "Unidad 3: Tipos de plantas", 3);
+        exampleRound = new Round(3, "Unidad 3: Caracteristicas de la planta", 3);
+        LoadMinigame3(exampleRound);
         //currentGeneralGame.Rounds.Add(exampleRound);
 
 
@@ -234,10 +246,10 @@ public class Singleton : MonoBehaviour
         round.Minigame3.Id = 3;
         round.Minigame3.Level = 3;
         round.Minigame3.ExtraInfo = new ExtraInfo("image");
-        round.Minigame3.Title = "MG03:selecionar las plantas correctas";
-        round.Minigame3.InteractionTime = 15;
-        round.Minigame3.ResolveTime = 30;
-        round.Minigame3.FeedbackTime = 10;
+        round.Minigame3.Title = "MG03:Caracteristicas de la planta";
+        round.Minigame3.InteractionTime = 5;
+        round.Minigame3.ResolveTime = 5;
+        round.Minigame3.FeedbackTime = 15;
         round.Minigame3.TimerState = TimerState.none;
         //round.Minigame1.Function = "seleccionar el modelo correcto";
 

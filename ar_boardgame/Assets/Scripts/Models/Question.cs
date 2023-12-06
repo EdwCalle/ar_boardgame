@@ -8,6 +8,7 @@ namespace Models
         private string optionC;
         private string optionD;
         private int solution;
+        private int isSelected = 0;
 
 
 
@@ -17,6 +18,7 @@ namespace Models
         public string OptionA { get => optionA; set => optionA = value; }
         public string Title { get => title; set => title = value; }
         public int Solution { get => solution; set => solution = value; }
+        public int IsSelected { get => isSelected; set => isSelected = value; }
 
         public Question(string title, string OptionA, string OptionB, string OptionC, string OptionD, int solution = 0)
         {
@@ -26,6 +28,9 @@ namespace Models
             this.OptionA = OptionA;
             this.title = title;
             this.solution = solution;
+        }
+        public Question()
+        {
         }
     }
 }
