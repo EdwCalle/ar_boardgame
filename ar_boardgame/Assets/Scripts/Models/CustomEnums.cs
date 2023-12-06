@@ -15,7 +15,8 @@ namespace Models
     }
     public enum ExtraComponentType
     {
-        normal, // level 1,2,3
+        normal,
+        explore, // level 1,2,3
         options, //level 4
         sorter, //level 5
         completeWord, //level 6

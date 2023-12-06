@@ -217,7 +217,7 @@ public class Singleton : MonoBehaviour
         round.Minigame2.Id = 2;
         round.Minigame2.Level = 2;
         round.Minigame2.ExtraInfo = new ExtraInfo("image");
-        round.Minigame2.Title = "MG02:Explora el Área y selecciona la opcion correcte";
+        round.Minigame2.Title = "MG02:Explora el area y encuentra todas plantas";
         round.Minigame2.InteractionTime = 15;
         round.Minigame2.ResolveTime = 30;
         round.Minigame2.FeedbackTime = 10;

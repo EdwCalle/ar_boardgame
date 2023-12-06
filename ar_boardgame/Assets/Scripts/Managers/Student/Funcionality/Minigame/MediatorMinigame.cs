@@ -27,7 +27,7 @@ public class MediatorMinigame : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     async void Start()
     {
-        // Singleton.instance.SetMinigame(1);
+        Singleton.instance.SetMinigame(2);
         if (!Singleton.instance.IsSinglePlayerMode)
             PhotonNetwork.AutomaticallySyncScene = true;
         // setting level from here
@@ -36,10 +36,10 @@ public class MediatorMinigame : MonoBehaviourPunCallbacks
             Singleton.instance.currentMinigame.ConfigureLevel(HeaderType.extraInfo, SelectionType.MultipleSelection, ExtraComponentType.normal);
         // level 2
         if (Singleton.instance.currentMinigame.Level == 2)
-            Singleton.instance.currentMinigame.ConfigureLevel(HeaderType.normal, SelectionType.OneSelection, ExtraComponentType.normal);
+            Singleton.instance.currentMinigame.ConfigureLevel(HeaderType.normal, SelectionType.MultipleSelection, ExtraComponentType.normal);
         // level 3
         if (Singleton.instance.currentMinigame.Level == 3)
-            Singleton.instance.currentMinigame.ConfigureLevel(HeaderType.normal, SelectionType.MultipleSelection, ExtraComponentType.normal);
+            Singleton.instance.currentMinigame.ConfigureLevel(HeaderType.questions, SelectionType.OneSelection, ExtraComponentType.options);
 
 
         // disable ar session
