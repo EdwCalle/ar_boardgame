@@ -39,7 +39,7 @@ public class ItemsManager : MonoBehaviour
         transform.gameObject.SetActive(true);
 
         ExtraComponentType extraComponentType = Singleton.instance.currentMinigame.ExtraComponent;
-        if (extraComponentType == ExtraComponentType.options)
+        if (extraComponentType == ExtraComponentType.options || extraComponentType == ExtraComponentType.normal)
         {
 
         }

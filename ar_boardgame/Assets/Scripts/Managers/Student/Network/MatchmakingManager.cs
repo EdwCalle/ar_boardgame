@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class MatchmakingManager : MonoBehaviourPunCallbacks
 {
@@ -30,12 +31,13 @@ public class MatchmakingManager : MonoBehaviourPunCallbacks
         PhotonNetwork.JoinLobby(customLobby);
     }
 
+
     public void CreateRoom()
     {
 
         PhotonNetwork.CreateRoom(nameCreatedRoom.text, new RoomOptions()
         {
-            MaxPlayers = 4,
+            MaxPlayers = 2,
             IsVisible = true,
             IsOpen = true
         });
@@ -50,6 +52,10 @@ public class MatchmakingManager : MonoBehaviourPunCallbacks
     }
     public override void OnJoinedRoom()
     {
+        // PhotonNetwork.NickName = "Player" + PhotonNetwork.CurrentRoom.PlayerCount;
+        ScoreManager.BeginScore(PhotonNetwork.LocalPlayer);
+        Singleton.instance.MyTurn = PhotonNetwork.CurrentRoom.PlayerCount - 1;
+        //  SendLogMessage("Entrando a la sala");
         PhotonNetwork.LoadLevel("board");
     }
     public override void OnJoinedLobby()
@@ -59,6 +65,10 @@ public class MatchmakingManager : MonoBehaviourPunCallbacks
     public override void OnLeftLobby()
     {
         cachedRoomList.Clear();
+    }
+    public override void OnLeftRoom()
+    {
+        SceneManager.LoadScene("mainPageStudent");
     }
     public override void OnDisconnected(DisconnectCause cause)
     {
@@ -78,7 +88,7 @@ public class MatchmakingManager : MonoBehaviourPunCallbacks
             }
 
         }
-        message.text = "Salas Activas:\n " + cachedRoomList.Count;
+        message.text = "Salas Activas: " + cachedRoomList.Count + "\n";
 
         foreach (KeyValuePair<string, RoomInfo> item in cachedRoomList)
         {

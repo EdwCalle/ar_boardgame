@@ -13,7 +13,7 @@ public class ScoreManager
     {
         Hashtable hash = player.CustomProperties;
 
-        hash["score"] = JsonUtility.ToJson(new Score { stars = 3, caps = 5 });
+        hash["score"] = JsonUtility.ToJson(new Score { stars = 0, caps = 0 });
         Debug.Log(hash["score"]);
         hash["partialScore"] = JsonUtility.ToJson(new Score { stars = 0, caps = 0 });
         player.SetCustomProperties(hash);

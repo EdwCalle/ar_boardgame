@@ -18,7 +18,7 @@ public class CountdownTimer : MonoBehaviour
     public float ResolveTime { get => resolveTime; set => resolveTime = value; }
     public float FeedbackTime { get => feedbackTime; set => feedbackTime = value; }
 
-    float offSet = 3f;
+    float offSet = 4f;
     public Texting messageState;
     public Texting textTime;
     public bool gameStart;
@@ -36,7 +36,7 @@ public class CountdownTimer : MonoBehaviour
         ChangeState(true, TimerState.offset, offSet, "Enfoca tus alrededores para dectectar el escenario");
         yield return StartCoroutine(CountownTimer(currentTime));
 
-        ChangeState(false, TimerState.offset, 2f);//6
+        ChangeState(false, TimerState.offset, 6f);//6
         detectPlane.EnablePlaneDetection(true);
         yield return StartCoroutine(CountownTimer(currentTime));
 
@@ -46,7 +46,7 @@ public class CountdownTimer : MonoBehaviour
         yield return StartCoroutine(CountownTimer(currentTime));
 
         detectPlane.EnableTap(true);
-        ChangeState(false, TimerState.offset, 2f);//15
+        ChangeState(false, TimerState.offset, 15f);//15
         yield return StartCoroutine(CountownTimer(currentTime));
 
 

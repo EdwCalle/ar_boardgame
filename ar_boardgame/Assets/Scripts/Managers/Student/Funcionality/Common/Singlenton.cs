@@ -99,7 +99,7 @@ public class Singleton : MonoBehaviour
         round.Questions.Add(new Question("¿Cuál de las siguientes opciones es una fruta?", "pan", "hamburguesa", "sandia", "queso", 2));
         LoadMinigame2(round);
 
-        currentGeneralGame.Rounds.Add(round);
+        // currentGeneralGame.Rounds.Add(round);
         round = new Round
         {
             Id = 3,
@@ -115,7 +115,7 @@ public class Singleton : MonoBehaviour
         round.Questions.Add(new Question("¿Cuál de las siguientes opciones es una fruta?", "manzana", "perro", "pata", "cajón", 0));
         round.Questions.Add(new Question("¿Cuál de las siguientes opciones es una fruta?", "pan", "hamburguesa", "sandia", "queso", 2));
         LoadMinigame3(round);
-        currentGeneralGame.Rounds.Add(round);
+        //  currentGeneralGame.Rounds.Add(round);
     }
     public void eQuestionsModel()
     {

@@ -42,6 +42,7 @@ public class UIPlayerManager : MonoBehaviour
     public class ResultsInfo
     {
         public GameObject modal;
+        public TextMeshProUGUI wimmner;
     }
     [Serializable]
     public class PlayerInfo
@@ -53,6 +54,7 @@ public class UIPlayerManager : MonoBehaviour
     }
     public RoundInfo roundInfo;
     public PlayerInfo[] playersList;
+    public PlayerInfo[] playersList2;
     //[Header("Directions")]
     public Arrows arrows;
     // [Header("Showing Minigame")]
@@ -106,7 +108,7 @@ public class UIPlayerManager : MonoBehaviour
 
     public void SetTitlteMinigame()
     {
-        minigameInfo.MinigameTitle.text = Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.CurrentRound].MyMinigame.Title;
+        minigameInfo.MinigameTitle.text = "Vamos a jugar:" + Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.CurrentRound].MyMinigame.Title;
         // text2.text = Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.currentRound].Minigame2.Title;
         // text3.text = Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.currentRound].Minigame3.Title;
     }
@@ -127,9 +129,27 @@ public class UIPlayerManager : MonoBehaviour
             }
         }
     }
+    public void SetPlayersListInfo2(List<Student> students)
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            if (i < students.Count)
+            {
+                playersList2[i].nickname.text = students[i].NickName;
+                playersList2[i].textCaps.text = students[i].Score.Caps + "";
+                playersList2[i].textStars.text = students[i].Score.Stars + "";
+            }
+            else
+            {
+                // playersList[i].modal.SetActive(false);
+            }
+        }
+    }
+
     public void ShowMinigameInfo()
     {
         ShowModal(minigameInfo.modal);
+        SetTitlteMinigame();
     }
     public void ShowDice()
     {
@@ -139,9 +159,10 @@ public class UIPlayerManager : MonoBehaviour
     {
         roundInfo.diceButton.SetActive(false);
     }
-    public void ShowResultsInfo()
+    public void ShowResultsInfo(String name)
     {
         ShowModal(resultsInfo.modal);
+        resultsInfo.wimmner.text = "El ganador es...." + name;
     }
     public void ShowQuestionsInfo(bool IsMyTurn)
     {
@@ -266,7 +287,7 @@ public class UIPlayerManager : MonoBehaviour
         else
             arrow.SetActive(false);
     }
-    public void WaitPlayersScreen()
+    public void HideWaitPlayers()
     {
         HideModal(WaitPlayersModal);
 

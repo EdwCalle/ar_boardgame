@@ -83,7 +83,7 @@ public class BoardManager : MonoBehaviourPunCallbacks
             playerUI.roundInfo.roundTitle.text = Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.CurrentRound].Title;
             playerUI.roundInfo.numberRound.text = $"Número de ronda: {Singleton.instance.CurrentRound}";
 
-            playerUI.WaitPlayersScreen();
+            playerUI.HideWaitPlayers();
             UpdatePlayersList();
             // if is new round show partial results
             if (Singleton.instance.CurrentRound != 0)
@@ -92,8 +92,25 @@ public class BoardManager : MonoBehaviourPunCallbacks
             // ShowDialog();
         }
         else
-            //  finish game 
-            playerUI.ShowResultsInfo();
+        {
+            playerUI.HideWaitPlayers();
+            //caculate winner
+            playerUI.ShowResultsInfo("......");
+            List<Student> students = new();
+            foreach (Player player in PhotonNetwork.PlayerList)
+            {
+
+                Student student = new Student
+                {
+                    Score = ScoreManager.UpdatedScore(player).FormatScore(),
+                    NickName = player.NickName
+                };
+                students.Add(student);
+            }
+            playerUI.SetPlayersListInfo2(students);
+        }
+        //  finish game 
+
     }
 
 

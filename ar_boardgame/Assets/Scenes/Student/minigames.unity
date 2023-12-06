@@ -1933,6 +1933,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1177760313930652538, guid: f5069c7f6027cf34992037c962c99fda,
         type: 3}
+      propertyPath: numberPlayers
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1177760313930652538, guid: f5069c7f6027cf34992037c962c99fda,
+        type: 3}
       propertyPath: isSinglePlayerMode
       value: 0
       objectReference: {fileID: 0}
@@ -7026,10 +7031,10 @@ RectTransform:
   - {fileID: 8563149684236584374}
   m_Father: {fileID: 1124198418}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -1208.9, y: 298.3}
-  m_SizeDelta: {x: 146.20001, y: 123.399994}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 73.099976, y: -61.700012}
+  m_SizeDelta: {x: 146.19995, y: 123.399994}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1632636953580329119
 CanvasRenderer:
