@@ -1,10 +1,7 @@
 
 using System;
-using ExitGames.Client.Photon;
-using Models;
 using Photon.Pun;
 using Photon.Realtime;
-using UnityEngine;
 public class AutomaticConnection : MonoBehaviourPunCallbacks
 {
     //public string scene;
@@ -12,7 +9,7 @@ public class AutomaticConnection : MonoBehaviourPunCallbacks
     private TypedLobby customLobby = new TypedLobby("customLobby", LobbyType.Default);
     void Start()
     {
-        if (!PhotonNetwork.IsConnected)
+        if (!PhotonNetwork.IsConnected && Singleton.instance.IsSinglePlayerMode)
         {
 
             PhotonNetwork.NickName = "";

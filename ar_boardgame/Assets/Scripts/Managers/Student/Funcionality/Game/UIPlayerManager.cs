@@ -105,7 +105,17 @@ public class UIPlayerManager : MonoBehaviour
         // gameObject.GetComponent<Animator>().SetBool("fade", true);
     }
 
+    public void SetRoundInfo()
+    {
+        roundInfo.roundTitle.text = Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.CurrentRound].Title;
+        roundInfo.numberRound.text = $"Número de ronda: {Singleton.instance.CurrentRound}";
 
+    }
+    public void SetDiceInfo(int dice)
+    {
+        roundInfo.diceTitle.text = $"{dice}";
+
+    }
     public void SetTitlteMinigame()
     {
         minigameInfo.MinigameTitle.text = "Vamos a jugar:" + Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.CurrentRound].MyMinigame.Title;
@@ -129,22 +139,22 @@ public class UIPlayerManager : MonoBehaviour
             }
         }
     }
-    public void SetPlayersListInfo2(List<Student> students)
-    {
-        for (int i = 0; i < 4; i++)
-        {
-            if (i < students.Count)
-            {
-                playersList2[i].nickname.text = students[i].NickName;
-                playersList2[i].textCaps.text = students[i].Score.Caps + "";
-                playersList2[i].textStars.text = students[i].Score.Stars + "";
-            }
-            else
-            {
-                // playersList[i].modal.SetActive(false);
-            }
-        }
-    }
+    // public void SetPlayersListInfo2(List<Student> students)
+    // {
+    //     for (int i = 0; i < 4; i++)
+    //     {
+    //         if (i < students.Count)
+    //         {
+    //             playersList2[i].nickname.text = students[i].NickName;
+    //             playersList2[i].textCaps.text = students[i].Score.Caps + "";
+    //             playersList2[i].textStars.text = students[i].Score.Stars + "";
+    //         }
+    //         else
+    //         {
+    //             // playersList[i].modal.SetActive(false);
+    //         }
+    //     }
+    // }
 
     public void ShowMinigameInfo()
     {
@@ -159,10 +169,10 @@ public class UIPlayerManager : MonoBehaviour
     {
         roundInfo.diceButton.SetActive(false);
     }
-    public void ShowResultsInfo(String name)
+    public void ShowResultsInfo()
     {
         ShowModal(resultsInfo.modal);
-        resultsInfo.wimmner.text = "El ganador es...." + name;
+        resultsInfo.wimmner.text = "El ganador es...." + "name";
     }
     public void ShowQuestionsInfo(bool IsMyTurn)
     {
@@ -290,13 +300,6 @@ public class UIPlayerManager : MonoBehaviour
     public void HideWaitPlayers()
     {
         HideModal(WaitPlayersModal);
-
-        // Debug.Log("funciona");
-        // WaitPlayersModal.SetActive(value);
-        // canvasModal.GetComponent<CanvasGroup>().blocksRaycasts = value;
-        // animator.SetBool("Activate", value);
-        // canvasModal.GetComponent<CanvasGroup>().alpha = value ? 1 : 0;
-
     }
     // Update is called once per frame
     void Update()

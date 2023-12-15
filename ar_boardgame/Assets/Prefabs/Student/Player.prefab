@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 2401322476128260567}
   - component: {fileID: 7523457197930004356}
   - component: {fileID: 6747094297877924622}
-  - component: {fileID: 4801082693740207353}
   m_Layer: 0
   m_Name: player
   m_TagString: Untagged
@@ -107,19 +106,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &4801082693740207353
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3669522443664301682}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68965fab5be901d4d95e33ad033f821d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nicknmame: {fileID: 0}
 --- !u!1 &5190105783421954906
 GameObject:
   m_ObjectHideFlags: 0
@@ -129,7 +115,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5270876592732763944}
-  - component: {fileID: 5465660765331071940}
   m_Layer: 5
   m_Name: Player
   m_TagString: Untagged
@@ -158,19 +143,6 @@ RectTransform:
   m_AnchoredPosition: {x: -646.0421, y: 454.6}
   m_SizeDelta: {x: 75, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &5465660765331071940
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5190105783421954906}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68965fab5be901d4d95e33ad033f821d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nicknmame: {fileID: 3610988119721456664}
 --- !u!1 &5410247309461546816
 GameObject:
   m_ObjectHideFlags: 0

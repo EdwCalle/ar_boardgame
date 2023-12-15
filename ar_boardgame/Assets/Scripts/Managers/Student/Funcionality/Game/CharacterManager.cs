@@ -1,4 +1,3 @@
-
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -46,7 +45,7 @@ public class CharacterManager : MonoBehaviour
     }
     public void GoBoard()
     {
-        Singleton.instance.firstSpritePlayer = characters[index];
+        // Singleton.instance.firstSpritePlayer = characters[index];
 
         SceneManager.LoadScene("board");
     }

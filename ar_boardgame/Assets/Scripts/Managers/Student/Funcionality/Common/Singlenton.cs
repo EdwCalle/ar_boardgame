@@ -6,24 +6,21 @@ public class Singleton : MonoBehaviour
 {
     public static Singleton instance;
 
-    public Sprite firstSpritePlayer;
-    [HideInInspector]
     // for game funcionality
     public Minigame currentMinigame = new Minigame();
 
     public GeneralGame currentGeneralGame;
 
     public Item[] exampleModels;
-    public Score playerScore;
+
     // for teacher testing
     public List<GeneralGame> generalGamesT = new List<GeneralGame>();
     public List<Round> roundsT = new List<Round>();
     public List<Minigame> minigamesT = new List<Minigame>();
     //public List<Round> roundsT = new List<Round>();
 
-
     //for minimage
-    private int currentQuestion = 0;
+    //private int currentQuestion = 0;
     // for board funcionality
     [SerializeField]
     private int numberPlayers = 2;
@@ -31,26 +28,28 @@ public class Singleton : MonoBehaviour
     private int myTurn = 0;
     //  [SerializeField]
     private int currentRound = 0;
-    //[SerializeField]
-    private int[] currentBox = { 0, 0, 0, 0 };
     //  [SerializeField]
     private int currentTurn = 0;
+    //[SerializeField]
+    private int[] squarePlayers = { 0, 0, 0, 0 };
+
     [SerializeField]
     private bool isSinglePlayerMode = false;
     public int NumberPlayers { get => numberPlayers; set => numberPlayers = value; }
     public int MyTurn { get => myTurn; set => myTurn = value; }
     public int CurrentRound { get => currentRound; set => currentRound = value; }
-    public int[] CurrentBox { get => currentBox; set => currentBox = value; }
+    public int[] SquarePlayers { get => squarePlayers; set => squarePlayers = value; }
     public int CurrentTurn { get => currentTurn; set => currentTurn = value; }
     public bool IsSinglePlayerMode { get => isSinglePlayerMode; set => isSinglePlayerMode = value; }
-    public int CurrentQuestion { get => currentQuestion; set => currentQuestion = value; }
+    public int CurrentQuestion { get; internal set; }
+
+    // public int CurrentQuestion { get => currentQuestion; set => currentQuestion = value; }
 
     private void Awake()
     {
         CreateSingleton();
         PreLoadDataStudent();
         // PreLoadDataTeacher();
-        GetComponent<Transform>();
     }
 
     void CreateSingleton()
@@ -186,12 +185,6 @@ public class Singleton : MonoBehaviour
         //currentGeneralGame.Rounds.Add(exampleRound);
     }
 
-    public void SetMinigame()
-    {  //if (level == 1)
-        currentMinigame = currentGeneralGame.Rounds[CurrentRound].MyMinigame;
-        Debug.Log("Vengo Con:" + currentGeneralGame.Rounds[CurrentRound].ToString());
-        Debug.Log("Vengo Con:" + currentMinigame.ToString());
-    }
     public void LoadMinigame1(Round round)
     {
         round.MyMinigame = new Minigame
@@ -243,6 +236,18 @@ public class Singleton : MonoBehaviour
         round.MyMinigame.Models.Add(exampleModels[1]);
         round.MyMinigame.Models.Add(exampleModels[2]);
     }
-
+    // for minigame 
+    public void SetMinigame()
+    {  //if (level == 1)
+        currentMinigame = currentGeneralGame.Rounds[CurrentRound].MyMinigame;
+    }
+    public bool ExistRounds()
+    {
+        return currentGeneralGame.Rounds.Count != CurrentRound;
+    }
+    public bool IsNotFirstRound()
+    {
+        return currentRound != 0;
+    }
 
 }

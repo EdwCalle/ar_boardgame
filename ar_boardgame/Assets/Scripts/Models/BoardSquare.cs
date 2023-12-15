@@ -5,7 +5,7 @@ namespace Models
     {
         private int nextSquare;
         private bool isSquarePoint;
-        private bool isNextSquareDirection;
+        // private bool isNextSquareDirection;
         private string directionOne;
         private string directionTwo;
         private int squareOne;
@@ -18,7 +18,7 @@ namespace Models
         }
         public int NextSquare { get => nextSquare; set => nextSquare = value; }
         public bool IsSquarePoint { get => isSquarePoint; set => isSquarePoint = value; }
-        public bool IsNextSquareDirection { get => isNextSquareDirection; set => isNextSquareDirection = value; }
+        // public bool IsNextSquareDirection { get => isNextSquareDirection; set => isNextSquareDirection = value; }
         public string DirectionOne { get => directionOne; set => directionOne = value; }
         public string DirectionTwo { get => directionTwo; set => directionTwo = value; }
         public void setSquarePointPropeties(string directionOne, string directionTwo, int squareOne, int squareTwo)
@@ -31,7 +31,7 @@ namespace Models
         }
         public void HasAnotherDirection(string directionOne)
         {
-            isNextSquareDirection = true;
+            //   isNextSquareDirection = true;
             this.directionOne = directionOne;
         }
         public void SwitchToOne()
