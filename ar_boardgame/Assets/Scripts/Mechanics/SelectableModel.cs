@@ -138,7 +138,7 @@ public class SelectableModel : MonoBehaviour
     }
     public void UnselectModel(int index)
     {
-        ItemsManager.items[index].transform.GetChild(1).gameObject.GetComponent<SelectableModel>().SwitchModelSelected();
+        mediatorMinigame.ItemsManager.Items[index].transform.GetChild(1).gameObject.GetComponent<SelectableModel>().SwitchModelSelected();
     }
 
 }

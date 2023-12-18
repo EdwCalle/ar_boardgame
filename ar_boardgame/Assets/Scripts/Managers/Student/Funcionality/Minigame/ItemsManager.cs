@@ -3,26 +3,25 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Models;
 using UnityEngine;
-using UnityEngine.U2D.IK;
-//using UnityGLTF;
 
 public class ItemsManager : MonoBehaviour
 {
+    [SerializeField] private MediatorMinigame mediatorMinigame;
     [SerializeField] private GameObject itemPrefab;
 
-    [SerializeField] private MediatorMinigame mediatorMinigame;
-
     //for level 1,2,3,5,7
-    public static List<GameObject> items;
+    private List<GameObject> items = new();
 
-    public GameObject objects;
+    public GameObject modalObjects;
+
+    public List<GameObject> Items { get => items; set => items = value; }
+
     //for level 4,6
-    // [SerializeField] private MediatorMinigame mediatorMinigame;
 
     void Start()
     {
 
-        items = new List<GameObject>();
+
         transform.gameObject.SetActive(false);
     }
 
@@ -37,7 +36,6 @@ public class ItemsManager : MonoBehaviour
         //     items[i].GetComponent<ItemManager>().SetActive(active); ;
         // }
         transform.gameObject.SetActive(true);
-
         ExtraComponentType extraComponentType = Singleton.instance.currentMinigame.ExtraComponent;
         if (extraComponentType == ExtraComponentType.options || extraComponentType == ExtraComponentType.normal)
         {
@@ -45,7 +43,7 @@ public class ItemsManager : MonoBehaviour
         }
         else
         {
-            objects.SetActive(true);
+            modalObjects.SetActive(true);
         }
     }
     public void ActiveCurrentItem(int before, int current)
@@ -54,7 +52,7 @@ public class ItemsManager : MonoBehaviour
         items[current].SetActive(true);
     }
 
-    public static void ShowFeedback()
+    public void ShowFeedback()
     {
         for (int i = 0; i < items.Count; i++)
         {
@@ -79,7 +77,6 @@ public class ItemsManager : MonoBehaviour
                                                                       );
 
             bool verify = await instance.GetComponent<ItemManager>().LoadModel();
-
             if (!verify)
                 print("something wrong happens, please make something with this");
 
@@ -94,6 +91,7 @@ public class ItemsManager : MonoBehaviour
     }
     public async Task PrepareLevel()
     {
+
         ExtraComponentType extraComponentType = Singleton.instance.currentMinigame.ExtraComponent;
         if (extraComponentType == ExtraComponentType.normal || extraComponentType == ExtraComponentType.explore || extraComponentType == ExtraComponentType.options)
         {
@@ -103,10 +101,10 @@ public class ItemsManager : MonoBehaviour
 
     }
 
-    void OnDestroy()
-    {
-        items = null;
-    }
+    // void OnDestroy()
+    // {
+    //     items = null;
+    // }
 
 
 

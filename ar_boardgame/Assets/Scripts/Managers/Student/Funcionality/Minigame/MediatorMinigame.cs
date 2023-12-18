@@ -1,6 +1,3 @@
-
-
-using ExitGames.Client.Photon;
 using Models;
 using Photon.Pun;
 using UnityEngine;
@@ -14,7 +11,7 @@ public class MediatorMinigame : MonoBehaviourPunCallbacks
 
     [SerializeField] private CountdownTimer timerManager;
     [SerializeField] private FooterManager footerManager;
-    [SerializeField] private ItemFinderManager itemFinderManager;
+    [SerializeField] private ExtraOneManager extraOneItem;
 
 
 
@@ -28,7 +25,7 @@ public class MediatorMinigame : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     async void Start()
     {
-
+        Singleton.instance.SetMinigame();
         if (!Singleton.instance.IsSinglePlayerMode)
             PhotonNetwork.AutomaticallySyncScene = true;
         // setting level from here
@@ -49,8 +46,7 @@ public class MediatorMinigame : MonoBehaviourPunCallbacks
         loadingScreenManager.StartAnimation("Cargando Minijuego, prepara tu cámara");
         /// headerManager.Configure(this); is not necessary right now
         // prepara el header, no olvidar implementar personalizadamente
-        headerManager.PrepareLevel();
-        itemFinderManager.SetItems();
+
         // prepare items
         await itemsManager.PrepareLevel();
 
@@ -60,64 +56,30 @@ public class MediatorMinigame : MonoBehaviourPunCallbacks
         }
         else
         {
-            photonView.RPC("PlayerLoadedScene", RpcTarget.All);
+            photonView.RPC("WaitPlayersRPC", RpcTarget.All);
         }
-
-
-        // //prepare extra item
-
-        // //prepare footer
-        // footerManager.PrepareLevel();
-        // // prepare timer
-
-        // // disable resume
-        // loadingScreenManager.StopAnimation();
-        // // show ar session
-
-        // // start timer
-        // timerManager.PrepareLevel();
         Debug.Log("finish start");
     }
-    public async void PrepareLevel()
-    {
-        await itemsManager.PrepareLevel();
-    }
-    public void ActivateFinish(bool active)
-    {
-        //footerManager.ActivateFinish(active);
-        ItemsManager.ShowFeedback();
-        footerManager.ShowFeedback();
-        footerManager.ShowResults();
-
-        itemFinderManager.ActiveListFound(false);
-    }
-    public void PrepareMinigame()
-    {
-
-        itemsManager.ActivateItems();
-        footerManager.PrepareLevel();
-
-    }
     [PunRPC]
-    void PlayerLoadedScene()
+    void WaitPlayersRPC()
     {
         playersReady++;
-        CheckAllPlayersLoadedScene();
-    }
-    void CheckAllPlayersLoadedScene()
-    {
         if (playersReady == PhotonNetwork.CurrentRoom.PlayerCount)
         {
             if (PhotonNetwork.IsMasterClient)
                 photonView.RPC("StartGame", RpcTarget.All);
         }
+
+        // CheckAllPlayersLoadedScene();
     }
     [PunRPC]
     void StartGame()
     {
-        playersReady = 0;
-        //prepare extra item
 
+        headerManager.PrepareLevel();
+        //
+        //prepare extra item
+        extraOneItem.PrepareLevel();
         //prepare footer
         //   footerManager.PrepareLevel();
         // prepare timer
@@ -127,9 +89,34 @@ public class MediatorMinigame : MonoBehaviourPunCallbacks
         // show ar session
         // start timer
         timerManager.PrepareLevel();
+        timerManager.StartMinigame();
         //ActivateCamera();
         // Debug.Log("preparing xd");
+        playersReady = 0;
     }
+    //from timer
+    public void StartHeadear()
+    {
+        headerManager.ActivateHeader();
+        extraOneItem.ActiveListFound(true);
+    }
+    // fromn timer
+    public void StartMinigame()
+    {
+        itemsManager.ActivateItems();
+        footerManager.showOptions();
+
+    }
+    // fromn timer
+    public void StopMinigame()
+    {
+        //footerManager.ActivateFinish(active);
+        ItemsManager.ShowFeedback();
+        footerManager.ShowFeedback();
+        footerManager.ShowResults();
+        extraOneItem.ActiveListFound(false);
+    }
+
     public void WaitingFinishGame()
     {
 
@@ -138,50 +125,31 @@ public class MediatorMinigame : MonoBehaviourPunCallbacks
         if (!Singleton.instance.IsSinglePlayerMode)
         {
             ScoreManager.SetPartialScore(PhotonNetwork.LocalPlayer, myPartialScore);
+            Singleton.instance.CurrentRound++;
             //  Debug.Log("una ves ya pues");
-            photonView.RPC("PlayerFinishedGame", RpcTarget.All);
-        }
-
-        //else
-
-
-    }
-    [PunRPC]
-    void PlayerFinishedGame()
-    {
-        playersReady++;
-        if (playersReady == PhotonNetwork.CurrentRoom.PlayerCount)
-        {
-            FinishGame();
-            // photonView.RPC("FinishGame", RpcTarget.MasterClient);
+            photonView.RPC("FinishGame", RpcTarget.All);
         }
     }
     [PunRPC]
     void FinishGame()
     {
-        Singleton.instance.CurrentRound++;
-        if (PhotonNetwork.IsMasterClient)
-            PhotonNetwork.LoadLevel("board");
-    }
-    public void ActivateHeader()
-    {
-        headerManager.ActivateHeader();
-        if (Singleton.instance.currentMinigame.ExtraComponent == ExtraComponentType.explore)
+        playersReady++;
+
+        if (playersReady == PhotonNetwork.CurrentRoom.PlayerCount)
         {
-            itemFinderManager.ActiveListFound(true);
+            if (PhotonNetwork.IsMasterClient)
+                PhotonNetwork.LoadLevel("board");
         }
     }
-
+    // public List<GameObject> GetItems()
+    // {
+    //     return itemsManager.items;
+    // }
+    // for refactoring
     public void FoundItem(int index)
     {
-        itemFinderManager.CheckItem(index);
+        extraOneItem.CheckItem(index);
     }
-    public void PrepareLevelFooter()
-    {
-        footerManager.PrepareLevel();
-    }
-
-
     //right now methods are static, so  mediator pattern design  doesn't applies totally
 
     // Update is called once per frame

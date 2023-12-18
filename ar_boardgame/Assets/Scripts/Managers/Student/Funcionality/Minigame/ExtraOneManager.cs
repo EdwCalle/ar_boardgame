@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Models;
 using UnityEngine;
 
-public class ItemFinderManager : MonoBehaviour
+public class ExtraOneManager : MonoBehaviour
 {
     public GameObject itemPrefab;
     List<GameObject> items = new();
@@ -17,7 +17,7 @@ public class ItemFinderManager : MonoBehaviour
     {
 
     }
-    public void SetItems()
+    public void PrepareLevel()
     {
         foreach (Item model in Singleton.instance.currentMinigame.Models)
         {
@@ -35,7 +35,12 @@ public class ItemFinderManager : MonoBehaviour
     public void ActiveListFound(bool value)
     {
 
-        gameObject.SetActive(value);
+        if (Singleton.instance.currentMinigame.ExtraComponent == ExtraComponentType.explore)
+        {
+            gameObject.SetActive(value);
+        }
+
+
     }
 
 }

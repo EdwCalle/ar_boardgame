@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using System.Threading.Tasks;
-using System.Collections;
 using System.Collections.Generic;
 public class UIPlayerManager : MonoBehaviour
 {

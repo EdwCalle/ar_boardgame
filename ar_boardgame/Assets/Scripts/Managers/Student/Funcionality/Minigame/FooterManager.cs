@@ -41,6 +41,7 @@ public class FooterManager : MonoBehaviour
     public TextMeshProUGUI info;
     public int lastIndex = -1;
     public bool feedback;
+    [SerializeField] private MediatorMinigame mediatorMinigame;
     // Start is called before the first frame update
     void Start()
     {
@@ -51,19 +52,13 @@ public class FooterManager : MonoBehaviour
     {
 
     }
-    public void ActivateFinish(bool active)
-    {
-        finish.gameObject.SetActive(active);
-    }
     public void ChangeScene()
     {
         Singleton.instance.CurrentRound++;
         SceneManager.LoadScene("board");
     }
-    public void PrepareLevel()
+    public void showOptions()
     {
-        finish.onClick.AddListener(ChangeScene);
-        ActivateFinish(false);
         if (Singleton.instance.currentMinigame.ExtraComponent == ExtraComponentType.options)
         {
             optionsModal.SetActive(true);
@@ -103,18 +98,6 @@ public class FooterManager : MonoBehaviour
     public void SelectOption(int value)
     {
         Singleton.instance.currentMinigame.Models[Singleton.instance.CurrentQuestion].Question.IsSelected = value;
-        // Singleton.instance.CurrentQuestion++;
-        // if (Singleton.instance.CurrentQuestion == Singleton.instance.currentMinigame.Models.Count - 1)
-        // {
-        //     Singleton.instance.CurrentQuestion = Singleton.instance.currentMinigame.Models.Count - 1;
-        //     // not move
-        // }
-        // else
-        // {
-        //     ItemsManager.items[Singleton.instance.CurrentQuestion - 1].SetActive(true);
-        //     ShowOptionById(Singleton.instance.CurrentQuestion);
-        // }
-
     }
     public void ShowResults()
     {
@@ -127,8 +110,8 @@ public class FooterManager : MonoBehaviour
     public void ShowOptionById(int index)
     {
         if (lastIndex != -1)
-            ItemsManager.items[lastIndex].SetActive(false);
-        ItemsManager.items[index].SetActive(true);
+            mediatorMinigame.ItemsManager.Items[lastIndex].SetActive(false);
+        mediatorMinigame.ItemsManager.Items[index].SetActive(true);
         info.text = $"{index + 1}/{Singleton.instance.currentMinigame.Models.Count}";
         Question question = Singleton.instance.currentMinigame.Models[index].Question;
         questiontitle.text = question.Title;

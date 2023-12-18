@@ -51,7 +51,7 @@ public class CountdownTimer : MonoBehaviour
 
 
         detectPlane.EnableTap(false);
-        mediatorMinigame.PrepareMinigame();
+        mediatorMinigame.StartMinigame();
         // ChangeState(true, TimerState.offset, offSet, "Enfoca la cámara y exploremos el nivel");
         // yield return StartCoroutine(CountownTimer(currentTime));
 
@@ -61,19 +61,21 @@ public class CountdownTimer : MonoBehaviour
         ChangeState(true, TimerState.offset, offSet, "Hora de Resolver el Juego!!!!!!!");
         yield return StartCoroutine(CountownTimer(currentTime));
 
-        mediatorMinigame.ActivateHeader();
+        mediatorMinigame.StartHeadear();
         ChangeState(false, TimerState.resolve, resolveTime);
         yield return StartCoroutine(CountownTimer(currentTime));
         ChangeState(true, TimerState.offset, offSet, "Se acabó el tiempo, pero te dejo las respuestas");
         yield return StartCoroutine(CountownTimer(currentTime));
 
 
-        mediatorMinigame.ActivateFinish(true);
+        mediatorMinigame.StopMinigame();
         ChangeState(false, TimerState.feedback, feedbackTime);
         yield return StartCoroutine(CountownTimer(currentTime));
 
         Singleton.instance.currentMinigame.TimerState = TimerState.none;
-        gameFinish = true;
+        //gameFinish = true;
+        mediatorMinigame.WaitingFinishGame();
+
 
     }
     IEnumerator CountownTimer(float elapsedTime)
@@ -139,8 +141,12 @@ public class CountdownTimer : MonoBehaviour
                    Singleton.instance.currentMinigame.FeedbackTime);
         ChangeState(true, TimerState.offset, offSet, "Enfoca la cámara y exploremos el nivel");
         // mediatorMinigame.ActivateCamera();
-        gameStart = true;
+        //  gameStart = true;
 
+    }
+    public void StartMinigame()
+    {
+        StartCoroutine(MinigameQueqe());
     }
 
 }

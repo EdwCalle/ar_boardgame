@@ -786,10 +786,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2748ffdcc3a379e4497d66502c446135, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mediatorMinigame: {fileID: 633072111}
   itemPrefab: {fileID: 4702784866002661811, guid: 456ea3c5eaedffb42bfb0d8691792b0c,
     type: 3}
-  mediatorMinigame: {fileID: 633072111}
-  objects: {fileID: 1152053978}
+  modalObjects: {fileID: 1152053978}
 --- !u!1 &363779208
 GameObject:
   m_ObjectHideFlags: 0
@@ -1939,7 +1939,7 @@ PrefabInstance:
     - target: {fileID: 1177760313930652538, guid: f5069c7f6027cf34992037c962c99fda,
         type: 3}
       propertyPath: isSinglePlayerMode
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2469942812086968723, guid: f5069c7f6027cf34992037c962c99fda,
         type: 3}
@@ -2346,7 +2346,7 @@ MonoBehaviour:
   loadingScreenManager: {fileID: 473997962}
   timerManager: {fileID: 1124198420}
   footerManager: {fileID: 1510874903}
-  itemFinderManager: {fileID: 1026689103}
+  extraOneItem: {fileID: 1026689103}
 --- !u!114 &633072112
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5492,6 +5492,7 @@ MonoBehaviour:
   info: {fileID: 477343129}
   lastIndex: -1
   feedback: 0
+  mediatorMinigame: {fileID: 0}
 --- !u!1 &1594500475
 GameObject:
   m_ObjectHideFlags: 0
