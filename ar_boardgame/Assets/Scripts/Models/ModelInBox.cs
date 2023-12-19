@@ -2,10 +2,11 @@ using UnityEngine;
 
 namespace Models
 {
+    [System.Serializable]
     public class ModelInBox
     {
-        private Vector3 position;
-        private Vector3 scale;
+        [SerializeField] private Vector3 position;
+        [SerializeField] private Vector3 scale;
 
         public ModelInBox()
         {

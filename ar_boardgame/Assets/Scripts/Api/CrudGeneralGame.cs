@@ -8,22 +8,22 @@ namespace Api
 
         public static List<GeneralGame> GetGeneralGames()
         {
-            return Singleton.instance.generalGamesT;
+            return Singleton.instance.GeneralGamesT;
         }
         public static void Create(GeneralGame generalGame)
         {
             generalGame.Id = GetGeneralGames().Count + 1;
-            Singleton.instance.generalGamesT.Add(generalGame);
+            Singleton.instance.GeneralGamesT.Add(generalGame);
         }
         public static void Edit(GeneralGame generalGame)
         {
-            int i = Singleton.instance.generalGamesT.FindIndex(ob => ob.Id == generalGame.Id);
-            Singleton.instance.generalGamesT[i] = generalGame;
+            int i = Singleton.instance.GeneralGamesT.FindIndex(ob => ob.Id == generalGame.Id);
+            Singleton.instance.GeneralGamesT[i] = generalGame;
         }
         public static void Delete(int id)
         {
             // THIS MAY CAUSE ERROR DUE TO IS SAVING DE POSITION AS ID 
-            Singleton.instance.generalGamesT.RemoveAll(ob => ob.Id == id);
+            Singleton.instance.GeneralGamesT.RemoveAll(ob => ob.Id == id);
 
         }
         public static GeneralGame GetById(int id)

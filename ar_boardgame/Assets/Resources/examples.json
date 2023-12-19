@@ -1,0 +1,329 @@
+{
+    "models": [
+        {
+            "code": 1,
+            "name": "Margarita",
+            "description": "some description",
+            "url": "Models3D/margarita.glb",
+            "position": {
+                "x": 1.0,
+                "y": 0.5,
+                "z": -1.5
+            },
+            "scale": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "isSolution": true,
+            "isSelected": false,
+            "modelInBox": {
+                "position": {
+                    "x": 0.0,
+                    "y": -0.15000000596046449,
+                    "z": -0.5
+                },
+                "scale": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            },
+            "colliderScale": {
+                "x": 0.5,
+                "y": 0.5,
+                "z": 0.5
+            },
+            "question": {
+                "title": "Pregunta 1",
+                "optionA": "1",
+                "optionB": "2",
+                "optionC": "3",
+                "optionD": "4",
+                "solution": 1,
+                "isSelected": 0
+            }
+        },
+        {
+            "code": 2,
+            "name": "Arbusto",
+            "description": "some description",
+            "url": "Models3D/arbusto.glb",
+            "position": {
+                "x": 0.0,
+                "y": 0.5,
+                "z": 0.0
+            },
+            "scale": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "isSolution": true,
+            "isSelected": false,
+            "modelInBox": {
+                "position": {
+                    "x": 0.0,
+                    "y": -0.15000000596046449,
+                    "z": -0.5
+                },
+                "scale": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            },
+            "colliderScale": {
+                "x": 0.5,
+                "y": 0.5,
+                "z": 0.5
+            },
+            "question": {
+                "title": "Pregunta 2",
+                "optionA": "1a",
+                "optionB": "2b",
+                "optionC": "3c",
+                "optionD": "4d",
+                "solution": 2,
+                "isSelected": 0
+            }
+        },
+        {
+            "code": 3,
+            "name": "Cactus",
+            "description": "some description",
+            "url": "Models3D/cactus.glb",
+            "position": {
+                "x": -1.5,
+                "y": 0.5,
+                "z": 1.5
+            },
+            "scale": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "isSolution": false,
+            "isSelected": false,
+            "modelInBox": {
+                "position": {
+                    "x": 0.0,
+                    "y": -0.15000000596046449,
+                    "z": -0.5
+                },
+                "scale": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            },
+            "colliderScale": {
+                "x": 0.5,
+                "y": 0.5,
+                "z": 0.5
+            },
+            "question": {
+                "title": "Pregunta 3",
+                "optionA": "a",
+                "optionB": "b",
+                "optionC": "c",
+                "optionD": "d",
+                "solution": 0,
+                "isSelected": 0
+            }
+        }
+    ],
+    "minigames": [
+        {
+            "id": 1,
+            "level": 1,
+            "title": "MG01:selecionar la planta según el ambiente",
+            "function": "",
+            "models": [],
+            "questions": [],
+            "extraInfo": {
+                "type": "image",
+                "info": ""
+            },
+            "interactionTime": 6.0,
+            "resolveTime": 5.0,
+            "feedbackTime": 10.0,
+            "headerType": 0,
+            "selectionType": 0,
+            "extraComponentType": 0,
+            "timerState": 0
+        },
+        {
+            "id": 2,
+            "level": 2,
+            "title": "MG02:Encontrar las plantas que estan en la lista",
+            "function": "",
+            "models": [],
+            "questions": [],
+            "extraInfo": {
+                "type": "image",
+                "info": ""
+            },
+            "interactionTime": 6.0,
+            "resolveTime": 5.0,
+            "feedbackTime": 4.0,
+            "headerType": 0,
+            "selectionType": 0,
+            "extraComponentType": 0,
+            "timerState": 0
+        },
+        {
+            "id": 3,
+            "level": 3,
+            "title": "MG03:Responder en base a la selección",
+            "function": "",
+            "models": [],
+            "questions": [],
+            "extraInfo": {
+                "type": "image",
+                "info": ""
+            },
+            "interactionTime": 6.0,
+            "resolveTime": 5.0,
+            "feedbackTime": 4.0,
+            "headerType": 0,
+            "selectionType": 0,
+            "extraComponentType": 0,
+            "timerState": 0
+        }
+    ],
+    "rounds": [
+        {
+            "id": 1,
+            "title": "Tema 1: Órganos del Cuerpo Humano",
+            "numberRound": 1,
+            "minigame": null,
+            "questions": [
+                {
+                    "title": "¿Cuál de las siguientes opciones es una parte del cuerpo humano?",
+                    "optionA": "gato",
+                    "optionB": "perro",
+                    "optionC": "cerebro",
+                    "optionD": "camiseta",
+                    "solution": 2,
+                    "isSelected": 0
+                },
+                {
+                    "title": "¿Cuál de las siguientes opciones es una parte del cuerpo humano?",
+                    "optionA": "árbol",
+                    "optionB": "manzana",
+                    "optionC": "cerebro",
+                    "optionD": "garras",
+                    "solution": 2,
+                    "isSelected": 0
+                },
+                {
+                    "title": "¿Cuál de las siguientes opciones es una parte del cuerpo humano?",
+                    "optionA": "brazo",
+                    "optionB": "perro",
+                    "optionC": "pata",
+                    "optionD": "cajón",
+                    "solution": 2,
+                    "isSelected": 0
+                },
+                {
+                    "title": "¿Cuál de las siguientes opciones es una parte del cuerpo humano?",
+                    "optionA": "pierna",
+                    "optionB": "zapatos",
+                    "optionC": "camiseta",
+                    "optionD": "garra",
+                    "solution": 0,
+                    "isSelected": 0
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "title": "Tema 2: Cuerpo saludable",
+            "numberRound": 2,
+            "minigame": null,
+            "questions": [
+                {
+                    "title": "¿Cuál de las siguientes opciones es un carbohidrato?",
+                    "optionA": "cereal",
+                    "optionB": "hamburguesa",
+                    "optionC": "manzana",
+                    "optionD": "cabeza",
+                    "solution": 0,
+                    "isSelected": 0
+                },
+                {
+                    "title": "¿Cuál de las siguientes opciones es un carbohidrato?",
+                    "optionA": "pan",
+                    "optionB": "lechuga",
+                    "optionC": "papas fritas",
+                    "optionD": "vino",
+                    "solution": 0,
+                    "isSelected": 0
+                },
+                {
+                    "title": "¿Cuál de las siguientes opciones es una fruta?",
+                    "optionA": "manzana",
+                    "optionB": "perro",
+                    "optionC": "pata",
+                    "optionD": "cajón",
+                    "solution": 0,
+                    "isSelected": 0
+                },
+                {
+                    "title": "¿Cuál de las siguientes opciones es una fruta?",
+                    "optionA": "pan",
+                    "optionB": "hamburguesa",
+                    "optionC": "sandia",
+                    "optionD": "queso",
+                    "solution": 2,
+                    "isSelected": 0
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "title": "Tema 3: Cuerpo saludable",
+            "numberRound": 3,
+            "minigame": null,
+            "questions": [
+                {
+                    "title": "¿Cuál de las siguientes opciones es un carbohidrato?",
+                    "optionA": "cereal",
+                    "optionB": "hamburguesa",
+                    "optionC": "manzana",
+                    "optionD": "cabeza",
+                    "solution": 0,
+                    "isSelected": 0
+                },
+                {
+                    "title": "¿Cuál de las siguientes opciones es un carbohidrato?",
+                    "optionA": "pan",
+                    "optionB": "lechuga",
+                    "optionC": "papas fritas",
+                    "optionD": "vino",
+                    "solution": 0,
+                    "isSelected": 0
+                },
+                {
+                    "title": "¿Cuál de las siguientes opciones es una fruta?",
+                    "optionA": "manzana",
+                    "optionB": "perro",
+                    "optionC": "pata",
+                    "optionD": "cajón",
+                    "solution": 0,
+                    "isSelected": 0
+                },
+                {
+                    "title": "¿Cuál de las siguientes opciones es una fruta?",
+                    "optionA": "pan",
+                    "optionB": "hamburguesa",
+                    "optionC": "sandia",
+                    "optionD": "queso",
+                    "solution": 2,
+                    "isSelected": 0
+                }
+            ]
+        }
+    ]
+}

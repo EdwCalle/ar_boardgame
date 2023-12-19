@@ -1,14 +1,17 @@
+using UnityEngine;
+
 namespace Models
 {
+    [System.Serializable]
     public class Question
     {
-        private string title;
-        private string optionA;
-        private string optionB;
-        private string optionC;
-        private string optionD;
-        private int solution;
-        private int isSelected = 0;
+        [SerializeField] private string title;
+        [SerializeField] private string optionA;
+        [SerializeField] private string optionB;
+        [SerializeField] private string optionC;
+        [SerializeField] private string optionD;
+        [SerializeField] private int solution;
+        [SerializeField] private int isSelected = 0;
 
 
 

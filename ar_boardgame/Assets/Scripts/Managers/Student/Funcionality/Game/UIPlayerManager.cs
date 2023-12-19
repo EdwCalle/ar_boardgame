@@ -117,7 +117,7 @@ public class UIPlayerManager : MonoBehaviour
     }
     public void SetTitlteMinigame()
     {
-        minigameInfo.MinigameTitle.text = "Vamos a jugar:" + Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.CurrentRound].MyMinigame.Title;
+        minigameInfo.MinigameTitle.text = "Vamos a jugar:" + Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.CurrentRound].Minigame.Title;
         // text2.text = Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.currentRound].Minigame2.Title;
         // text3.text = Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.currentRound].Minigame3.Title;
     }

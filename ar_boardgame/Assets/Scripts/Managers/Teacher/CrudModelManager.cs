@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class CrudModelManager : MonoBehaviour
 {
-    private Item currentModel = new Item();
+    private Model3D currentModel = new Model3D();
 
     public VectorValues hitboxScale;
     public VectorValues hitboxPosition;

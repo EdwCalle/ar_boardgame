@@ -20,7 +20,7 @@ public class SelectableModel : MonoBehaviour
         // if the mode time is interaction just interact
         if (Singleton.instance.currentMinigame.TimerState == TimerState.resolve)
         {
-            SelectionType selection = Singleton.instance.currentMinigame.Selection;
+            SelectionType selection = Singleton.instance.currentMinigame.SelectionType;
             //print("index:" + index + " last index:" + lastSelectedItem + " item selected:" + selection);
             // if the selection type is one selection and  the current item selected is the same that the last selected
             if (selection == SelectionType.OneSelection && lastSelectedItem == index)

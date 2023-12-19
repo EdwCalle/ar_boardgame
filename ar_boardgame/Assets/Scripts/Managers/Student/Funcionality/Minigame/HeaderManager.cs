@@ -77,16 +77,16 @@ public class HeaderManager : MonoBehaviour
     public void PrepareLevel()
     {
         HideExtraComponents();
-        if (Singleton.instance.currentMinigame.Header == HeaderType.extraInfo) // if level 1 
+        if (Singleton.instance.currentMinigame.HeaderType == HeaderType.extraInfo) // if level 1 
         {
             SetExtraInfoFromSinglenton();
             SetTitleFromSinglenton();
         }
-        if (Singleton.instance.currentMinigame.Header == HeaderType.normal) // if level 2,3,5,6,7,8,9(special)
+        if (Singleton.instance.currentMinigame.HeaderType == HeaderType.normal) // if level 2,3,5,6,7,8,9(special)
         {
             SetTitleFromSinglenton();
         }
-        if (Singleton.instance.currentMinigame.Header == HeaderType.questions) // if level 4
+        if (Singleton.instance.currentMinigame.HeaderType == HeaderType.questions) // if level 4
         {
             SetTitleFromSinglenton();
         }

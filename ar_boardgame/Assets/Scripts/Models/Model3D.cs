@@ -3,25 +3,26 @@ using UnityEngine;
 
 namespace Models
 {
-    public class Item
+    [System.Serializable]
+    public class Model3D
     {
-        private int code;
-        private string name;
-        private string description;
-        private string url;
-        private Vector3 position;
-        private Vector3 scale;
-        private bool isSolution;
-        private bool isSelected = false;
+        [SerializeField] private int code;
+        [SerializeField] private string name;
+        [SerializeField] private string description;
+        [SerializeField] private string url;
+        [SerializeField] private Vector3 position;
+        [SerializeField] private Vector3 scale;
+        [SerializeField] private bool isSolution;
+        [SerializeField] private bool isSelected = false;
 
-        private ModelInBox modelInBox;
-        private Vector3 colliderScale;
-        private Question question;
-        public Item()
+        [SerializeField] private ModelInBox modelInBox;
+        [SerializeField] private Vector3 colliderScale;
+        [SerializeField] private Question question;
+        public Model3D()
         {
         }
 
-        public Item(int code, string name, string description, string url, Vector3 position, Vector3 scale, bool isSolution, bool isSelected, ModelInBox modelInBox, Vector3 colliderScale)
+        public Model3D(int code, string name, string description, string url, Vector3 position, Vector3 scale, bool isSolution, bool isSelected, ModelInBox modelInBox, Vector3 colliderScale)
         {
             this.code = code;
             this.name = name;

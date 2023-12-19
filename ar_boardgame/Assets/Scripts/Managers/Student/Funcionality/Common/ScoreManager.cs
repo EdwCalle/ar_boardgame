@@ -58,7 +58,7 @@ public class ScoreManager
     private static Score GetResultMinigame1(Minigame minigame)
     {
         int stars = 0;
-        foreach (Item item in minigame.Models)
+        foreach (Model3D item in minigame.Models)
         {
             if (item.IsSolution == item.IsSelected)
                 stars++;
@@ -72,7 +72,7 @@ public class ScoreManager
         Debug.Log("GetResultMinigame2 working");
 
         int stars = 0;
-        foreach (Item item in minigame.Models)
+        foreach (Model3D item in minigame.Models)
         {
 
             if (item.IsSelected)
@@ -86,7 +86,7 @@ public class ScoreManager
     private static Score GetResultMinigame3(Minigame minigame)
     {
         int stars = 0;
-        foreach (Item item in minigame.Models)
+        foreach (Model3D item in minigame.Models)
         {
             if (item.Question.IsSelected == item.Question.Solution)
                 stars++;

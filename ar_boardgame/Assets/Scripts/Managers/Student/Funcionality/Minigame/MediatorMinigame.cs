@@ -25,6 +25,7 @@ public class MediatorMinigame : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     async void Start()
     {
+        Singleton.instance.CurrentRound = 2;
         Singleton.instance.SetMinigame();
         if (!Singleton.instance.IsSinglePlayerMode)
             PhotonNetwork.AutomaticallySyncScene = true;

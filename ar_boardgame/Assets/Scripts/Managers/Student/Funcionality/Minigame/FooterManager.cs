@@ -59,7 +59,7 @@ public class FooterManager : MonoBehaviour
     }
     public void showOptions()
     {
-        if (Singleton.instance.currentMinigame.ExtraComponent == ExtraComponentType.options)
+        if (Singleton.instance.currentMinigame.ExtraComponentType == ExtraComponentType.options)
         {
             optionsModal.SetActive(true);
             ShowOptionById(0);

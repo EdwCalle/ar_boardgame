@@ -6,11 +6,11 @@ public class CrudMinigame
 
     public static List<Minigame> GetMinigames()
     {
-        return Singleton.instance.minigamesT;
+        return Singleton.instance.MinigamesT;
     }
 
     public static List<Minigame> GetMinigamesbyLevel(int level)
     {
-        return Singleton.instance.minigamesT.FindAll(ob => ob.Level == level);
+        return Singleton.instance.MinigamesT.FindAll(ob => ob.Level == level);
     }
 }

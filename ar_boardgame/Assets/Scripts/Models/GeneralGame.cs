@@ -1,13 +1,14 @@
 using System.Collections.Generic;
-
+using UnityEngine;
 namespace Models
 {
+    [System.Serializable]
     public class GeneralGame
     {
-        private int id;
-        private string title;
-        private string subject;
-        private List<Round> rounds = new List<Round>();
+        [SerializeField] private int id;
+        [SerializeField] private string title;
+        [SerializeField] private string subject;
+        [SerializeField] private List<Round> rounds = new List<Round>();
 
         public GeneralGame()
         {
