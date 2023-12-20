@@ -1,24 +1,22 @@
 using UnityEngine;
 using Models;
 using Photon.Pun;
-using System.Threading.Tasks;
-using Photon.Realtime;
 using System.Collections.Generic;
+using Photon.Realtime;
+using System.Threading.Tasks;
 public class BoardManager : MonoBehaviourPunCallbacks
 {
     [Header("Board Components")]
     public UIPlayerManager playerUI;
     public GameObject[] players;
     public GameObject[] boxes;
-
     [Header("Board Funcionality/offline")]
     [Range(0, 500)]
     public float speed;
     public bool isDefaultDice;
     public int defaultDice;
-    int numberPlayers;
     public float offsetPlayer = 50f;
-
+    int numberPlayers;
     private int currentSquare = 0;
     private bool isMoving = false;
     BoardSquare[] boardSquares = new BoardSquare[56];
@@ -27,15 +25,12 @@ public class BoardManager : MonoBehaviourPunCallbacks
     private bool isActiveDice;
     private int currentPlayer = 0;
     private int playersReady = 0;
-
-    public bool skipScene;
-
     void Start()
     {
-
-        if (Singleton.instance.IsSinglePlayerMode)
+        numberPlayers = Singleton.GetNumberPlayers();
+        if (Singleton.IsSinglePlayer())
         {
-            numberPlayers = Singleton.instance.NumberPlayers;
+
             PrepareGameRPC();
         }
         else
@@ -44,12 +39,9 @@ public class BoardManager : MonoBehaviourPunCallbacks
             {
                 // for sync scenes to other players
                 PhotonNetwork.AutomaticallySyncScene = true;
-                //get number players
-                numberPlayers = Singleton.instance.NumberPlayers;
                 photonView.RPC("WaitPlayers", RpcTarget.All);
             }
         }
-
     }
     [PunRPC]
     void WaitPlayersRPC()
@@ -57,17 +49,13 @@ public class BoardManager : MonoBehaviourPunCallbacks
         playersReady++;
         if (playersReady == numberPlayers && photonView.IsMine)
         {
-            if (skipScene)
-                GoToMinigame();
-            else
-                photonView.RPC("PrepareGame", RpcTarget.All);
+            photonView.RPC("PrepareGame", RpcTarget.All);
         }
-
     }
     [PunRPC]
     void PrepareGameRPC()
     {
-        if (Singleton.instance.ExistRounds()) // si no es la ultima romda
+        if (Singleton.ExistRounds()) // si no es la ultima romda
         {
             // preparing boardsquare order
             PrepareBoxes();
@@ -78,7 +66,7 @@ public class BoardManager : MonoBehaviourPunCallbacks
             UpdateTurn(); // make it in player ui
             playerUI.HideWaitPlayers();
             // if is new round show partial results
-            if (Singleton.instance.IsNotFirstRound())
+            if (Singleton.IsNotFirstRound())
             {
                 //  ShowPartialResults();
             }
@@ -131,7 +119,7 @@ public class BoardManager : MonoBehaviourPunCallbacks
         {
             if (i < numberPlayers)  // if local players are the numberplayer
             {
-                int playerBox = Singleton.instance.SquarePlayers[i];
+                int playerBox = Singleton.GetSquarePlayer(i);
                 if (playerBox != 0)// set to their postion when restart scene
                 {
                     players[i].transform.localPosition = boxes[playerBox].transform.localPosition;
@@ -142,7 +130,7 @@ public class BoardManager : MonoBehaviourPunCallbacks
             else
                 players[i].SetActive(false);
         }
-        currentSquare = Singleton.instance.SquarePlayers[0]; // set position to player one 
+        currentSquare = Singleton.GetSquarePlayer(0); // set position to player one 
     }
     public Vector3 SetOffsetPosition(int playerTurn)
     {
@@ -162,12 +150,11 @@ public class BoardManager : MonoBehaviourPunCallbacks
     }
     void UpdateTurn()
     {
-        if (IsMyTurn)
+        if (Singleton.IsMyTurn(currentPlayer))
             playerUI.ShowDice();
         else
             playerUI.HideDice();
     }
-    bool IsMyTurn => Singleton.instance.MyTurn == CurrentPlayer;
     private void UpdatePlayersList()
     {
         List<Student> students = new();
@@ -185,7 +172,7 @@ public class BoardManager : MonoBehaviourPunCallbacks
     public void ThrowDice()
     {
         int randomDice = Random.Range(1, 7);
-        if (Singleton.instance.IsSinglePlayerMode)
+        if (Singleton.IsSinglePlayer())
             ThrowDiceRPC(randomDice);
         else
             photonView.RPC("ThrowDiceRPC", RpcTarget.All, randomDice);
@@ -195,7 +182,7 @@ public class BoardManager : MonoBehaviourPunCallbacks
     {
         if (!isMoving)
         {
-            currentSquare = Singleton.instance.SquarePlayers[currentPlayer];// players[CurrentPlayer].GetComponent<PlayerManager>().CurrentSquare;
+            currentSquare = Singleton.GetSquarePlayer(currentPlayer);
             dice = randomDice;
             if (isDefaultDice)
                 dice = defaultDice;
@@ -205,14 +192,14 @@ public class BoardManager : MonoBehaviourPunCallbacks
     }
     void FixedUpdate()
     {
-        MoveCurrentPlayer();
+        MovecurrentPlayer();
     }
-    void MoveCurrentPlayer()
+    void MovecurrentPlayer()
     {
         if (isMoving)
         {
-            players[CurrentPlayer].transform.localPosition = Vector3.MoveTowards(players[CurrentPlayer].transform.localPosition, nextPosition, Time.fixedDeltaTime * speed);
-            if (players[CurrentPlayer].transform.localPosition.Equals(nextPosition))
+            players[currentPlayer].transform.localPosition = Vector3.MoveTowards(players[currentPlayer].transform.localPosition, nextPosition, Time.fixedDeltaTime * speed);
+            if (players[currentPlayer].transform.localPosition.Equals(nextPosition))
             {
                 isMoving = false;
                 dice--;
@@ -230,7 +217,7 @@ public class BoardManager : MonoBehaviourPunCallbacks
                     {
                         isActiveDice = false;
                         print("this is not controlled");
-                        if (IsMyTurn)
+                        if (Singleton.IsMyTurn(currentPlayer))
                             playerUI.ShowArrows(boardSquares[currentSquare].DirectionOne, boardSquares[currentSquare].DirectionTwo);
                     }
                     else
@@ -242,7 +229,7 @@ public class BoardManager : MonoBehaviourPunCallbacks
                 {
                     isMoving = false;       //this stop moving when player go to their last square
                     isActiveDice = false; // this used for dont loop everytime when moving is false
-                    playerUI.ShowQuestionsInfo(IsMyTurn);
+                    playerUI.ShowQuestionsInfo(Singleton.IsMyTurn(currentPlayer), currentPlayer);
                 }
             }
         }
@@ -251,17 +238,14 @@ public class BoardManager : MonoBehaviourPunCallbacks
     {
         currentSquare = boardSquares[currentSquare].NextSquare;
         nextPosition = boxes[currentSquare].transform.localPosition;
-        //  nextPosition.x = boxes[currentSquare].transform.localPosition.x;
-        // nextPosition.y = boxes[currentSquare].transform.localPosition.y;
-        // nextPosition.z = players[currentPlayer].transform.localPosition.z;
         // put player in his respective corner when go to last box(square)
         if (dice == 1)
-            nextPosition += SetOffsetPosition(CurrentPlayer);
+            nextPosition += SetOffsetPosition(currentPlayer);
         isMoving = true; // this activate the movement
     }
     public void ChangeDirection(string direction)
     {
-        if (Singleton.instance.IsSinglePlayerMode)
+        if (Singleton.IsSinglePlayer())
             ChangeDirectionRPC(direction);
         else
             photonView.RPC("ChangeDirectionRPC", RpcTarget.All, direction);
@@ -280,13 +264,13 @@ public class BoardManager : MonoBehaviourPunCallbacks
     }
     public void SelectOption(int value)
     {
-        if (Singleton.instance.IsSinglePlayerMode)
+        if (Singleton.IsSinglePlayer())
         {
             SelectOptionRPC(value);
         }
         else
         {
-            if (value == Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.CurrentRound].Questions[Singleton.instance.CurrentTurn].Solution)
+            if (Singleton.IsAnwserCorrect(value, currentPlayer))
             {
                 ScoreManager.addStart(PhotonNetwork.LocalPlayer);
             }
@@ -299,19 +283,18 @@ public class BoardManager : MonoBehaviourPunCallbacks
     {
         //playerUI.SelectOption(value);
         UpdatePlayersList();
-        await playerUI.SelectOption(value);
+        await playerUI.SelectOption(value, currentPlayer);
         FinishTurn();
         // ChangeTurn();
     }
     async void FinishTurn()
     {   //saving current position current player
-        Singleton.instance.SquarePlayers[currentPlayer] = currentSquare;//players[CurrentPlayer].GetComponent<PlayerManager>().CurrentSquare = currentSquare;
-                                                                        // changing player
-        CurrentPlayer++;
-        // this verifys if the current player is the last one
-        if (CurrentPlayer == numberPlayers)
+        Singleton.SaveSquarePlayer(currentPlayer, currentSquare);
+        currentPlayer++;
+        // this checks if the current player is the last one
+        if (currentPlayer == numberPlayers)
         {
-            // CurrentPlayer = 0;
+            // currentPlayer = 0;
             playerUI.ShowMinigameInfo();
             await Task.Delay(2000);
             playerUI.HideModal(playerUI.minigameInfo.modal);
@@ -325,20 +308,13 @@ public class BoardManager : MonoBehaviourPunCallbacks
     }
     public void GoToMinigame()
     {
-        Singleton.instance.SetMinigame();
-        //Singleton.instance.currentMinigame = Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.CurrentRound].MyMinigame; ;        if (PhotonNetwork.IsMasterClient)
+        Singleton.SetMinigame();
         PhotonNetwork.LoadLevel("minigames");
-        // Singleton.instance.CurrentBox = currentSquare;
-        //SceneManager.LoadScene("minigames");
     }
 
-    public int CurrentPlayer { get => currentPlayer; set => currentPlayer = GetValue(value); }
 
-    private static int GetValue(int value)
-    {
-        Singleton.instance.CurrentTurn = value;
-        return value;
-    }
+
+
 
 }
 

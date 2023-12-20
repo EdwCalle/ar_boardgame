@@ -54,7 +54,7 @@ public class MatchmakingManager : MonoBehaviourPunCallbacks
     {
         // PhotonNetwork.NickName = "Player" + PhotonNetwork.CurrentRoom.PlayerCount;
         ScoreManager.BeginScore(PhotonNetwork.LocalPlayer);
-        Singleton.instance.MyTurn = PhotonNetwork.CurrentRoom.PlayerCount - 1;
+        Singleton.instance.boardPersistent.MyTurn = PhotonNetwork.CurrentRoom.PlayerCount - 1;
         //  SendLogMessage("Entrando a la sala");
         PhotonNetwork.LoadLevel("board");
     }

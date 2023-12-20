@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Models;
 using UnityEngine;
 
@@ -22,45 +21,21 @@ public class Singleton : MonoBehaviour
     public TextAsset examplesJson;
     Wrapper ExampleData;
 
-    // for teacher testing
-    private List<GeneralGame> generalGamesT = new();
-    private List<Round> roundsT = new();
-    private List<Minigame> minigamesT = new();
+
     //for Multiplayer
     [SerializeField]
     private bool isSinglePlayerMode = false;
-    // for minimage
-    // private int currentQuestion = 0;
+
     // for board funcionality
-    [SerializeField]
-    private int numberPlayers = 2;
-    // [SerializeField]
-    private int myTurn = 0;
-    //  [SerializeField]
-    private int currentRound = 0;
-    //  [SerializeField]
-    private int currentTurn = 0;
-    //[SerializeField]
-    private int[] squarePlayers = { 0, 0, 0, 0 };
-
-
-
-    public int NumberPlayers { get => numberPlayers; set => numberPlayers = value; }
-    public int MyTurn { get => myTurn; set => myTurn = value; }
-    public int CurrentRound { get => currentRound; set => currentRound = value; }
-    public int[] SquarePlayers { get => squarePlayers; set => squarePlayers = value; }
-    public int CurrentTurn { get => currentTurn; set => currentTurn = value; }
+    public BoardPersistent boardPersistent = new();
     public bool IsSinglePlayerMode { get => isSinglePlayerMode; set => isSinglePlayerMode = value; }
-    public int CurrentQuestion { get; internal set; }
-    public List<GeneralGame> GeneralGamesT { get => generalGamesT; set => generalGamesT = value; }
-    public List<Round> RoundsT { get => roundsT; set => roundsT = value; }
-    public List<Minigame> MinigamesT { get => minigamesT; set => minigamesT = value; }
+
+
 
     private void Awake()
     {
         CreateSingleton();
         PreLoadDataStudent();
-        // PreLoadDataTeacher();
     }
 
     void CreateSingleton()
@@ -98,17 +73,63 @@ public class Singleton : MonoBehaviour
         round.Minigame.Models.Add(ExampleData.models[2]);
     }
     // for minigame 
-    public void SetMinigame()
+    public static void SetMinigame()
     {
-        currentMinigame = currentGeneralGame.Rounds[CurrentRound].Minigame;
+        instance.currentMinigame = instance.currentGeneralGame.Rounds[instance.boardPersistent.CurrentRound].Minigame;
     }
-    public bool ExistRounds()
+    public static Minigame GetCurrentMinigame()
     {
-        return currentGeneralGame.Rounds.Count != CurrentRound;
+        return instance.currentGeneralGame.Rounds[instance.boardPersistent.CurrentRound].Minigame;
     }
-    public bool IsNotFirstRound()
+
+    public static bool ExistRounds()
     {
-        return currentRound != 0;
+        return instance.currentGeneralGame.Rounds.Count != instance.boardPersistent.CurrentRound;
     }
+    public static bool IsNotFirstRound()
+    {
+        return instance.boardPersistent.CurrentRound != 0;
+    }
+    public static bool IsSinglePlayer()
+    {
+        return instance.IsSinglePlayerMode;
+    }
+    public static int GetNumberPlayers()
+    {
+        return instance.boardPersistent.NumberPlayers;
+    }
+    public static int GetSquarePlayer(int position)
+    {
+        return instance.boardPersistent.SquarePlayers[position];
+    }
+    public static bool IsMyTurn(int currentPlayerTurn)
+    {
+        return instance.boardPersistent.MyTurn == currentPlayerTurn;
+    }
+    public static bool IsAnwserCorrect(int selectedValue, int currentPlayer)
+    {
+        return selectedValue == instance.currentGeneralGame.Rounds[instance.boardPersistent.CurrentRound].Questions[currentPlayer].Solution;
+    }
+    public static void SaveSquarePlayer(int currentPlayer, int square)
+    {
+        instance.boardPersistent.SquarePlayers[currentPlayer] = square;
+    }
+    public static string GetRoundTitle()
+    {
+        return instance.currentGeneralGame.Rounds[instance.boardPersistent.CurrentRound].Title;
+    }
+    public static string GetMinigameTitle()
+    {
+        return instance.currentGeneralGame.Rounds[instance.boardPersistent.CurrentRound].Minigame.Title;
+    }
+    public static int GetNumberRound()
+    {
+        return instance.boardPersistent.CurrentRound;
+    }
+    public static Question GetQuestionRound(int currentPlayer)
+    {
+        return instance.currentGeneralGame.Rounds[instance.boardPersistent.CurrentRound].Questions[currentPlayer];
+    }
+
 
 }

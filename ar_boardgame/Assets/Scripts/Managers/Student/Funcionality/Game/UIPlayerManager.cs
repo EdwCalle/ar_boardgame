@@ -53,7 +53,6 @@ public class UIPlayerManager : MonoBehaviour
     }
     public RoundInfo roundInfo;
     public PlayerInfo[] playersList;
-    public PlayerInfo[] playersList2;
     //[Header("Directions")]
     public Arrows arrows;
     // [Header("Showing Minigame")]
@@ -106,8 +105,8 @@ public class UIPlayerManager : MonoBehaviour
 
     public void SetRoundInfo()
     {
-        roundInfo.roundTitle.text = Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.CurrentRound].Title;
-        roundInfo.numberRound.text = $"Número de ronda: {Singleton.instance.CurrentRound}";
+        roundInfo.roundTitle.text = Singleton.GetRoundTitle();
+        roundInfo.numberRound.text = $"Número de ronda: {Singleton.GetNumberRound()}";
 
     }
     public void SetDiceInfo(int dice)
@@ -117,11 +116,8 @@ public class UIPlayerManager : MonoBehaviour
     }
     public void SetTitlteMinigame()
     {
-        minigameInfo.MinigameTitle.text = "Vamos a jugar:" + Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.CurrentRound].Minigame.Title;
-        // text2.text = Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.currentRound].Minigame2.Title;
-        // text3.text = Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.currentRound].Minigame3.Title;
+        minigameInfo.MinigameTitle.text = "Vamos a jugar:" + Singleton.GetMinigameTitle();
     }
-
     public void SetPlayersListInfo(List<Student> students)
     {
         for (int i = 0; i < 4; i++)
@@ -138,22 +134,6 @@ public class UIPlayerManager : MonoBehaviour
             }
         }
     }
-    // public void SetPlayersListInfo2(List<Student> students)
-    // {
-    //     for (int i = 0; i < 4; i++)
-    //     {
-    //         if (i < students.Count)
-    //         {
-    //             playersList2[i].nickname.text = students[i].NickName;
-    //             playersList2[i].textCaps.text = students[i].Score.Caps + "";
-    //             playersList2[i].textStars.text = students[i].Score.Stars + "";
-    //         }
-    //         else
-    //         {
-    //             // playersList[i].modal.SetActive(false);
-    //         }
-    //     }
-    // }
 
     public void ShowMinigameInfo()
     {
@@ -173,44 +153,42 @@ public class UIPlayerManager : MonoBehaviour
         ShowModal(resultsInfo.modal);
         resultsInfo.wimmner.text = "El ganador es...." + "name";
     }
-    public void ShowQuestionsInfo(bool IsMyTurn)
+    public void ShowQuestionsInfo(bool IsMyTurn, int currentPlayer)
     {
         ShowModal(questionsInfo.modal);
-        PrepareQuestion(IsMyTurn);
+        PrepareQuestion(IsMyTurn, currentPlayer);
     }
-    public void PrepareQuestion(bool IsMyTurn)
+    public void PrepareQuestion(bool IsMyTurn, int currentPlayer)
     {
         EnableOptions(IsMyTurn);
-        SetQuestion(Singleton.instance.CurrentTurn);
+        SetQuestion(currentPlayer);
     }
-    public void SetQuestion(int currentTurn)
+    public void SetQuestion(int currentPlayer)
     {
-        questionsInfo.questionTitle.text = Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.CurrentRound].Questions[currentTurn].Title;
-        SetOption(0, Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.CurrentRound].Questions[currentTurn].OptionA);
-        SetOption(1, Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.CurrentRound].Questions[currentTurn].OptionB);
-        SetOption(2, Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.CurrentRound].Questions[currentTurn].OptionC);
-        SetOption(3, Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.CurrentRound].Questions[currentTurn].OptionD);
+
+        questionsInfo.questionTitle.text = Singleton.GetQuestionRound(currentPlayer).Title;
+        SetOption(0, Singleton.GetQuestionRound(currentPlayer).OptionA);
+        SetOption(1, Singleton.GetQuestionRound(currentPlayer).OptionB);
+        SetOption(2, Singleton.GetQuestionRound(currentPlayer).OptionC);
+        SetOption(3, Singleton.GetQuestionRound(currentPlayer).OptionD);
 
     }
     public void SetOption(int pos, string value)
     {
         questionsInfo.options[pos].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = value;
     }
-    public async Task SelectOption(int value)
+    public async Task SelectOption(int value, int currentPlayer)
     {
-        int solution = Singleton.instance.currentGeneralGame.Rounds[Singleton.instance.CurrentRound].Questions[Singleton.instance.CurrentTurn].Solution;
+        int solution = Singleton.GetQuestionRound(currentPlayer).Solution;
         if (value == solution)
         {
-            // Blink(questionsInfo.options[value], Color.green, 1f);
-            //correect
+
             questionsInfo.options[value].GetComponent<Animator>().SetInteger("optionState", 1);
         }
         else
         {
             questionsInfo.options[value].GetComponent<Animator>().SetInteger("optionState", -1);
             questionsInfo.options[solution].GetComponent<Animator>().SetInteger("optionState", 1);
-            //Blink(questionsInfo.options[value], Color.red, 1f);
-            // Blink(questionsInfo.options[solution], Color.green, 1f);
         }
         EnableOptions(false);
         await Task.Delay(2000);
@@ -227,54 +205,6 @@ public class UIPlayerManager : MonoBehaviour
         questionsInfo.options[2].GetComponent<Button>().interactable = value;
         questionsInfo.options[3].GetComponent<Button>().interactable = value;
     }
-    // void Blink(GameObject gameObject, Color targetColor, float duration)
-    // {
-    //     Image myRawImage = gameObject.GetComponent<Image>();
-    //     // Tween the color from the original color to a new color (fully transparent in this case) over the specified duration
-    //     myRawImage.DOColor(targetColor, duration)
-    //         .SetLoops(5, LoopType.Yoyo) // SetLoops with 2 and LoopType.Yoyo creates a single cycle of fading in and out
-    //         .OnComplete(() =>
-    //         {
-    //             myRawImage.color = Color.white;
-    //             //  HideModal(questionsInfo.modal);
-    //             //questionsInfo.modal.SetActive(false);
-
-    //         }); // Disable the GameObject after the blinking effect is complete
-    // }
-    // // void FadeIn(GameObject gameObject)
-    // // {
-    // //     gameObject.SetActive(true);
-    // //     Fade(gameObject, 0f, 1f, 1.0f);
-
-    // // }
-    // // async void FadeOut(GameObject gameObject, float duration)
-    // // {
-    // //     await Fade(gameObject, 1f, 0f, duration);
-    // //     gameObject.SetActive(false);
-
-    // // }
-    // // Task Fade(GameObject gameObject, float fromAlpha, float toAlpha, float duration)
-    // //     {
-    // //         CanvasGroup canvasGroup = gameObject.GetComponent<CanvasGroup>();
-    // //     var tcs = new TaskCompletionSource<object>();
-    // //         // Ensure the CanvasGroup exists
-    // //         if (canvasGroup != null)
-    // //         {
-    // //             // Set the starting alpha
-    // //             canvasGroup.alpha = fromAlpha;
-
-    // //             // Use DOTween to tween the alpha property
-    // //             canvasGroup.DOFade(toAlpha, duration)
-    // //                 .OnComplete(() => tcs.SetResult(null));
-    // //         }
-    // //         else
-    // // {
-    // //     // If there's no CanvasGroup, complete the task immediately
-    // //     tcs.SetResult(null);
-    // // }
-
-    // // return tcs.Task;
-    // //     }
     public void ShowArrows(string directionOne, string directionTwo)
     {
 

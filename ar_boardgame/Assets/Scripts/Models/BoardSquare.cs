@@ -5,7 +5,6 @@ namespace Models
     {
         private int nextSquare;
         private bool isSquarePoint;
-        // private bool isNextSquareDirection;
         private string directionOne;
         private string directionTwo;
         private int squareOne;

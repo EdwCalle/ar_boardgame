@@ -32,7 +32,6 @@ public class FooterManager : MonoBehaviour
     }
 
     public Button finish;
-
     public Texting finalMessage;
     public Texting Result;
     public OptionUi[] optionUis = new OptionUi[4];
@@ -41,7 +40,10 @@ public class FooterManager : MonoBehaviour
     public TextMeshProUGUI info;
     public int lastIndex = -1;
     public bool feedback;
+    public int CurrentQuestion = 0;
     [SerializeField] private MediatorMinigame mediatorMinigame;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -54,7 +56,7 @@ public class FooterManager : MonoBehaviour
     }
     public void ChangeScene()
     {
-        Singleton.instance.CurrentRound++;
+        Singleton.instance.boardPersistent.CurrentRound++;
         SceneManager.LoadScene("board");
     }
     public void showOptions()
@@ -69,35 +71,35 @@ public class FooterManager : MonoBehaviour
     }
     public void OnRight()
     {
-        lastIndex = Singleton.instance.CurrentQuestion;
+        lastIndex = CurrentQuestion;
 
-        if (Singleton.instance.CurrentQuestion == Singleton.instance.currentMinigame.Models.Count - 1)
+        if (CurrentQuestion == Singleton.instance.currentMinigame.Models.Count - 1)
         {
-            Singleton.instance.CurrentQuestion = Singleton.instance.currentMinigame.Models.Count - 1;
+            CurrentQuestion = Singleton.instance.currentMinigame.Models.Count - 1;
             // not move
         }
         else
         {
-            Singleton.instance.CurrentQuestion++;
-            ShowOptionById(Singleton.instance.CurrentQuestion);
+            CurrentQuestion++;
+            ShowOptionById(CurrentQuestion);
         }
 
 
     }
     public void OnLeft()
     {
-        lastIndex = Singleton.instance.CurrentQuestion;
-        Singleton.instance.CurrentQuestion--;
-        if (Singleton.instance.CurrentQuestion == -1)
+        lastIndex = CurrentQuestion;
+        CurrentQuestion--;
+        if (CurrentQuestion == -1)
         {
-            Singleton.instance.CurrentQuestion = 0;
+            CurrentQuestion = 0;
         }
-        ShowOptionById(Singleton.instance.CurrentQuestion);
+        ShowOptionById(CurrentQuestion);
 
     }
     public void SelectOption(int value)
     {
-        Singleton.instance.currentMinigame.Models[Singleton.instance.CurrentQuestion].Question.IsSelected = value;
+        Singleton.instance.currentMinigame.Models[CurrentQuestion].Question.IsSelected = value;
     }
     public void ShowResults()
     {
@@ -126,15 +128,11 @@ public class FooterManager : MonoBehaviour
     public void ShowFeedback()
     {
         feedback = true;
-        ShowFeedbackItem(Singleton.instance.CurrentQuestion);
+        ShowFeedbackItem(CurrentQuestion);
     }
     public void ShowFeedbackItem(int index)
     {
-        // if (index == Singleton.instance.currentMinigame.Models.Count - 1)
-        // {
-        //     Singleton.instance.CurrentQuestion = Singleton.instance.currentMinigame.Models.Count - 1;
-        //     // not move
-        // }
+
         Question question = Singleton.instance.currentMinigame.Models[index].Question;
         optionUis[0].Label.color = Color.black;
         optionUis[1].Label.color = Color.black;

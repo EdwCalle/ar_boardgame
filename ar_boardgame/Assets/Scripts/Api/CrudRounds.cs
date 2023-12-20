@@ -7,13 +7,13 @@ namespace Api
     {
         public static List<Round> GetRounds()
         {
-            return Singleton.instance.RoundsT;
+            return SingletonTeacher.instance.RoundsT;
         }
 
         public static void Create(Round round)
         {
             round.Id = GetRounds().Count + 1;
-            Singleton.instance.RoundsT.Add(round);
+            SingletonTeacher.instance.RoundsT.Add(round);
         }
         public static Round GetById(int id)
         {
