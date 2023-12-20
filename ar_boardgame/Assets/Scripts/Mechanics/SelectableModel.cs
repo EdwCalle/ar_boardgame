@@ -18,9 +18,9 @@ public class SelectableModel : MonoBehaviour
     public void SelectModel()
     {
         // if the mode time is interaction just interact
-        if (Singleton.instance.currentMinigame.TimerState == TimerState.resolve)
+        if (Singleton.GetCurrentMinigame().TimerState == TimerState.resolve)
         {
-            SelectionType selection = Singleton.instance.currentMinigame.SelectionType;
+            SelectionType selection = Singleton.GetCurrentMinigame().SelectionType;
             //print("index:" + index + " last index:" + lastSelectedItem + " item selected:" + selection);
             // if the selection type is one selection and  the current item selected is the same that the last selected
             if (selection == SelectionType.OneSelection && lastSelectedItem == index)
@@ -96,7 +96,7 @@ public class SelectableModel : MonoBehaviour
     }
     public void SetCorrect(int index)
     {
-        Singleton.instance.currentMinigame.Models[index].IsSelected = isSelected;
+        Singleton.GetCurrentMinigame().Models[index].IsSelected = isSelected;
 
         if (IsSolution == isSelected)
             GetComponent<Renderer>().material.color = Color.green;
@@ -110,7 +110,7 @@ public class SelectableModel : MonoBehaviour
     }
     public void FindedItem()
     {
-        Singleton.instance.currentMinigame.Models[index].IsSelected = true;
+        Singleton.GetCurrentMinigame().Models[index].IsSelected = true;
         mediatorMinigame.FoundItem(index);
         gameObject.SetActive(false);
     }

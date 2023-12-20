@@ -31,11 +31,11 @@ public class HeaderManager : MonoBehaviour
 
     public void SetExtraInfoFromSinglenton()
     {
-        SetExtraInfo(Singleton.instance.currentMinigame.ExtraInfo.Type, Singleton.instance.currentMinigame.ExtraInfo.Info);
+        SetExtraInfo(Singleton.GetCurrentMinigame().ExtraInfo.Type, Singleton.GetCurrentMinigame().ExtraInfo.Info);
     }
     public void SetTitleFromSinglenton()
     {
-        SetTitle(Singleton.instance.currentMinigame.Title);
+        SetTitle(Singleton.GetCurrentMinigame().Title);
     }
 
     public void SetExtraInfo(string typeInfo, string info)
@@ -77,16 +77,16 @@ public class HeaderManager : MonoBehaviour
     public void PrepareLevel()
     {
         HideExtraComponents();
-        if (Singleton.instance.currentMinigame.HeaderType == HeaderType.extraInfo) // if level 1 
+        if (Singleton.GetCurrentMinigame().HeaderType == HeaderType.extraInfo) // if level 1 
         {
             SetExtraInfoFromSinglenton();
             SetTitleFromSinglenton();
         }
-        if (Singleton.instance.currentMinigame.HeaderType == HeaderType.normal) // if level 2,3,5,6,7,8,9(special)
+        if (Singleton.GetCurrentMinigame().HeaderType == HeaderType.normal) // if level 2,3,5,6,7,8,9(special)
         {
             SetTitleFromSinglenton();
         }
-        if (Singleton.instance.currentMinigame.HeaderType == HeaderType.questions) // if level 4
+        if (Singleton.GetCurrentMinigame().HeaderType == HeaderType.questions) // if level 4
         {
             SetTitleFromSinglenton();
         }

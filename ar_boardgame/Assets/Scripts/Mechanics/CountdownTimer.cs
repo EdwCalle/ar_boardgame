@@ -72,7 +72,7 @@ public class CountdownTimer : MonoBehaviour
         ChangeState(false, TimerState.feedback, feedbackTime);
         yield return StartCoroutine(CountownTimer(currentTime));
 
-        Singleton.instance.currentMinigame.TimerState = TimerState.none;
+        Singleton.GetCurrentMinigame().TimerState = TimerState.none;
         //gameFinish = true;
         mediatorMinigame.WaitingFinishGame();
 
@@ -110,7 +110,7 @@ public class CountdownTimer : MonoBehaviour
     void ChangeState(bool enable, TimerState timerState, float currentTime, string message = null)
     {
         EnableMessageState(enable);
-        Singleton.instance.currentMinigame.TimerState = timerState;
+        Singleton.GetCurrentMinigame().TimerState = timerState;
         this.currentTime = currentTime;
         if (message != null)
             SetMessage(message);
@@ -136,9 +136,9 @@ public class CountdownTimer : MonoBehaviour
     }
     public void PrepareLevel()
     {
-        BuildTimer(Singleton.instance.currentMinigame.InteractionTime,
-                   Singleton.instance.currentMinigame.ResolveTime,
-                   Singleton.instance.currentMinigame.FeedbackTime);
+        BuildTimer(Singleton.GetCurrentMinigame().InteractionTime,
+                   Singleton.GetCurrentMinigame().ResolveTime,
+                   Singleton.GetCurrentMinigame().FeedbackTime);
         ChangeState(true, TimerState.offset, offSet, "Enfoca la cámara y exploremos el nivel");
         // mediatorMinigame.ActivateCamera();
         //  gameStart = true;

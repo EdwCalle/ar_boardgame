@@ -36,7 +36,7 @@ public class ItemsManager : MonoBehaviour
         //     items[i].GetComponent<ItemManager>().SetActive(active); ;
         // }
         transform.gameObject.SetActive(true);
-        ExtraComponentType extraComponentType = Singleton.instance.currentMinigame.ExtraComponentType;
+        ExtraComponentType extraComponentType = Singleton.GetCurrentMinigame().ExtraComponentType;
         if (extraComponentType == ExtraComponentType.options || extraComponentType == ExtraComponentType.normal)
         {
 
@@ -63,7 +63,7 @@ public class ItemsManager : MonoBehaviour
     public async Task LoadMultipleModels()
     {
         int i = 0;
-        foreach (Model3D item in Singleton.instance.currentMinigame.Models)
+        foreach (Model3D item in Singleton.GetCurrentMinigame().Models)
         {
             GameObject instance = createItem(item.Position);
             instance.transform.GetChild(0).GetComponent<SelectableModel>().mediatorMinigame = mediatorMinigame;
@@ -80,7 +80,7 @@ public class ItemsManager : MonoBehaviour
             if (!verify)
                 print("something wrong happens, please make something with this");
 
-            ExtraComponentType extraComponentType = Singleton.instance.currentMinigame.ExtraComponentType;
+            ExtraComponentType extraComponentType = Singleton.GetCurrentMinigame().ExtraComponentType;
             if (extraComponentType == ExtraComponentType.options)
             {
                 instance.SetActive(false);
@@ -92,7 +92,7 @@ public class ItemsManager : MonoBehaviour
     public async Task PrepareLevel()
     {
 
-        ExtraComponentType extraComponentType = Singleton.instance.currentMinigame.ExtraComponentType;
+        ExtraComponentType extraComponentType = Singleton.GetCurrentMinigame().ExtraComponentType;
         if (extraComponentType == ExtraComponentType.normal || extraComponentType == ExtraComponentType.explore || extraComponentType == ExtraComponentType.options)
         {
             await LoadMultipleModels();

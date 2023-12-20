@@ -58,7 +58,7 @@ public class ItemManager : MonoBehaviour
     }
     public void ShowFeedback(int index)
     {
-        if (Singleton.instance.currentMinigame.ExtraComponentType == ExtraComponentType.normal)
+        if (Singleton.GetCurrentMinigame().ExtraComponentType == ExtraComponentType.normal)
         {
             modelCollider.GetComponent<SelectableModel>().SetCorrect(index);
         }

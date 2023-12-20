@@ -61,7 +61,7 @@ public class FooterManager : MonoBehaviour
     }
     public void showOptions()
     {
-        if (Singleton.instance.currentMinigame.ExtraComponentType == ExtraComponentType.options)
+        if (Singleton.GetCurrentMinigame().ExtraComponentType == ExtraComponentType.options)
         {
             optionsModal.SetActive(true);
             ShowOptionById(0);
@@ -73,9 +73,9 @@ public class FooterManager : MonoBehaviour
     {
         lastIndex = CurrentQuestion;
 
-        if (CurrentQuestion == Singleton.instance.currentMinigame.Models.Count - 1)
+        if (CurrentQuestion == Singleton.GetCurrentMinigame().Models.Count - 1)
         {
-            CurrentQuestion = Singleton.instance.currentMinigame.Models.Count - 1;
+            CurrentQuestion = Singleton.GetCurrentMinigame().Models.Count - 1;
             // not move
         }
         else
@@ -99,23 +99,23 @@ public class FooterManager : MonoBehaviour
     }
     public void SelectOption(int value)
     {
-        Singleton.instance.currentMinigame.Models[CurrentQuestion].Question.IsSelected = value;
+        Singleton.GetCurrentMinigame().Models[CurrentQuestion].Question.IsSelected = value;
     }
     public void ShowResults()
     {
         //optionsModal.SetActive(false);
         Result.Container.SetActive(true);
-        Score currentMinigameScore = ScoreManager.GetMinigameResults(Singleton.instance.currentMinigame);
+        Score currentMinigameScore = ScoreManager.GetMinigameResults(Singleton.GetCurrentMinigame());
         Result.Label.text = $"Ganaste {currentMinigameScore.Stars}";
-        Result.Label2.text = $"de {Singleton.instance.currentMinigame.Models.Count} posibles";
+        Result.Label2.text = $"de {Singleton.GetCurrentMinigame().Models.Count} posibles";
     }
     public void ShowOptionById(int index)
     {
         if (lastIndex != -1)
             mediatorMinigame.ItemsManager.Items[lastIndex].SetActive(false);
         mediatorMinigame.ItemsManager.Items[index].SetActive(true);
-        info.text = $"{index + 1}/{Singleton.instance.currentMinigame.Models.Count}";
-        Question question = Singleton.instance.currentMinigame.Models[index].Question;
+        info.text = $"{index + 1}/{Singleton.GetCurrentMinigame().Models.Count}";
+        Question question = Singleton.GetCurrentMinigame().Models[index].Question;
         questiontitle.text = question.Title;
         optionUis[0].Label.text = question.OptionA;
         optionUis[1].Label.text = question.OptionB;
@@ -133,7 +133,7 @@ public class FooterManager : MonoBehaviour
     public void ShowFeedbackItem(int index)
     {
 
-        Question question = Singleton.instance.currentMinigame.Models[index].Question;
+        Question question = Singleton.GetCurrentMinigame().Models[index].Question;
         optionUis[0].Label.color = Color.black;
         optionUis[1].Label.color = Color.black;
         optionUis[2].Label.color = Color.black;

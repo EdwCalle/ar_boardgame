@@ -1967,6 +1967,11 @@ PrefabInstance:
       propertyPath: models
       value: 
       objectReference: {fileID: 4900000, guid: 57b0956365d047346861cef2673562e5, type: 3}
+    - target: {fileID: 1177760313930652538, guid: f5069c7f6027cf34992037c962c99fda,
+        type: 3}
+      propertyPath: currentGeneralGame.rounds.Array.size
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 2469942812086968723, guid: f5069c7f6027cf34992037c962c99fda,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5461,6 +5466,7 @@ MonoBehaviour:
   info: {fileID: 477343129}
   lastIndex: -1
   feedback: 0
+  CurrentQuestion: 0
   mediatorMinigame: {fileID: 633072111}
 --- !u!1 &1594500475
 GameObject:

@@ -31,14 +31,14 @@ public class MediatorMinigame : MonoBehaviourPunCallbacks
             PhotonNetwork.AutomaticallySyncScene = true;
         // setting level from here
         // level 1
-        if (Singleton.instance.currentMinigame.Level == 1)
-            Singleton.instance.currentMinigame.ConfigureLevel(HeaderType.extraInfo, SelectionType.MultipleSelection, ExtraComponentType.normal);
+        if (Singleton.GetCurrentMinigame().Level == 1)
+            Singleton.GetCurrentMinigame().ConfigureLevel(HeaderType.extraInfo, SelectionType.MultipleSelection, ExtraComponentType.normal);
         // level 2
-        if (Singleton.instance.currentMinigame.Level == 2)
-            Singleton.instance.currentMinigame.ConfigureLevel(HeaderType.normal, SelectionType.OneTimeSelection, ExtraComponentType.explore);
+        if (Singleton.GetCurrentMinigame().Level == 2)
+            Singleton.GetCurrentMinigame().ConfigureLevel(HeaderType.normal, SelectionType.OneTimeSelection, ExtraComponentType.explore);
         // level 3
-        if (Singleton.instance.currentMinigame.Level == 3)
-            Singleton.instance.currentMinigame.ConfigureLevel(HeaderType.questions, SelectionType.noSelection, ExtraComponentType.options);
+        if (Singleton.GetCurrentMinigame().Level == 3)
+            Singleton.GetCurrentMinigame().ConfigureLevel(HeaderType.questions, SelectionType.noSelection, ExtraComponentType.options);
 
 
         // disable ar session
@@ -122,7 +122,7 @@ public class MediatorMinigame : MonoBehaviourPunCallbacks
     {
 
         loadingScreenManager.StartAnimation("Ingresando al tablero, esperando al resto de jugadores......");
-        Score myPartialScore = ScoreManager.GetMinigameResults(Singleton.instance.currentMinigame);
+        Score myPartialScore = ScoreManager.GetMinigameResults(Singleton.GetCurrentMinigame());
         if (!Singleton.instance.IsSinglePlayerMode)
         {
             ScoreManager.SetPartialScore(PhotonNetwork.LocalPlayer, myPartialScore);

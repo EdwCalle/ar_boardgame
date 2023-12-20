@@ -308,7 +308,6 @@ public class BoardManager : MonoBehaviourPunCallbacks
     }
     public void GoToMinigame()
     {
-        Singleton.SetMinigame();
         PhotonNetwork.LoadLevel("minigames");
     }
 

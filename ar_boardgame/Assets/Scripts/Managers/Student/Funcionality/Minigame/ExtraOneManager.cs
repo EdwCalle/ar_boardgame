@@ -19,7 +19,7 @@ public class ExtraOneManager : MonoBehaviour
     }
     public void PrepareLevel()
     {
-        foreach (Model3D model in Singleton.instance.currentMinigame.Models)
+        foreach (Model3D model in Singleton.GetCurrentMinigame().Models)
         {
             GameObject item = Instantiate(itemPrefab, transform);
             item.GetComponent<ItemFoundManager>().nameText.text = model.Name;
@@ -35,7 +35,7 @@ public class ExtraOneManager : MonoBehaviour
     public void ActiveListFound(bool value)
     {
 
-        if (Singleton.instance.currentMinigame.ExtraComponentType == ExtraComponentType.explore)
+        if (Singleton.GetCurrentMinigame().ExtraComponentType == ExtraComponentType.explore)
         {
             gameObject.SetActive(value);
         }
