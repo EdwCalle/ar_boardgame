@@ -2044,9 +2044,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1046677541}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 253.59998, y: -371.40002}
   m_SizeDelta: {x: 495.6, y: 701}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &225196808
@@ -3166,7 +3166,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &274807239
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3239,26 +3239,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chat: {fileID: 2132319403}
   skipButton: {fileID: 1533312690}
-  dialogues:
-  - numberCharacter: 0
-    sentence: "Personaje 1: \xA1Hola! Estaba leyendo sobre las plantas. \xBFSab\xEDas
-      que las ra\xEDces absorben agua y nutrientes del suelo?"
-    order: 0
-  - numberCharacter: 1
-    sentence: "Personaje 2: S\xED, es fascinante. Adem\xE1s, las hojas realizan la
-      fotos\xEDntesis, convirtiendo la luz solar en energ\xEDa."
-    order: 0
-  - numberCharacter: 0
-    sentence: "Personaje 1: \xBFY las flores? Tienen un papel crucial en la reproducci\xF3n,
-      \xBFverdad?"
-    order: 0
-  - numberCharacter: 1
-    sentence: "Personaje 2: Exacto, las flores contienen \xF3rganos reproductivos.
-      Luego, las semillas se dispersan para dar vida a nuevas plantas."
-    order: 0
-  - numberCharacter: 0
-    sentence: "Personaje 1: \xA1Incre\xEDble c\xF3mo cada parte tiene su funci\xF3n!"
-    order: 0
   Characters:
   - {fileID: 225196806}
   - {fileID: 572342852}
@@ -9361,9 +9341,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1046677541}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 1572.4001, y: -371.40002}
   m_SizeDelta: {x: 495.6, y: 701}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &572342854
@@ -13531,9 +13511,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1046677541}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 913, y: -421.90002}
   m_SizeDelta: {x: 800, y: 600}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &892582621
@@ -26667,6 +26647,8 @@ MonoBehaviour:
     - {fileID: 416777629}
   canvasModal: {fileID: 374821127}
   WaitPlayersModal: {fileID: 1938963744}
+  DialogueModal: {fileID: 274807238}
+  dialogueController: {fileID: 274807242}
 --- !u!4 &1622390971
 Transform:
   m_ObjectHideFlags: 0
@@ -31781,7 +31763,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1938963745
 RectTransform:
   m_ObjectHideFlags: 0

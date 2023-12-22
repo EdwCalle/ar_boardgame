@@ -70,6 +70,7 @@ public class BoardManager : MonoBehaviourPunCallbacks
             {
                 //  ShowPartialResults();
             }
+            playerUI.ShowDialogue();
             // show new dialog
             // ShowDialog();
         }
@@ -297,7 +298,7 @@ public class BoardManager : MonoBehaviourPunCallbacks
             // currentPlayer = 0;
             playerUI.ShowMinigameInfo();
             await Task.Delay(2000);
-            playerUI.HideModal(playerUI.minigameInfo.modal);
+            playerUI.HideModal(playerUI.minigameInfo.Modal);
             UpdateTurn();
             GoToMinigame();
         }

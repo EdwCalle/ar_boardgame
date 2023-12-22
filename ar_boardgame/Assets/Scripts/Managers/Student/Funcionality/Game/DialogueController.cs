@@ -9,7 +9,7 @@ public class DialogueController : MonoBehaviour
 
     public TextMeshProUGUI chat;
     public Button skipButton;
-    public Dialogue[] dialogues;
+    Sentence[] sentences;
 
     public GameObject[] Characters;
     public GameObject[] CharactersName;
@@ -23,6 +23,9 @@ public class DialogueController : MonoBehaviour
 
 
     int focusedCharacter = 1;
+
+    public Sentence[] Sentences { get => sentences; set => sentences = value; }
+
     void Start()
     {
 
@@ -41,17 +44,17 @@ public class DialogueController : MonoBehaviour
     public void NextSentece()
     {
         skipButton.interactable = false;
-        if (currentDialog < dialogues.Length)
+        if (currentDialog < Sentences.Length)
             StartCoroutine(IterateSentece());
     }
 
     IEnumerator IterateSentece()
     {
         FocusCharacter(focusedCharacter, false);
-        FocusCharacter(dialogues[currentDialog].NumberCharacter, true);
-        focusedCharacter = dialogues[currentDialog].NumberCharacter;
+        FocusCharacter(Sentences[currentDialog].NumberCharacter, true);
+        focusedCharacter = Sentences[currentDialog].NumberCharacter;
         chat.text = "";
-        foreach (char item in dialogues[currentDialog].Sentence.ToCharArray())
+        foreach (char item in Sentences[currentDialog].Line.ToCharArray())
         {
             chat.text += item;
             yield return new WaitForSeconds(timeBetweenChar);

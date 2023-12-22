@@ -15,6 +15,7 @@ namespace Models
         // private Minigame minigame3;
         // [SerializeField] private Minigame finalMinigame;
         [SerializeField] private List<Question> questions = new();
+        [SerializeField] private Dialogue dialogue;
         public Round(int id, string title, int numberRound)
         {
             this.id = id;
@@ -33,7 +34,7 @@ namespace Models
         //  public Minigame FinalMinigame { get => finalMinigame; set => finalMinigame = value; }
         public List<Question> Questions { get => questions; set => questions = value; }
         public Minigame Minigame { get => minigame; set => minigame = value; }
-
+        public Dialogue Dialogue { get => dialogue; set => dialogue = value; }
 
         public override string ToString()
         {

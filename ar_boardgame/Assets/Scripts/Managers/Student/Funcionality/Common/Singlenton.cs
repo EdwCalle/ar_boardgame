@@ -16,6 +16,7 @@ public class Singleton : MonoBehaviour
     {
         public Model3D[] models;
         public Minigame[] minigames;
+        public Dialogue[] dialogues;
         public Round[] rounds;
         public GeneralGame[] generalGames;
     }
@@ -61,6 +62,7 @@ public class Singleton : MonoBehaviour
     public void SetRoundExample(int numberRound, int idMinigame)
     {
         Round round = ExampleData.rounds[numberRound];
+        round.Dialogue = ExampleData.dialogues[0];
         SetMinigameExample(round, idMinigame);
         currentGeneralGame.Rounds.Add(round);
     }
@@ -125,6 +127,10 @@ public class Singleton : MonoBehaviour
     public static Question GetQuestionRound(int currentPlayer)
     {
         return instance.currentGeneralGame.Rounds[instance.boardPersistent.CurrentRound].Questions[currentPlayer];
+    }
+    public static Sentence[] GetSentences()
+    {
+        return instance.currentGeneralGame.Rounds[instance.boardPersistent.CurrentRound].Dialogue.Sentences;
     }
 
 

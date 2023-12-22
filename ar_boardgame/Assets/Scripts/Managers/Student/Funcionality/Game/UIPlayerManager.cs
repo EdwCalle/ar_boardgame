@@ -2,67 +2,16 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using static thisAPP.UIElements.Modals;
 public class UIPlayerManager : MonoBehaviour
 {
-    [Serializable]
-    public class Arrows
-    {
-        public GameObject modal;
-        public GameObject leftButton;
-        public GameObject rightButton;
-        public GameObject upButton;
-        public GameObject downButton;
-    }
-    [Serializable]
-    public class MinigameInfo
-    {
-        public GameObject modal;
-        public TextMeshProUGUI MinigameTitle;
-    }
-    [Serializable]
-    public class RoundInfo
-    {
-        public TextMeshProUGUI roundTitle;
-        public TextMeshProUGUI numberRound;
-        public GameObject diceButton;
-        public TextMeshProUGUI diceTitle;
-    }
-    [Serializable]
-    public class QuestionsInfo
-    {
-        public GameObject modal;
-        public TextMeshProUGUI questionTitle;
-        public GameObject[] options;
-    }
-    [Serializable]
-    public class ResultsInfo
-    {
-        public GameObject modal;
-        public TextMeshProUGUI wimmner;
-    }
-    [Serializable]
-    public class PlayerInfo
-    {
-        public TextMeshProUGUI textStars;
-        public TextMeshProUGUI textCaps;
-        public TextMeshProUGUI nickname;
-        public GameObject modal;
-    }
     public RoundInfo roundInfo;
     public PlayerInfo[] playersList;
-    //[Header("Directions")]
     public Arrows arrows;
-    // [Header("Showing Minigame")]
     public MinigameInfo minigameInfo;
-
-    // [Header("Round Information")]
-
-    //  [Header("Results")]
     public ResultsInfo resultsInfo;
-    //  [Header("Questions")]
     public QuestionsInfo questionsInfo;
 
     public GameObject canvasModal;
@@ -70,16 +19,20 @@ public class UIPlayerManager : MonoBehaviour
     Animator animator;
 
     public GameObject WaitPlayersModal;
+    public GameObject DialogueModal;
+
+    public DialogueController dialogueController;
     // Start is called before the first frame update
     void Awake()
     {
         animator = canvasModal.GetComponent<Animator>();
 
         // canvasModal.SetActive(false);
-        arrows.modal.SetActive(false);
-        questionsInfo.modal.SetActive(false);
-        minigameInfo.modal.SetActive(false);
-        resultsInfo.modal.SetActive(false);
+        arrows.Modal.SetActive(false);
+        questionsInfo.Modal.SetActive(false);
+        minigameInfo.Modal.SetActive(false);
+        resultsInfo.Modal.SetActive(false);
+        DialogueModal.SetActive(false);
 
     }
     public void HideModal(GameObject gameObject)
@@ -105,18 +58,22 @@ public class UIPlayerManager : MonoBehaviour
 
     public void SetRoundInfo()
     {
-        roundInfo.roundTitle.text = Singleton.GetRoundTitle();
-        roundInfo.numberRound.text = $"Número de ronda: {Singleton.GetNumberRound()}";
+        roundInfo.RoundTitle.text = Singleton.GetRoundTitle();
+        roundInfo.NumberRound.text = $"Número de ronda: {Singleton.GetNumberRound()}";
 
     }
     public void SetDiceInfo(int dice)
     {
-        roundInfo.diceTitle.text = $"{dice}";
+        roundInfo.DiceTitle.text = $"{dice}";
 
     }
     public void SetTitlteMinigame()
     {
         minigameInfo.MinigameTitle.text = "Vamos a jugar:" + Singleton.GetMinigameTitle();
+    }
+    public void SetDialogue()
+    {
+        dialogueController.Sentences = Singleton.GetSentences();
     }
     public void SetPlayersListInfo(List<Student> students)
     {
@@ -124,9 +81,9 @@ public class UIPlayerManager : MonoBehaviour
         {
             if (i < students.Count)
             {
-                playersList[i].nickname.text = students[i].NickName;
-                playersList[i].textCaps.text = students[i].Score.Caps + "";
-                playersList[i].textStars.text = students[i].Score.Stars + "";
+                playersList[i].Nickname.text = students[i].NickName;
+                playersList[i].TextCaps.text = students[i].Score.Caps + "";
+                playersList[i].TextStars.text = students[i].Score.Stars + "";
             }
             else
             {
@@ -137,25 +94,31 @@ public class UIPlayerManager : MonoBehaviour
 
     public void ShowMinigameInfo()
     {
-        ShowModal(minigameInfo.modal);
+        ShowModal(minigameInfo.Modal);
         SetTitlteMinigame();
+    }
+    public void ShowDialogue()
+    {
+
+        ShowModal(DialogueModal);
+        SetDialogue();
     }
     public void ShowDice()
     {
-        roundInfo.diceButton.SetActive(true);
+        roundInfo.DiceButton.SetActive(true);
     }
     public void HideDice()
     {
-        roundInfo.diceButton.SetActive(false);
+        roundInfo.DiceButton.SetActive(false);
     }
     public void ShowResultsInfo()
     {
-        ShowModal(resultsInfo.modal);
-        resultsInfo.wimmner.text = "El ganador es...." + "name";
+        ShowModal(resultsInfo.Modal);
+        resultsInfo.Wimmner.text = "El ganador es...." + "name";
     }
     public void ShowQuestionsInfo(bool IsMyTurn, int currentPlayer)
     {
-        ShowModal(questionsInfo.modal);
+        ShowModal(questionsInfo.Modal);
         PrepareQuestion(IsMyTurn, currentPlayer);
     }
     public void PrepareQuestion(bool IsMyTurn, int currentPlayer)
@@ -166,7 +129,7 @@ public class UIPlayerManager : MonoBehaviour
     public void SetQuestion(int currentPlayer)
     {
 
-        questionsInfo.questionTitle.text = Singleton.GetQuestionRound(currentPlayer).Title;
+        questionsInfo.QuestionTitle.text = Singleton.GetQuestionRound(currentPlayer).Title;
         SetOption(0, Singleton.GetQuestionRound(currentPlayer).OptionA);
         SetOption(1, Singleton.GetQuestionRound(currentPlayer).OptionB);
         SetOption(2, Singleton.GetQuestionRound(currentPlayer).OptionC);
@@ -175,7 +138,7 @@ public class UIPlayerManager : MonoBehaviour
     }
     public void SetOption(int pos, string value)
     {
-        questionsInfo.options[pos].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = value;
+        questionsInfo.Options[pos].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = value;
     }
     public async Task SelectOption(int value, int currentPlayer)
     {
@@ -183,40 +146,40 @@ public class UIPlayerManager : MonoBehaviour
         if (value == solution)
         {
 
-            questionsInfo.options[value].GetComponent<Animator>().SetInteger("optionState", 1);
+            questionsInfo.Options[value].GetComponent<Animator>().SetInteger("optionState", 1);
         }
         else
         {
-            questionsInfo.options[value].GetComponent<Animator>().SetInteger("optionState", -1);
-            questionsInfo.options[solution].GetComponent<Animator>().SetInteger("optionState", 1);
+            questionsInfo.Options[value].GetComponent<Animator>().SetInteger("optionState", -1);
+            questionsInfo.Options[solution].GetComponent<Animator>().SetInteger("optionState", 1);
         }
         EnableOptions(false);
         await Task.Delay(2000);
-        HideModal(questionsInfo.modal);
-        questionsInfo.options[value].GetComponent<Animator>().SetInteger("optionState", 0);
-        questionsInfo.options[solution].GetComponent<Animator>().SetInteger("optionState", 0);
+        HideModal(questionsInfo.Modal);
+        questionsInfo.Options[value].GetComponent<Animator>().SetInteger("optionState", 0);
+        questionsInfo.Options[solution].GetComponent<Animator>().SetInteger("optionState", 0);
         await Task.Delay(1050);
 
     }
     void EnableOptions(bool value)
     {
-        questionsInfo.options[0].GetComponent<Button>().interactable = value;
-        questionsInfo.options[1].GetComponent<Button>().interactable = value;
-        questionsInfo.options[2].GetComponent<Button>().interactable = value;
-        questionsInfo.options[3].GetComponent<Button>().interactable = value;
+        questionsInfo.Options[0].GetComponent<Button>().interactable = value;
+        questionsInfo.Options[1].GetComponent<Button>().interactable = value;
+        questionsInfo.Options[2].GetComponent<Button>().interactable = value;
+        questionsInfo.Options[3].GetComponent<Button>().interactable = value;
     }
     public void ShowArrows(string directionOne, string directionTwo)
     {
 
-        ShowModal(arrows.modal);
-        SetActiveArrow(arrows.leftButton, directionOne, directionTwo, "left");
-        SetActiveArrow(arrows.rightButton, directionOne, directionTwo, "right");
-        SetActiveArrow(arrows.upButton, directionOne, directionTwo, "up");
-        SetActiveArrow(arrows.downButton, directionOne, directionTwo, "down");
+        ShowModal(arrows.Modal);
+        SetActiveArrow(arrows.LeftButton, directionOne, directionTwo, "left");
+        SetActiveArrow(arrows.RightButton, directionOne, directionTwo, "right");
+        SetActiveArrow(arrows.UpButton, directionOne, directionTwo, "up");
+        SetActiveArrow(arrows.DownButton, directionOne, directionTwo, "down");
     }
     public void HideArrows()
     {
-        HideModal(arrows.modal);
+        HideModal(arrows.Modal);
 
     }
     void SetActiveArrow(GameObject arrow, string directionOne, string directionTwo, string direction)
