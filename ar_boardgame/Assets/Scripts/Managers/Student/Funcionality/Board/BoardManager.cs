@@ -168,7 +168,7 @@ public class BoardManager : MonoBehaviourPunCallbacks
             };
             students.Add(student);
         }
-        playerUI.SetPlayersListInfo(students);
+        // playerUI.SetPlayersListInfo(students);
     }
     public void ThrowDice()
     {
@@ -230,7 +230,7 @@ public class BoardManager : MonoBehaviourPunCallbacks
                 {
                     isMoving = false;       //this stop moving when player go to their last square
                     isActiveDice = false; // this used for dont loop everytime when moving is false
-                    playerUI.ShowQuestionsInfo(Singleton.IsMyTurn(currentPlayer), currentPlayer);
+                    playerUI.ShowQuestions(Singleton.IsMyTurn(currentPlayer), currentPlayer);
                 }
             }
         }
@@ -298,7 +298,7 @@ public class BoardManager : MonoBehaviourPunCallbacks
             // currentPlayer = 0;
             playerUI.ShowMinigameInfo();
             await Task.Delay(2000);
-            playerUI.HideModal(playerUI.minigameInfo.Modal);
+            playerUI.HideMinigameInfo();
             UpdateTurn();
             GoToMinigame();
         }

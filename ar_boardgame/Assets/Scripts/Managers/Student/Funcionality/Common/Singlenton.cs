@@ -7,7 +7,8 @@ public class Singleton : MonoBehaviour
     public static Singleton instance;
 
     // for game funcionality
-    public GeneralGame currentGeneralGame = new();
+    //public
+    GeneralGame currentGeneralGame = new();
     // [HideInInspector] public Minigame currentMinigame = new();
 
     //for load examples from json
@@ -55,9 +56,9 @@ public class Singleton : MonoBehaviour
         SetRoundExample(0, 0);
         SetRoundExample(1, 1);
         SetRoundExample(2, 2);
-        print(JsonUtility.ToJson(currentGeneralGame.Rounds[0]));
-        print(JsonUtility.ToJson(currentGeneralGame.Rounds[1]));
-        print(JsonUtility.ToJson(currentGeneralGame.Rounds[2]));
+        // print(JsonUtility.ToJson(currentGeneralGame.Rounds[0]));
+        // print(JsonUtility.ToJson(currentGeneralGame.Rounds[1]));
+        // print(JsonUtility.ToJson(currentGeneralGame.Rounds[2]));
     }
     public void SetRoundExample(int numberRound, int idMinigame)
     {
