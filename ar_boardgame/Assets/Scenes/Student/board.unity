@@ -8946,7 +8946,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &504118333
@@ -10037,9 +10037,8 @@ GameObject:
   m_Component:
   - component: {fileID: 633581125}
   - component: {fileID: 633581128}
-  - component: {fileID: 633581127}
   - component: {fileID: 633581130}
-  - component: {fileID: 633581129}
+  - component: {fileID: 633581127}
   m_Layer: 5
   m_Name: Dice
   m_TagString: Untagged
@@ -10102,34 +10101,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 633581124}
   m_CullTransparentMesh: 1
---- !u!114 &633581129
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 633581124}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d741b76780e58b4f87a468460973b37, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  swipeSpeed: 500
-  rotationSpeed: 500
-  rotatingTime: 4
-  rotationObject: {fileID: 1834913663}
-  limitObject: {fileID: 1271479521}
-  dices:
-  - {fileID: 1844090520, guid: 31998aad6aad9d040a0bc2f87fb31df0, type: 3}
-  - {fileID: 1841565209, guid: 31998aad6aad9d040a0bc2f87fb31df0, type: 3}
-  - {fileID: 1559165974, guid: 31998aad6aad9d040a0bc2f87fb31df0, type: 3}
-  - {fileID: -582781870, guid: 31998aad6aad9d040a0bc2f87fb31df0, type: 3}
-  - {fileID: -1940473072, guid: 31998aad6aad9d040a0bc2f87fb31df0, type: 3}
-  - {fileID: 532286721, guid: 31998aad6aad9d040a0bc2f87fb31df0, type: 3}
-  numberDice: 1
-  swipeAnimation: {fileID: 985186614}
-  imageDice: {fileID: 615356640}
-  titleNumberDice: {fileID: 1328073546}
 --- !u!61 &633581130
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -10262,6 +10233,7 @@ GameObject:
   - component: {fileID: 666932573}
   - component: {fileID: 666932575}
   - component: {fileID: 666932574}
+  - component: {fileID: 666932576}
   m_Layer: 5
   m_Name: DiceInfo
   m_TagString: Untagged
@@ -10327,6 +10299,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 666932572}
   m_CullTransparentMesh: 1
+--- !u!114 &666932576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 666932572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d741b76780e58b4f87a468460973b37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiElements:
+    modal: {fileID: 666932572}
+    dice: {fileID: 633581124}
+    rotationObject: {fileID: 1834913663}
+    limitObject: {fileID: 1271479521}
+    dices:
+    - {fileID: 1844090520, guid: 31998aad6aad9d040a0bc2f87fb31df0, type: 3}
+    - {fileID: 1841565209, guid: 31998aad6aad9d040a0bc2f87fb31df0, type: 3}
+    - {fileID: 1559165974, guid: 31998aad6aad9d040a0bc2f87fb31df0, type: 3}
+    - {fileID: -582781870, guid: 31998aad6aad9d040a0bc2f87fb31df0, type: 3}
+    - {fileID: -1940473072, guid: 31998aad6aad9d040a0bc2f87fb31df0, type: 3}
+    - {fileID: 532286721, guid: 31998aad6aad9d040a0bc2f87fb31df0, type: 3}
+    swipeAnimation: {fileID: 985186614}
+    imageDice: {fileID: 615356640}
+    titleNumberDice: {fileID: 1328073546}
+  swipeSpeed: 500
+  rotationSpeed: 500
+  rotatingTime: 4
+  numberDice: 1
 --- !u!1001 &671238731
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16496,7 +16499,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1003851164
@@ -22507,7 +22510,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1373172566
@@ -29167,7 +29170,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1756048096
@@ -34845,7 +34848,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &2132319404

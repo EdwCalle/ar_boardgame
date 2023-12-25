@@ -94,5 +94,24 @@ namespace thisAPP.UIElements
 
         //public TextMeshProUGUI Wimmner { get => winner; set => winner = value; }
     }
+    [System.Serializable]
+    public class DiceUi : ModalAnimator
+    {
+        [SerializeField] private GameObject dice;
+        [SerializeField] private GameObject rotationObject;
+        [SerializeField] private GameObject limitObject;
+        [SerializeField] private Image imageDice;
+        [SerializeField] private Sprite[] dices;
+        [SerializeField] private GameObject swipeAnimation;
 
+        [SerializeField] private GameObject titleNumberDice;
+
+        public GameObject RotationObject { get => rotationObject; set => rotationObject = value; }
+        public GameObject LimitObject { get => limitObject; set => limitObject = value; }
+        public Sprite[] Dices { get => dices; set => dices = value; }
+        public GameObject SwipeAnimation { get => swipeAnimation; set => swipeAnimation = value; }
+        public Image ImageDice { get => imageDice; set => imageDice = value; }
+        public GameObject TitleNumberDice { get => titleNumberDice; set => titleNumberDice = value; }
+        public GameObject Dice { get => dice; set => dice = value; }
+    }
 }
