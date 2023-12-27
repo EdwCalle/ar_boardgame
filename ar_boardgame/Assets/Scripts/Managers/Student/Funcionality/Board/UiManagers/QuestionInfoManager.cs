@@ -7,10 +7,10 @@ using UnityEngine.UI;
 public class QuestionInfoManager : MonoBehaviour
 {
     public QuestionsInfo uiElements;
-    public void PrepareQuestion(bool IsMyTurn, int currentPlayer)
+    public void PrepareQuestion()
     {
-        EnableOptions(IsMyTurn);
-        SetQuestion(currentPlayer);
+        EnableOptions(Singleton.IsMyTurn());
+        SetQuestion(Singleton.GetCurrentPlayerTurn());
     }
     void EnableOptions(bool value)
     {
@@ -33,9 +33,9 @@ public class QuestionInfoManager : MonoBehaviour
     {
         uiElements.Options[pos].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = value;
     }
-    public async Task SelectOption(int value, int currentPlayer)
+    public async Task SelectOption(int value)
     {
-        int solution = Singleton.GetQuestionRound(currentPlayer).Solution;
+        int solution = Singleton.GetQuestionRound(Singleton.GetCurrentPlayerTurn()).Solution;
         if (value == solution)
         {
 
@@ -50,7 +50,6 @@ public class QuestionInfoManager : MonoBehaviour
         await Task.Delay(2000);
         uiElements.Options[value].GetComponent<Animator>().SetInteger("optionState", 0);
         uiElements.Options[solution].GetComponent<Animator>().SetInteger("optionState", 0);
-
     }
 
 }

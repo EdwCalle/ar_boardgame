@@ -101,9 +101,21 @@ public class Singleton : MonoBehaviour
     {
         return instance.boardPersistent.SquarePlayers[position];
     }
-    public static bool IsMyTurn(int currentPlayerTurn)
+    public static bool IsMyTurn()
     {
-        return instance.boardPersistent.MyTurn == currentPlayerTurn;
+        return instance.boardPersistent.MyTurn == instance.boardPersistent.CurrentPlayerTurn;
+    }
+    public static void UpdateTurn()
+    {
+        instance.boardPersistent.CurrentPlayerTurn++;
+    }
+    public static int GetCurrentPlayerTurn()
+    {
+        return instance.boardPersistent.CurrentPlayerTurn;
+    }
+    public static void ResetPlayerTurn()
+    {
+        instance.boardPersistent.CurrentPlayerTurn = 0;
     }
     public static bool IsAnwserCorrect(int selectedValue, int currentPlayer)
     {

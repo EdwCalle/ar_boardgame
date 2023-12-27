@@ -2,22 +2,26 @@
 using UnityEngine;
 using System.Threading.Tasks;
 using thisAPP.UIElements;
-public class UIPlayerManager : MonoBehaviour
+public class UIMediatorManager : MonoBehaviour
 {
     public RoundInfo roundInfo;
     // public PlayerInfo[] playersList;
     public WaitPlayerManager waitPlayerManager;
     public DialogueManager dialogueManager;
+    public DiceManager diceManager;
     public ArrowsManager arrowsManager;
     public MinigameInfoManager minigameInfoManager;
     public QuestionInfoManager questionManager;
     public ResultsInfoManager resultsInfoManager;
+    public BoardManager boardManager;
     public GameObject canvasModal;
+    //public Photon pw;
     void Awake()
     {
         // canvasModal.SetActive(false);
         arrowsManager.uiElements.Modal.SetActive(false);
         dialogueManager.uiElements.Modal.SetActive(false);
+        diceManager.uiElements.Modal.SetActive(false);
         questionManager.uiElements.Modal.SetActive(false);
         minigameInfoManager.uiElements.Modal.SetActive(false);
         resultsInfoManager.uiElements.Modal.SetActive(false);
@@ -26,7 +30,6 @@ public class UIPlayerManager : MonoBehaviour
     {
         roundInfo.RoundTitle.text = Singleton.GetRoundTitle();
         roundInfo.NumberRound.text = $"Número de ronda: {Singleton.GetNumberRound()}";
-
     }
     public void SetDiceInfo(int dice)
     {
@@ -58,32 +61,51 @@ public class UIPlayerManager : MonoBehaviour
     {
         minigameInfoManager.uiElements.HideModal(canvasModal);
     }
-    public void ShowDialogue()
+    public async void ShowDialogue()
     {
+        await Task.Delay(1050);
         dialogueManager.SetDialogue();
         dialogueManager.uiElements.ShowModal(canvasModal);
+        await Task.Delay(1050);
+        dialogueManager.NextSentece();
+    }
+    public async void HideDialogue()
+    {
+        dialogueManager.uiElements.HideModal(canvasModal);
+        await Task.Delay(1050);
+        //make a waiting players
+        ShowDice();
     }
     public void ShowDice()
     {
-        roundInfo.DiceButton.SetActive(true);
+        // roundInfo.DiceButton.SetActive(true);
+        diceManager.uiElements.ShowModal(canvasModal);
+        diceManager.SetDiceInfo();
+    }
+    public void RollDice(int numberDice)
+    {
+        // roundInfo.DiceButton.SetActive(true);
+        boardManager.RollDice(numberDice);
     }
     public void HideDice()
     {
         roundInfo.DiceButton.SetActive(false);
+        diceManager.uiElements.HideModal(canvasModal);
     }
     public void ShowResultsInfo()
     {
         resultsInfoManager.SetResultsInfo();
         resultsInfoManager.uiElements.ShowModal(canvasModal);
     }
-    public void ShowQuestions(bool IsMyTurn, int currentPlayer)
+    public void ShowQuestions()
     {
-        questionManager.PrepareQuestion(IsMyTurn, currentPlayer);
+        questionManager.PrepareQuestion();
         questionManager.uiElements.ShowModal(canvasModal);
     }
-    public async Task SelectOption(int value, int currentPlayer)
+    public async Task SelectOption(int value)
     {
-        await questionManager.SelectOption(value, currentPlayer);
+
+        await questionManager.SelectOption(value);
         questionManager.uiElements.HideModal(canvasModal);
         await Task.Delay(1050);
     }
@@ -102,6 +124,8 @@ public class UIPlayerManager : MonoBehaviour
 
     }
 
-
-
+    public void ThrowDice(int numberDice)
+    {
+        boardManager.ThrowDice(numberDice);
+    }
 }

@@ -103,8 +103,9 @@ namespace thisAPP.UIElements
         [SerializeField] private Image imageDice;
         [SerializeField] private Sprite[] dices;
         [SerializeField] private GameObject swipeAnimation;
-
         [SerializeField] private GameObject titleNumberDice;
+        [SerializeField] private TextMeshProUGUI titleTurn;
+        [SerializeField] private Sprite player;
 
         public GameObject RotationObject { get => rotationObject; set => rotationObject = value; }
         public GameObject LimitObject { get => limitObject; set => limitObject = value; }
@@ -113,5 +114,7 @@ namespace thisAPP.UIElements
         public Image ImageDice { get => imageDice; set => imageDice = value; }
         public GameObject TitleNumberDice { get => titleNumberDice; set => titleNumberDice = value; }
         public GameObject Dice { get => dice; set => dice = value; }
+        public TextMeshProUGUI TitleTurn { get => titleTurn; set => titleTurn = value; }
+        public Sprite Player { get => player; set => player = value; }
     }
 }

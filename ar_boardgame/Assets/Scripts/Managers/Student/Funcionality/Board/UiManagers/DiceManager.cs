@@ -1,36 +1,31 @@
 
 using System.Collections;
+using ExitGames.Client.Photon.StructWrapping;
+using Photon.Pun;
 using thisAPP.UIElements;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-
 public class DiceManager : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerDownHandler, IPointerUpHandler
 {
     public DiceUi uiElements;
-
     public float swipeSpeed = 5f;
     public float rotationSpeed = 5f;
     public float rotatingTime = 2f;
     public int numberDice = 1;
     private bool isRotating = false;
     private Vector3 defaultPosition;
-    // public GameObject rotationObject;
-    // public GameObject limitObject;
-    // public Sprite[] dices;
-    // public GameObject swipeAnimation;
-    // public Image imageDice;
-    // public GameObject titleNumberDice;
+    public UIMediatorManager UImediatorManager;
 
-    void Start()
+    void Awake()
     {
+        //uiElements.Dice.transform.localPosition = defaultPosition;
         defaultPosition = uiElements.Dice.transform.position;
-
     }
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (!isRotating)
+        if (!isRotating && Singleton.IsMyTurn())
         {
             isRotating = true;
             StartCoroutine(RotateDice());
@@ -55,12 +50,15 @@ public class DiceManager : MonoBehaviour, IDragHandler, IEndDragHandler, IPointe
     }
     public void OnPointerUp(PointerEventData eventData)
     {
-        isRotating = false;
 
+        if (Singleton.IsMyTurn())
+            isRotating = false;
     }
     public void OnDrag(PointerEventData eventData)
     {
-        MoveObjectWithSwipe(eventData);
+
+        if (Singleton.IsMyTurn())
+            MoveObjectWithSwipe(eventData);
     }
     void MoveObjectWithSwipe(PointerEventData eventData)
     {
@@ -70,22 +68,29 @@ public class DiceManager : MonoBehaviour, IDragHandler, IEndDragHandler, IPointe
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (Singleton.IsMyTurn())
+        {
+            if (uiElements.Dice.transform.position.y > uiElements.LimitObject.transform.position.y)
+                HandleSwipeUp();
+            else
+                RestartDice();
+        }
         //print("EndDrag");
-        if (uiElements.Dice.transform.position.y > uiElements.LimitObject.transform.position.y)
-            HandleSwipeUp();
-        else
-            ResetDice();
     }
     void HandleSwipeUp()
     {
         Debug.Log("Swipe up!");
+        uiElements.Dice.transform.position = uiElements.LimitObject.transform.position; // center dice 
+        uiElements.Dice.GetComponent<BoxCollider2D>().enabled = false;                  // one throw dice
+        uiElements.SwipeAnimation.SetActive(false);                                       // disable animation of title "throw dice"
+        numberDice = Random.Range(1, 7);
+        UImediatorManager.RollDice(numberDice);
 
-        uiElements.Dice.transform.position = uiElements.LimitObject.transform.position;
-        uiElements.SwipeAnimation.SetActive(false);
-        StartCoroutine(RotateDiceTime());
     }
-    IEnumerator RotateDiceTime()
+    public IEnumerator RotateDiceTime(int definedDice)
     {
+        uiElements.Dice.transform.position = uiElements.LimitObject.transform.position; // center dice 
+        numberDice = definedDice;
         float currentTime = rotatingTime;
         float currentRotationSpeed = rotationSpeed;
         float totalRotation = 0f;
@@ -97,22 +102,50 @@ public class DiceManager : MonoBehaviour, IDragHandler, IEndDragHandler, IPointe
             totalRotation += currentRotationSpeed * Time.deltaTime;
             if (totalRotation >= 360f)
             {
-                numberDice = Random.Range(1, 7);
-                uiElements.ImageDice.sprite = uiElements.Dices[numberDice - 1];
+                uiElements.ImageDice.sprite = uiElements.Dices[Random.Range(0, 6)];
                 totalRotation = 0f;
             }
             yield return null;
         }
+
+        uiElements.ImageDice.sprite = uiElements.Dices[numberDice - 1];// set all dice for every one
         uiElements.RotationObject.GetComponent<Animation>().Play("DiceSelected"); //activate diceselected animation
         uiElements.TitleNumberDice.SetActive(true);     //activate diceTitleNumberBlink animation
         uiElements.TitleNumberDice.GetComponent<TextMeshProUGUI>().text = $"{numberDice}"; // set number dice in numberDicetText
         yield return new WaitForSeconds(uiElements.RotationObject.GetComponent<Animation>()["DiceSelected"].length);
+        UImediatorManager.ThrowDice(numberDice);
     }
-    public void ResetDice()
+    public void RestartDice()
     {
         uiElements.Dice.transform.position = defaultPosition;
         uiElements.RotationObject.transform.rotation = Quaternion.identity;
     }
+    public void ResetDice()
+    {
+        RestartDice();
+        uiElements.TitleNumberDice.SetActive(false);
+        uiElements.TitleNumberDice.GetComponent<TextMeshProUGUI>().text = $"-";
+        Color color = uiElements.RotationObject.GetComponent<Image>().color;
+        color.a = 0;
+        uiElements.RotationObject.GetComponent<Image>().color = color;
+    }
+
+    public void SetDiceInfo()
+    {
+        ResetDice();
+        if (Singleton.IsMyTurn())
+        {
+            uiElements.TitleTurn.text = "Es tu turno";
+            uiElements.SwipeAnimation.SetActive(true);
+        }
+        else
+        {
+            uiElements.SwipeAnimation.SetActive(false);
+            uiElements.TitleTurn.text = $"Player{Singleton.GetCurrentPlayerTurn()} está lanzando el dado";
+        }
+    }
+
+
 
 
 

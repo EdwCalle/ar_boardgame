@@ -6,6 +6,7 @@ namespace Models
     {
         [SerializeField] private int numberPlayers = 2;
         private int myTurn = 0;
+        private int currentPlayerTurn = 0;
         private int currentRound = 0;
         private int[] squarePlayers = { 0, 0, 0, 0 };
 
@@ -25,6 +26,9 @@ namespace Models
         /// Positions of each player in board
         /// </summary>
         public int[] SquarePlayers { get => squarePlayers; set => squarePlayers = value; }
-
+        /// <summary>
+        /// Turn of currentPlayer
+        /// </summary>
+        public int CurrentPlayerTurn { get => currentPlayerTurn; set => currentPlayerTurn = value; }
     }
 }

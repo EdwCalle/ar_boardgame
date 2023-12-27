@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 public class BoardManager : MonoBehaviourPunCallbacks
 {
     [Header("Board Components")]
-    public UIPlayerManager playerUI;
+    public UIMediatorManager UImediatorManager;
     public GameObject[] players;
     public GameObject[] boxes;
     [Header("Board Funcionality/offline")]
@@ -39,7 +39,7 @@ public class BoardManager : MonoBehaviourPunCallbacks
             {
                 // for sync scenes to other players
                 PhotonNetwork.AutomaticallySyncScene = true;
-                photonView.RPC("WaitPlayers", RpcTarget.All);
+                photonView.RPC("WaitPlayersRPC", RpcTarget.All);
             }
         }
     }
@@ -49,7 +49,7 @@ public class BoardManager : MonoBehaviourPunCallbacks
         playersReady++;
         if (playersReady == numberPlayers && photonView.IsMine)
         {
-            photonView.RPC("PrepareGame", RpcTarget.All);
+            photonView.RPC("PrepareGameRPC", RpcTarget.All);
         }
     }
     [PunRPC]
@@ -61,24 +61,23 @@ public class BoardManager : MonoBehaviourPunCallbacks
             PrepareBoxes();
             PreparePlayers();
             // show Round Info
-            playerUI.SetRoundInfo();
+            UImediatorManager.SetRoundInfo();
             UpdatePlayersList(); // make it in player ui
-            UpdateTurn(); // make it in player ui
-            playerUI.HideWaitPlayers();
+            UImediatorManager.HideWaitPlayers();
             // if is new round show partial results
             if (Singleton.IsNotFirstRound())
             {
                 //  ShowPartialResults();
             }
-            playerUI.ShowDialogue();
+            UImediatorManager.ShowDialogue();
             // show new dialog
             // ShowDialog();
         }
         else
         {
-            playerUI.HideWaitPlayers();
+            UImediatorManager.HideWaitPlayers();
             //caculate winner
-            playerUI.ShowResultsInfo();
+            UImediatorManager.ShowResultsInfo();
         }
         //  finish game 
 
@@ -149,13 +148,13 @@ public class BoardManager : MonoBehaviourPunCallbacks
 
         return Vector3.zero;
     }
-    void UpdateTurn()
-    {
-        if (Singleton.IsMyTurn(currentPlayer))
-            playerUI.ShowDice();
-        else
-            playerUI.HideDice();
-    }
+    // void UpdateTurn()
+    // {
+    //     if (Singleton.IsMyTurn(currentPlayer))
+    //         UImediatorManager.ShowDice();
+    //     else
+    //         UImediatorManager.HideDice();
+    // }
     private void UpdatePlayersList()
     {
         List<Student> students = new();
@@ -170,9 +169,21 @@ public class BoardManager : MonoBehaviourPunCallbacks
         }
         // playerUI.SetPlayersListInfo(students);
     }
-    public void ThrowDice()
+
+    public void RollDice(int randomDice)
     {
-        int randomDice = Random.Range(1, 7);
+        if (Singleton.IsSinglePlayer())
+            RollDiceRPC(randomDice);
+        else
+            photonView.RPC("RollDiceRPC", RpcTarget.All, randomDice);
+    }
+    [PunRPC]
+    public void RollDiceRPC(int randomDice)
+    {
+        StartCoroutine(UImediatorManager.diceManager.RotateDiceTime(randomDice));
+    }
+    public void ThrowDice(int randomDice)
+    {
         if (Singleton.IsSinglePlayer())
             ThrowDiceRPC(randomDice);
         else
@@ -181,13 +192,15 @@ public class BoardManager : MonoBehaviourPunCallbacks
     [PunRPC]
     void ThrowDiceRPC(int randomDice)
     {
+        //
+        UImediatorManager.HideDice();
         if (!isMoving)
         {
             currentSquare = Singleton.GetSquarePlayer(currentPlayer);
             dice = randomDice;
             if (isDefaultDice)
                 dice = defaultDice;
-            playerUI.SetDiceInfo(dice);
+            UImediatorManager.SetDiceInfo(dice);
             isActiveDice = true;
         }
     }
@@ -218,8 +231,8 @@ public class BoardManager : MonoBehaviourPunCallbacks
                     {
                         isActiveDice = false;
                         print("this is not controlled");
-                        if (Singleton.IsMyTurn(currentPlayer))
-                            playerUI.ShowArrows(boardSquares[currentSquare].DirectionOne, boardSquares[currentSquare].DirectionTwo);
+                        if (Singleton.IsMyTurn())
+                            UImediatorManager.ShowArrows(boardSquares[currentSquare].DirectionOne, boardSquares[currentSquare].DirectionTwo);
                     }
                     else
                     {
@@ -230,7 +243,7 @@ public class BoardManager : MonoBehaviourPunCallbacks
                 {
                     isMoving = false;       //this stop moving when player go to their last square
                     isActiveDice = false; // this used for dont loop everytime when moving is false
-                    playerUI.ShowQuestions(Singleton.IsMyTurn(currentPlayer), currentPlayer);
+                    UImediatorManager.ShowQuestions();
                 }
             }
         }
@@ -259,7 +272,7 @@ public class BoardManager : MonoBehaviourPunCallbacks
             boardSquares[currentSquare].SwitchToOne();
         else
             boardSquares[currentSquare].SwitchToTwo();
-        playerUI.HideArrows();
+        UImediatorManager.HideArrows();
         isActiveDice = true;
         SetNextSquare();
     }
@@ -284,7 +297,7 @@ public class BoardManager : MonoBehaviourPunCallbacks
     {
         //playerUI.SelectOption(value);
         UpdatePlayersList();
-        await playerUI.SelectOption(value, currentPlayer);
+        await UImediatorManager.SelectOption(value);
         FinishTurn();
         // ChangeTurn();
     }
@@ -292,26 +305,27 @@ public class BoardManager : MonoBehaviourPunCallbacks
     {   //saving current position current player
         Singleton.SaveSquarePlayer(currentPlayer, currentSquare);
         currentPlayer++;
+        Singleton.UpdateTurn();
         // this checks if the current player is the last one
         if (currentPlayer == numberPlayers)
         {
             // currentPlayer = 0;
-            playerUI.ShowMinigameInfo();
+            UImediatorManager.ShowMinigameInfo();
             await Task.Delay(2000);
-            playerUI.HideMinigameInfo();
-            UpdateTurn();
+            UImediatorManager.HideMinigameInfo();
+            //UpdateTurn();
             GoToMinigame();
         }
         else
         {
-            UpdateTurn();
+            UImediatorManager.ShowDice();
         }
     }
     public void GoToMinigame()
     {
+        Singleton.ResetPlayerTurn();
         PhotonNetwork.LoadLevel("minigames");
     }
-
 
 
 

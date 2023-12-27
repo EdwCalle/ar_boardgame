@@ -8,6 +8,7 @@ public class DialogueManager : MonoBehaviour
     // Start is called before the first frame update
     [Header("UI ELEMENTS")]
     public DialogueUi uiElements;
+    public UIMediatorManager uIMediatorManager;
 
     [Header("Internal Funcionality")]
     int currentDialog = 0;
@@ -34,6 +35,9 @@ public class DialogueManager : MonoBehaviour
         uiElements.SkipButton.interactable = false;
         if (currentDialog < Sentences.Length)
             StartCoroutine(IterateSentece());
+        else
+            uIMediatorManager.HideDialogue();
+
     }
 
     IEnumerator IterateSentece()

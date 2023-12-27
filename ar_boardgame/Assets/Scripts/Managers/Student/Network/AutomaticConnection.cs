@@ -9,7 +9,7 @@ public class AutomaticConnection : MonoBehaviourPunCallbacks
     private TypedLobby customLobby = new TypedLobby("customLobby", LobbyType.Default);
     void Start()
     {
-        if (!PhotonNetwork.IsConnected && Singleton.instance.IsSinglePlayerMode)
+        if (!PhotonNetwork.IsConnected && !Singleton.IsSinglePlayer())
         {
 
             PhotonNetwork.NickName = "";
