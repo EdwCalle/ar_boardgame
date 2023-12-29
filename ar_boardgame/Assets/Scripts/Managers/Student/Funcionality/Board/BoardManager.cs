@@ -4,6 +4,7 @@ using Photon.Pun;
 using System.Collections.Generic;
 using Photon.Realtime;
 using System.Threading.Tasks;
+using System.Collections;
 public class BoardManager : MonoBehaviourPunCallbacks
 {
     [Header("Board Components")]
@@ -25,6 +26,7 @@ public class BoardManager : MonoBehaviourPunCallbacks
     private bool isActiveDice;
     private int currentPlayer = 0;
     private int playersReady = 0;
+    private bool isChangedNextSquare = false;
     void Start()
     {
         numberPlayers = Singleton.GetNumberPlayers();
@@ -197,9 +199,8 @@ public class BoardManager : MonoBehaviourPunCallbacks
             photonView.RPC("ThrowDiceRPC", RpcTarget.All, randomDice);
     }
     [PunRPC]
-    void ThrowDiceRPC(int randomDice)
+    public void ThrowDiceRPC(int randomDice)
     {
-        //
         UImediatorManager.HideDice();
         if (!isMoving)
         {
@@ -208,53 +209,57 @@ public class BoardManager : MonoBehaviourPunCallbacks
             if (isDefaultDice)
                 dice = defaultDice;
             UImediatorManager.SetDiceInfo(dice);
-            isActiveDice = true;
+            //  isActiveDice = true;
+            //SetNextSquare();
+            StartCoroutine(MovingPlayer());
+
         }
     }
-    void FixedUpdate()
-    {
-        MovecurrentPlayer();
-    }
-    void MovecurrentPlayer()
-    {
-        if (isMoving)
-        {
-            players[currentPlayer].transform.localPosition = Vector3.MoveTowards(players[currentPlayer].transform.localPosition, nextPosition, Time.fixedDeltaTime * speed);
-            if (players[currentPlayer].transform.localPosition.Equals(nextPosition))
-            {
-                isMoving = false;
-                dice--;
-                //   Debug.Log("DiceNumber:" + dice + "CurrentSquare:" + currentSquare);
-            }
-        }
-        else
-        {
-            if (isActiveDice)
-            {
-                if (dice > 0)// if there are more movements, move again
-                {
-                    // ask for if there are directions, stop movments and stop asking for current LocalPostion
-                    if (boardSquares[currentSquare].IsSquarePoint)
-                    {
-                        isActiveDice = false;
-                        print("this is not controlled");
-                        // if (Singleton.IsMyTurn())
-                        UImediatorManager.ShowArrows(boardSquares[currentSquare].DirectionOne, boardSquares[currentSquare].DirectionTwo);
-                    }
-                    else
-                    {
-                        SetNextSquare();
-                    }
-                }
-                else // stop moving
-                {
-                    isMoving = false;       //this stop moving when player go to their last square
-                    isActiveDice = false; // this used for dont loop everytime when moving is false
-                    UImediatorManager.PrepareQuestions();
-                }
-            }
-        }
-    }
+    // void FixedUpdate()
+    // {
+    //       MovecurrentPlayer();
+    // }
+    // void MovecurrentPlayer()
+    // {
+    //     if (isMoving)
+    //     {
+    //         players[currentPlayer].transform.localPosition = Vector3.MoveTowards(players[currentPlayer].transform.localPosition, nextPosition, Time.fixedDeltaTime * speed);
+    //         if (players[currentPlayer].transform.localPosition.Equals(nextPosition))
+    //         {
+    //             isMoving = false;
+    //             dice--;
+    //             //   Debug.Log("DiceNumber:" + dice + "CurrentSquare:" + currentSquare);
+    //         }
+    //     }
+    //     else
+    //     {
+    //         if (isActiveDice)
+    //         {
+    //             if (dice > 0)// if there are more movements, move again
+    //             {
+    //                 // ask for if there are directions, stop movments and stop asking for current LocalPostion
+    //                 if (boardSquares[currentSquare].IsSquarePoint)
+    //                 {
+    //                     isActiveDice = false;
+    //                     print("this is not controlled");
+    //                     // if (Singleton.IsMyTurn())
+    //                     UImediatorManager.ShowArrows(boardSquares[currentSquare].DirectionOne, boardSquares[currentSquare].DirectionTwo);
+    //                 }
+    //                 else
+    //                 {
+    //                     SetNextSquare(dice);
+    //                 }
+    //             }
+    //             else // stop moving
+    //             {
+    //                 isMoving = false;       //this stop moving when player go to their last square
+    //                 isActiveDice = false; // this used for dont loop everytime when moving is false
+    //                 UImediatorManager.PrepareQuestions();
+    //             }
+    //         }
+    //     }
+    // }
+
     [PunRPC]
     void ShowQuestionRPC()
     {
@@ -262,14 +267,14 @@ public class BoardManager : MonoBehaviourPunCallbacks
         UImediatorManager.HideWaitPlayer();
         UImediatorManager.ShowQuestions();
     }
-    void SetNextSquare()
+    void SetNextSquare(int currentDice)
     {
         currentSquare = boardSquares[currentSquare].NextSquare;
         nextPosition = boxes[currentSquare].transform.localPosition;
         // put player in his respective corner when go to last box(square)
-        if (dice == 1)
+        if (currentDice == 1)
             nextPosition += SetOffsetPosition(currentPlayer);
-        isMoving = true; // this activate the movement
+        //isMoving = true; // this activate the movement
     }
     public void ChangeDirection(string direction)
     {
@@ -277,7 +282,6 @@ public class BoardManager : MonoBehaviourPunCallbacks
             ChangeDirectionRPC(direction);
         else
             photonView.RPC("ChangeDirectionRPC", RpcTarget.All, direction);
-
     }
     [PunRPC]
     public void ChangeDirectionRPC(string direction)
@@ -287,8 +291,11 @@ public class BoardManager : MonoBehaviourPunCallbacks
         else
             boardSquares[currentSquare].SwitchToTwo();
         UImediatorManager.HideArrows();
-        isActiveDice = true;
-        SetNextSquare();
+        //isActiveDice = true;
+        //  SetNextSquare();
+
+        isChangedNextSquare = true;
+        StartCoroutine(MovingPlayer());
     }
     public void SelectOption(int value)
     {
@@ -323,11 +330,10 @@ public class BoardManager : MonoBehaviourPunCallbacks
         // this checks if the current player is the last one
         if (currentPlayer == numberPlayers)
         {
-            // currentPlayer = 0;
             UImediatorManager.ShowMinigameInfo();
             await Task.Delay(2000);
             UImediatorManager.HideMinigameInfo();
-            //UpdateTurn();
+            Singleton.ResetPlayerTurn();
             GoToMinigame();
         }
         else
@@ -337,13 +343,43 @@ public class BoardManager : MonoBehaviourPunCallbacks
     }
     public void GoToMinigame()
     {
-        Singleton.ResetPlayerTurn();
         PhotonNetwork.LoadLevel("minigames");
     }
+    public IEnumerator MovingPlayer()
+    {
+        while (dice > 0)
+        {
+            if (boardSquares[currentSquare].IsSquarePoint)
+            {
+                UImediatorManager.ShowArrows(boardSquares[currentSquare].DirectionOne, boardSquares[currentSquare].DirectionTwo);
+                print(dice + "DEBI MOSTRARLO PERO NO SE QUE PASO");
+                break;
+            }
+            else
+            {
+                if (isChangedNextSquare)
+                {
+                    boardSquares[currentSquare].ResetSquarePoint();
+                    isChangedNextSquare = false;
+                }
+                SetNextSquare(dice);
+                yield return InternalMove();
+                dice--;
 
-
-
-
+            }
+        }
+        // Singleton.SaveSquarePlayer(currentPlayer, currentSquare);
+        UImediatorManager.PrepareQuestions();
+    }
+    public IEnumerator InternalMove()
+    {
+        while (Vector3.Distance(players[currentPlayer].transform.localPosition, nextPosition) > 0.01f)
+        {
+            players[currentPlayer].transform.localPosition = Vector3.MoveTowards(players[currentPlayer].transform.localPosition, nextPosition, speed * Time.deltaTime);
+            yield return null;
+        }
+        players[currentPlayer].transform.localPosition = nextPosition;
+    }
 }
 
 
