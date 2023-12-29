@@ -5,17 +5,21 @@ using UnityEngine.UI;
 namespace thisAPP.UIElements
 {
     [System.Serializable]
-    public class Arrows : ModalAnimator
+    public class ArrowsUI : ModalAnimator
     {
         [SerializeField] private GameObject leftButton;
         [SerializeField] private GameObject rightButton;
         [SerializeField] private GameObject upButton;
         [SerializeField] private GameObject downButton;
+        [SerializeField] private TextMeshProUGUI titleTurn;
+        [SerializeField] private Sprite player;
 
         public GameObject LeftButton { get => leftButton; set => leftButton = value; }
         public GameObject RightButton { get => rightButton; set => rightButton = value; }
         public GameObject UpButton { get => upButton; set => upButton = value; }
         public GameObject DownButton { get => downButton; set => downButton = value; }
+        public TextMeshProUGUI TitleTurn { get => titleTurn; set => titleTurn = value; }
+        public Sprite Player { get => player; set => player = value; }
     }
     [System.Serializable]
     public class MinigameInfo : ModalAnimator
@@ -88,7 +92,13 @@ namespace thisAPP.UIElements
     [System.Serializable]
     public class WaitPlayerUi : ModalAnimator
     {
+        [SerializeField] private GameObject waitBoard;
+        [SerializeField] private GameObject waitPlayer;
+        [SerializeField] private TextMeshProUGUI message;
 
+        public GameObject WaitPlayer { get => waitPlayer; set => waitPlayer = value; }
+        public TextMeshProUGUI Message { get => message; set => message = value; }
+        public GameObject WaitBoard { get => waitBoard; set => waitBoard = value; }
         //  [SerializeField] private TextMeshProUGUI winner;
 
 

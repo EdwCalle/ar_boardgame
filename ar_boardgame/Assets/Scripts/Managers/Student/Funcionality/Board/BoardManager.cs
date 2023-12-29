@@ -39,22 +39,28 @@ public class BoardManager : MonoBehaviourPunCallbacks
             {
                 // for sync scenes to other players
                 PhotonNetwork.AutomaticallySyncScene = true;
-                photonView.RPC("WaitPlayersRPC", RpcTarget.All);
+                WaitPlayers("PrepareGameRPC");
+
             }
         }
     }
+    public void WaitPlayers(string NameRPC)
+    {
+        photonView.RPC("WaitPlayersRPC", RpcTarget.All, NameRPC);
+    }
     [PunRPC]
-    void WaitPlayersRPC()
+    void WaitPlayersRPC(string NameRPC)
     {
         playersReady++;
         if (playersReady == numberPlayers && photonView.IsMine)
         {
-            photonView.RPC("PrepareGameRPC", RpcTarget.All);
+            photonView.RPC(NameRPC, RpcTarget.All);
         }
     }
     [PunRPC]
     void PrepareGameRPC()
     {
+        ResetPlayersReady();
         if (Singleton.ExistRounds()) // si no es la ultima romda
         {
             // preparing boardsquare order
@@ -63,24 +69,33 @@ public class BoardManager : MonoBehaviourPunCallbacks
             // show Round Info
             UImediatorManager.SetRoundInfo();
             UpdatePlayersList(); // make it in player ui
-            UImediatorManager.HideWaitPlayers();
+            UImediatorManager.HideWaitBoard();
             // if is new round show partial results
             if (Singleton.IsNotFirstRound())
             {
                 //  ShowPartialResults();
             }
             UImediatorManager.ShowDialogue();
-            // show new dialog
-            // ShowDialog();
         }
         else
         {
-            UImediatorManager.HideWaitPlayers();
+            UImediatorManager.HideWaitBoard();
             //caculate winner
             UImediatorManager.ShowResultsInfo();
         }
-        //  finish game 
 
+
+    }
+    void ResetPlayersReady()
+    {
+        playersReady = 0;
+    }
+    [PunRPC]
+    void ShowDiceRPC()
+    {
+        ResetPlayersReady();
+        UImediatorManager.HideWaitPlayer();
+        UImediatorManager.ShowDice();
     }
     void PrepareBoxes()
     {
@@ -148,13 +163,6 @@ public class BoardManager : MonoBehaviourPunCallbacks
 
         return Vector3.zero;
     }
-    // void UpdateTurn()
-    // {
-    //     if (Singleton.IsMyTurn(currentPlayer))
-    //         UImediatorManager.ShowDice();
-    //     else
-    //         UImediatorManager.HideDice();
-    // }
     private void UpdatePlayersList()
     {
         List<Student> students = new();
@@ -169,7 +177,6 @@ public class BoardManager : MonoBehaviourPunCallbacks
         }
         // playerUI.SetPlayersListInfo(students);
     }
-
     public void RollDice(int randomDice)
     {
         if (Singleton.IsSinglePlayer())
@@ -231,8 +238,8 @@ public class BoardManager : MonoBehaviourPunCallbacks
                     {
                         isActiveDice = false;
                         print("this is not controlled");
-                        if (Singleton.IsMyTurn())
-                            UImediatorManager.ShowArrows(boardSquares[currentSquare].DirectionOne, boardSquares[currentSquare].DirectionTwo);
+                        // if (Singleton.IsMyTurn())
+                        UImediatorManager.ShowArrows(boardSquares[currentSquare].DirectionOne, boardSquares[currentSquare].DirectionTwo);
                     }
                     else
                     {
@@ -243,10 +250,17 @@ public class BoardManager : MonoBehaviourPunCallbacks
                 {
                     isMoving = false;       //this stop moving when player go to their last square
                     isActiveDice = false; // this used for dont loop everytime when moving is false
-                    UImediatorManager.ShowQuestions();
+                    UImediatorManager.PrepareQuestions();
                 }
             }
         }
+    }
+    [PunRPC]
+    void ShowQuestionRPC()
+    {
+        ResetPlayersReady();
+        UImediatorManager.HideWaitPlayer();
+        UImediatorManager.ShowQuestions();
     }
     void SetNextSquare()
     {

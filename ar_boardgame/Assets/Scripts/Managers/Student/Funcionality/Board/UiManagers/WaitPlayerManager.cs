@@ -5,5 +5,8 @@ public class WaitPlayerManager : MonoBehaviour
 {
     [Header("UI ELEMENTS")]
     public WaitPlayerUi uiElements;
-    int playersReady = 0;
+    public void SetMessage(string message)
+    {
+        uiElements.Message.text = message;
+    }
 }

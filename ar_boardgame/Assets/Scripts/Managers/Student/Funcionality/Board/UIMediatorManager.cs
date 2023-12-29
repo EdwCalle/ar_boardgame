@@ -52,76 +52,88 @@ public class UIMediatorManager : MonoBehaviour
     //         }
     //     }
     // }
-    public void ShowMinigameInfo()
+    public async void ShowMinigameInfo()
     {
         minigameInfoManager.SetTitlteMinigame();
-        minigameInfoManager.uiElements.ShowModal(canvasModal);
+        await minigameInfoManager.uiElements.ShowModal(canvasModal);
     }
-    public void HideMinigameInfo()
+    public async void HideMinigameInfo()
     {
-        minigameInfoManager.uiElements.HideModal(canvasModal);
+        await minigameInfoManager.uiElements.HideModal(canvasModal);
     }
     public async void ShowDialogue()
     {
-        await Task.Delay(1050);
+        //await Task.Delay(1050);
         dialogueManager.SetDialogue();
-        dialogueManager.uiElements.ShowModal(canvasModal);
-        await Task.Delay(1050);
+        await dialogueManager.uiElements.ShowModal(canvasModal);
+        // await Task.Delay(1050);
         dialogueManager.NextSentece();
     }
     public async void HideDialogue()
     {
-        dialogueManager.uiElements.HideModal(canvasModal);
-        await Task.Delay(1050);
+        await dialogueManager.uiElements.HideModal(canvasModal);
+        // await Task.Delay(1050);
         //make a waiting players
-        ShowDice();
+        ShowWaitPlayer("Esperando a que el resto de jugadores terminen de leer el diálogo...", "ShowDiceRPC");
     }
-    public void ShowDice()
+    public async void ShowDice()
     {
-        // roundInfo.DiceButton.SetActive(true);
-        diceManager.uiElements.ShowModal(canvasModal);
+        await diceManager.uiElements.ShowModal(canvasModal);
         diceManager.SetDiceInfo();
     }
     public void RollDice(int numberDice)
     {
-        // roundInfo.DiceButton.SetActive(true);
         boardManager.RollDice(numberDice);
     }
-    public void HideDice()
+    public async void HideDice()
     {
         roundInfo.DiceButton.SetActive(false);
-        diceManager.uiElements.HideModal(canvasModal);
+        await diceManager.uiElements.HideModal(canvasModal);
     }
-    public void ShowResultsInfo()
+    public async void ShowResultsInfo()
     {
         resultsInfoManager.SetResultsInfo();
-        resultsInfoManager.uiElements.ShowModal(canvasModal);
+        await resultsInfoManager.uiElements.ShowModal(canvasModal);
     }
-    public void ShowQuestions()
+    public async void ShowQuestions()
+    {
+        await questionManager.uiElements.ShowModal(canvasModal);
+    }
+    public void PrepareQuestions()
     {
         questionManager.PrepareQuestion();
-        questionManager.uiElements.ShowModal(canvasModal);
+        ShowWaitPlayer("sincronizando tablero, esperando al resto de jugadores", "ShowQuestionRPC");
     }
     public async Task SelectOption(int value)
     {
-
-        await questionManager.SelectOption(value);
-        questionManager.uiElements.HideModal(canvasModal);
-        await Task.Delay(1050);
+        //  await questionManager.SelectOption(value);
+        await questionManager.uiElements.HideModal(canvasModal);
+        //  await Task.Delay(1050);
     }
-    public void ShowArrows(string directionOne, string directionTwo)
+    public async void ShowArrows(string directionOne, string directionTwo)
     {
         arrowsManager.ActivateArrows(directionOne, directionTwo);
-        arrowsManager.uiElements.ShowModal(canvasModal);
+        await arrowsManager.uiElements.ShowModal(canvasModal);
     }
-    public void HideArrows()
+    public async void HideArrows()
     {
-        arrowsManager.uiElements.HideModal(canvasModal);
+        await arrowsManager.uiElements.HideModal(canvasModal);
     }
-    public void HideWaitPlayers()
+    public async void HideWaitBoard()
     {
-        waitPlayerManager.uiElements.HideModal(canvasModal);
-
+        await waitPlayerManager.uiElements.HideModal(canvasModal);
+        waitPlayerManager.uiElements.WaitPlayer.SetActive(true);
+        waitPlayerManager.uiElements.WaitBoard.SetActive(false);
+    }
+    public async void HideWaitPlayer()
+    {
+        await waitPlayerManager.uiElements.HideModal(canvasModal);
+    }
+    public async void ShowWaitPlayer(string message, string NameRPC)
+    {
+        waitPlayerManager.SetMessage(message);
+        await waitPlayerManager.uiElements.ShowModal(canvasModal);
+        boardManager.WaitPlayers(NameRPC);
     }
 
     public void ThrowDice(int numberDice)
