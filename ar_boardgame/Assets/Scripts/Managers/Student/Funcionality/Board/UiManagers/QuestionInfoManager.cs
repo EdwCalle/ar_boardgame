@@ -4,9 +4,10 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class QuestionInfoManager : MonoBehaviour
+public class QuestionInfoManager : MonoBehaviour, IModalAnimator
 {
     public QuestionsInfo uiElements;
+    public GameManager gameManager;
     public void PrepareQuestion()
     {
         EnableOptions(Singleton.IsMyTurn());
@@ -33,7 +34,11 @@ public class QuestionInfoManager : MonoBehaviour
     {
         uiElements.Options[pos].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = value;
     }
-    public async Task SelectOption(int value)
+    public void SelectOption(int value)
+    {
+        gameManager.SelectOption(value);
+    }
+    public async Task CheckOption(int value)
     {
         int solution = Singleton.GetQuestionRound(Singleton.GetCurrentPlayerTurn()).Solution;
         if (value == solution)
@@ -50,6 +55,19 @@ public class QuestionInfoManager : MonoBehaviour
         await Task.Delay(2000);
         uiElements.Options[value].GetComponent<Animator>().SetInteger("optionState", 0);
         uiElements.Options[solution].GetComponent<Animator>().SetInteger("optionState", 0);
+        await HideModal(gameManager.canvasModal);
     }
 
+    public async Task ShowModal(GameObject canvasModal)
+    {
+        PrepareQuestion();
+        uiElements.ShowModal(canvasModal);
+        await Task.Delay(1050);
+    }
+
+    public async Task HideModal(GameObject canvasModal)
+    {
+        uiElements.HideModal(canvasModal);
+        await Task.Delay(1050);
+    }
 }

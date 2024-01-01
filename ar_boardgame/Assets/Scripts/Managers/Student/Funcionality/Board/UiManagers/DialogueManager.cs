@@ -1,14 +1,16 @@
 using System.Collections;
+using System.Threading.Tasks;
 using Models;
 using thisAPP.UIElements;
 using UnityEngine;
 using UnityEngine.UI;
-public class DialogueManager : MonoBehaviour
+public class DialogueManager : MonoBehaviour, IModalAnimator
 {
     // Start is called before the first frame update
     [Header("UI ELEMENTS")]
     public DialogueUi uiElements;
-    public UIMediatorManager uIMediatorManager;
+    //public UIMediatorManager uIMediatorManager;
+    public GameManager gameManager;
 
     [Header("Internal Funcionality")]
     int currentDialog = 0;
@@ -30,18 +32,20 @@ public class DialogueManager : MonoBehaviour
         StartCoroutine(IterateSentece());
     }
 
-    public void NextSentece()
+    public async void NextSentece()
     {
         uiElements.SkipButton.interactable = false;
         if (currentDialog < Sentences.Length)
             StartCoroutine(IterateSentece());
         else
-            uIMediatorManager.HideDialogue();
-
+        {
+            await HideModal(gameManager.canvasModal);
+        }
     }
 
     IEnumerator IterateSentece()
     {
+
         FocusCharacter(focusedCharacter, false);
         FocusCharacter(Sentences[currentDialog].NumberCharacter, true);
         focusedCharacter = Sentences[currentDialog].NumberCharacter;
@@ -59,7 +63,6 @@ public class DialogueManager : MonoBehaviour
     }
     void FocusCharacter(int value, bool focus)
     {
-
         Color fade = Color.white;
         if (focus)
             fade.a = 1f;
@@ -73,6 +76,24 @@ public class DialogueManager : MonoBehaviour
         Sentences = Singleton.GetSentences();
     }
 
+    public async Task ShowModal(GameObject canvasModal)
+    {
+        uiElements.ShowModal(canvasModal);
+        await Task.Delay(2000);
+        SetDialogue();
+        NextSentece();
+    }
+    public async Task HideModal(GameObject canvasModal)
+    {
+        uiElements.HideModal(canvasModal);
+        await Task.Delay(1050);
+        gameManager.waitPlayerManager.SetMessage("sincronizando tablero, esperando al resto de jugadores");
+        gameManager.waitPlayerManager.uiElements.WaitBoard.SetActive(false);
+        gameManager.waitPlayerManager.uiElements.WaitPlayer.SetActive(true);
+        await gameManager.WaitPlayer("ShowDiceRPC");
+    }
+
     //override 
+
 
 }

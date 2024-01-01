@@ -1,10 +1,12 @@
+using System.Threading.Tasks;
 using thisAPP.UIElements;
 using UnityEngine;
 using UnityEngine.UI;
-public class ArrowsManager : MonoBehaviour
+public class ArrowsManager : MonoBehaviour, IModalAnimator
 {
     [Header("UI ELEMENTS")]
     public ArrowsUI uiElements;
+    public GameManager gameManager;
     public void ActivateArrows(string directionOne, string directionTwo)
     {
 
@@ -24,7 +26,6 @@ public class ArrowsManager : MonoBehaviour
         }
 
     }
-
     void SetActiveArrow(GameObject arrow, string directionOne, string directionTwo, string direction)
     {
         if (Singleton.IsMyTurn())
@@ -37,5 +38,21 @@ public class ArrowsManager : MonoBehaviour
             arrow.SetActive(false);
 
     }
+    public void ChangeDirection(string direction)
+    {
+        gameManager.ChangeDirection(direction);
+    }
+    public async Task ShowModal(GameObject canvasModal)
+    {
+
+        uiElements.ShowModal(canvasModal);
+        await Task.Delay(1050);
+    }
+    public async Task HideModal(GameObject canvasModal)
+    {
+        uiElements.HideModal(canvasModal);
+        await Task.Delay(1050);
+    }
+
 
 }

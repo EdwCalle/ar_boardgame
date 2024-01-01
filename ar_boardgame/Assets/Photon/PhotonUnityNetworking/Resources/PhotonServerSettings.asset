@@ -51,6 +51,9 @@ MonoBehaviour:
   - RollDiceRPC
   - ShowDiceRPC
   - ShowQuestionRPC
+  - PrepareBoard
+  - WaitPlayers2RPC
+  - ShowDice2RPC
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

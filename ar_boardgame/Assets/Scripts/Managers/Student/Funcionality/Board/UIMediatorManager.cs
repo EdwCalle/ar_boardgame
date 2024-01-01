@@ -19,12 +19,12 @@ public class UIMediatorManager : MonoBehaviour
     void Awake()
     {
         // canvasModal.SetActive(false);
-        arrowsManager.uiElements.Modal.SetActive(false);
-        dialogueManager.uiElements.Modal.SetActive(false);
-        diceManager.uiElements.Modal.SetActive(false);
-        questionManager.uiElements.Modal.SetActive(false);
-        minigameInfoManager.uiElements.Modal.SetActive(false);
-        resultsInfoManager.uiElements.Modal.SetActive(false);
+        arrowsManager.uiElements.ModalUI.SetActive(false);
+        dialogueManager.uiElements.ModalUI.SetActive(false);
+        diceManager.uiElements.ModalUI.SetActive(false);
+        questionManager.uiElements.ModalUI.SetActive(false);
+        minigameInfoManager.uiElements.ModalUI.SetActive(false);
+        resultsInfoManager.uiElements.ModalUI.SetActive(false);
     }
     public void SetRoundInfo()
     {
@@ -52,88 +52,89 @@ public class UIMediatorManager : MonoBehaviour
     //         }
     //     }
     // }
-    public async void ShowMinigameInfo()
+    public void ShowMinigameInfo()
     {
         minigameInfoManager.SetTitlteMinigame();
-        await minigameInfoManager.uiElements.ShowModal(canvasModal);
+        minigameInfoManager.uiElements.ShowModal(canvasModal);
     }
-    public async void HideMinigameInfo()
+    public void HideMinigameInfo()
     {
-        await minigameInfoManager.uiElements.HideModal(canvasModal);
+        minigameInfoManager.uiElements.HideModal(canvasModal);
     }
-    public async void ShowDialogue()
+    public void ShowDialogue()
     {
         //await Task.Delay(1050);
         dialogueManager.SetDialogue();
-        await dialogueManager.uiElements.ShowModal(canvasModal);
+        dialogueManager.uiElements.ShowModal(canvasModal);
         // await Task.Delay(1050);
         dialogueManager.NextSentece();
     }
-    public async void HideDialogue()
+    public void HideDialogue()
     {
-        await dialogueManager.uiElements.HideModal(canvasModal);
+        dialogueManager.uiElements.HideModal(canvasModal);
         // await Task.Delay(1050);
         //make a waiting players
         ShowWaitPlayer("Esperando a que el resto de jugadores terminen de leer el diálogo...", "ShowDiceRPC");
     }
-    public async void ShowDice()
+    public void ShowDice()
     {
-        await diceManager.uiElements.ShowModal(canvasModal);
+        diceManager.uiElements.ShowModal(canvasModal);
         diceManager.SetDiceInfo();
     }
     public void RollDice(int numberDice)
     {
-        boardManager.RollDice(numberDice);
+        // boardManager.RollDice(numberDice);
     }
-    public async void HideDice()
+    public void HideDice()
     {
         roundInfo.DiceButton.SetActive(false);
-        await diceManager.uiElements.HideModal(canvasModal);
+        diceManager.uiElements.HideModal(canvasModal);
     }
-    public async void ShowResultsInfo()
+    public void ShowResultsInfo()
     {
         resultsInfoManager.SetResultsInfo();
-        await resultsInfoManager.uiElements.ShowModal(canvasModal);
+        resultsInfoManager.uiElements.ShowModal(canvasModal);
     }
-    public async void ShowQuestions()
+    public void ShowQuestions()
     {
-        await questionManager.uiElements.ShowModal(canvasModal);
+        questionManager.uiElements.ShowModal(canvasModal);
     }
     public void PrepareQuestions()
     {
         questionManager.PrepareQuestion();
         ShowWaitPlayer("sincronizando tablero, esperando al resto de jugadores", "ShowQuestionRPC");
     }
-    public async Task SelectOption(int value)
-    {
-        //  await questionManager.SelectOption(value);
-        await questionManager.uiElements.HideModal(canvasModal);
-        //  await Task.Delay(1050);
-    }
-    public async void ShowArrows(string directionOne, string directionTwo)
+    // public async Task SelectOption(int value)
+    // {
+    //     //  await questionManager.SelectOption(value);
+    //      questionManager.uiElements.HideModal(canvasModal);
+    //     //  await Task.Delay(1050);
+    // }
+    public void ShowArrows(string directionOne, string directionTwo)
     {
         arrowsManager.ActivateArrows(directionOne, directionTwo);
-        await arrowsManager.uiElements.ShowModal(canvasModal);
+        arrowsManager.uiElements.ShowModal(canvasModal);
+
     }
-    public async void HideArrows()
+    public void HideArrows()
     {
-        await arrowsManager.uiElements.HideModal(canvasModal);
+        arrowsManager.uiElements.HideModal(canvasModal);
     }
-    public async void HideWaitBoard()
+    public void HideWaitBoard()
     {
-        await waitPlayerManager.uiElements.HideModal(canvasModal);
+        waitPlayerManager.uiElements.HideModal(canvasModal);
         waitPlayerManager.uiElements.WaitPlayer.SetActive(true);
         waitPlayerManager.uiElements.WaitBoard.SetActive(false);
     }
-    public async void HideWaitPlayer()
+    public void HideWaitPlayer()
     {
-        await waitPlayerManager.uiElements.HideModal(canvasModal);
+        waitPlayerManager.uiElements.HideModal(canvasModal);
     }
-    public async void ShowWaitPlayer(string message, string NameRPC)
+    public void ShowWaitPlayer(string message, string NameRPC)
     {
         waitPlayerManager.SetMessage(message);
-        await waitPlayerManager.uiElements.ShowModal(canvasModal);
-        boardManager.WaitPlayers(NameRPC);
+        waitPlayerManager.uiElements.ShowModal(canvasModal);
+        //  boardManager.WaitPlayers(NameRPC);
     }
 
     public void ThrowDice(int numberDice)

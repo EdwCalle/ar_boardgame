@@ -207,8 +207,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1622390972}
-        m_TargetAssemblyTypeName: BoardManager, Assembly-CSharp
+      - m_Target: {fileID: 354565922}
+        m_TargetAssemblyTypeName: QuestionInfoManager, Assembly-CSharp
         m_MethodName: SelectOption
         m_Mode: 3
         m_Arguments:
@@ -1939,7 +1939,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: -199295537
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!224 &194375458
 RectTransform:
@@ -1988,7 +1988,7 @@ PrefabInstance:
         type: 3}
       propertyPath: selectGame
       value: 
-      objectReference: {fileID: 1622390970}
+      objectReference: {fileID: 0}
     - target: {fileID: 456338014620923728, guid: 7638ed5972147d2449267fac0ca6e74c,
         type: 3}
       propertyPath: titleRound
@@ -4029,8 +4029,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiElements:
-    modal: {fileID: 274807238}
-    TimeDelay: 1.05
+    modalUI: {fileID: 274807238}
     chat: {fileID: 2132319403}
     skipButton: {fileID: 1533312690}
     characters:
@@ -4039,7 +4038,7 @@ MonoBehaviour:
     charactersName:
     - {fileID: 1027515619}
     - {fileID: 1835673839}
-  uIMediatorManager: {fileID: 1622390970}
+  gameManager: {fileID: 1622390974}
   timeBetweenChar: 0
   timeBetweenSentence: 2
   opacityCharacter: 0.5
@@ -4055,6 +4054,7 @@ GameObject:
   - component: {fileID: 275189280}
   - component: {fileID: 275189279}
   - component: {fileID: 275189278}
+  - component: {fileID: 275189282}
   m_Layer: 5
   m_Name: CanvasBoard
   m_TagString: Untagged
@@ -4138,10 +4138,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 662430127}
-  - {fileID: 788382896}
-  - {fileID: 623191681}
-  - {fileID: 1703842768}
-  - {fileID: 1948351364}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -4149,6 +4145,86 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &275189282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 275189277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b84cfe2aff854d049c0615102423883, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UImediatorManager: {fileID: 0}
+  gameManager: {fileID: 1622390974}
+  players:
+  - {fileID: 832570711}
+  - {fileID: 1672179051}
+  - {fileID: 1070433192}
+  - {fileID: 238640056}
+  boxes:
+  - {fileID: 350423347}
+  - {fileID: 277812241}
+  - {fileID: 671238733}
+  - {fileID: 736937503}
+  - {fileID: 1561333529}
+  - {fileID: 968896188}
+  - {fileID: 1602985169}
+  - {fileID: 483215586}
+  - {fileID: 1105504777}
+  - {fileID: 780731522}
+  - {fileID: 1343386342}
+  - {fileID: 1757853255}
+  - {fileID: 629752177}
+  - {fileID: 158261633}
+  - {fileID: 1052820894}
+  - {fileID: 537768444}
+  - {fileID: 1725514313}
+  - {fileID: 2122920451}
+  - {fileID: 1388942166}
+  - {fileID: 330999069}
+  - {fileID: 896903090}
+  - {fileID: 1007816669}
+  - {fileID: 1510172208}
+  - {fileID: 386285050}
+  - {fileID: 837226810}
+  - {fileID: 308188450}
+  - {fileID: 1140926761}
+  - {fileID: 1575970067}
+  - {fileID: 1622697041}
+  - {fileID: 1432382780}
+  - {fileID: 716597309}
+  - {fileID: 97978304}
+  - {fileID: 1943590585}
+  - {fileID: 1835157872}
+  - {fileID: 1027756448}
+  - {fileID: 240060118}
+  - {fileID: 265436885}
+  - {fileID: 441009961}
+  - {fileID: 1581101165}
+  - {fileID: 850814298}
+  - {fileID: 1886174283}
+  - {fileID: 1402139721}
+  - {fileID: 1627499715}
+  - {fileID: 1889949653}
+  - {fileID: 400988021}
+  - {fileID: 1833696581}
+  - {fileID: 1986853719}
+  - {fileID: 852147627}
+  - {fileID: 1771206827}
+  - {fileID: 1096502513}
+  - {fileID: 1345493513}
+  - {fileID: 991691771}
+  - {fileID: 1778928930}
+  - {fileID: 1113220188}
+  - {fileID: 278887256}
+  - {fileID: 1517381264}
+  speed: 100
+  isDefaultDice: 0
+  defaultDice: 6
+  offsetPlayer: 25
 --- !u!1001 &277812239
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5847,14 +5923,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiElements:
-    modal: {fileID: 354565917}
-    TimeDelay: 1.05
+    modalUI: {fileID: 354565917}
     questionTitle: {fileID: 1948249818}
     options:
     - {fileID: 44480798}
     - {fileID: 2114647277}
     - {fileID: 1437189327}
     - {fileID: 416777629}
+  gameManager: {fileID: 1622390974}
 --- !u!1 &355981348
 GameObject:
   m_ObjectHideFlags: 0
@@ -7098,8 +7174,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1622390972}
-        m_TargetAssemblyTypeName: BoardManager, Assembly-CSharp
+      - m_Target: {fileID: 354565922}
+        m_TargetAssemblyTypeName: QuestionInfoManager, Assembly-CSharp
         m_MethodName: SelectOption
         m_Mode: 3
         m_Arguments:
@@ -10795,14 +10871,14 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 623191680}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2134490163}
   - {fileID: 1520935733}
-  m_Father: {fileID: 275189281}
+  m_Father: {fileID: 662430127}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -11375,8 +11451,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiElements:
-    modal: {fileID: 666932572}
-    TimeDelay: 1.05
+    modalUI: {fileID: 666932572}
     dice: {fileID: 633581124}
     rotationObject: {fileID: 1834913663}
     limitObject: {fileID: 1271479521}
@@ -11396,7 +11471,7 @@ MonoBehaviour:
   rotationSpeed: 500
   rotatingTime: 4
   numberDice: 1
-  UImediatorManager: {fileID: 1622390970}
+  gameManager: {fileID: 1622390974}
 --- !u!1 &662430126
 GameObject:
   m_ObjectHideFlags: 0
@@ -11428,6 +11503,10 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 855618576}
+  - {fileID: 788382896}
+  - {fileID: 623191681}
+  - {fileID: 1703842768}
+  - {fileID: 1948351364}
   m_Father: {fileID: 275189281}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -12454,8 +12533,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiElements:
-    modal: {fileID: 721591989}
-    TimeDelay: 1.05
+    modalUI: {fileID: 721591989}
     minigameTitle: {fileID: 1589107393}
 --- !u!1001 &736937501
 PrefabInstance:
@@ -13032,7 +13110,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1622390972}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: BoardManager, Assembly-CSharp
         m_MethodName: ThrowDiceRPC
         m_Mode: 3
@@ -13502,14 +13580,14 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 788382895}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 214299764}
   - {fileID: 1073494133}
-  m_Father: {fileID: 275189281}
+  m_Father: {fileID: 662430127}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -13706,8 +13784,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1622390972}
-        m_TargetAssemblyTypeName: BoardManager, Assembly-CSharp
+      - m_Target: {fileID: 1966123235}
+        m_TargetAssemblyTypeName: ArrowsManager, Assembly-CSharp
         m_MethodName: ChangeDirection
         m_Mode: 5
         m_Arguments:
@@ -16422,8 +16500,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1622390972}
-        m_TargetAssemblyTypeName: BoardManager, Assembly-CSharp
+      - m_Target: {fileID: 1966123235}
+        m_TargetAssemblyTypeName: ArrowsManager, Assembly-CSharp
         m_MethodName: ChangeDirection
         m_Mode: 5
         m_Arguments:
@@ -16598,7 +16676,7 @@ PrefabInstance:
         type: 3}
       propertyPath: selectGame
       value: 
-      objectReference: {fileID: 1622390970}
+      objectReference: {fileID: 0}
     - target: {fileID: 456338014620923728, guid: 7638ed5972147d2449267fac0ca6e74c,
         type: 3}
       propertyPath: titleRound
@@ -18948,8 +19026,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1622390972}
-        m_TargetAssemblyTypeName: BoardManager, Assembly-CSharp
+      - m_Target: {fileID: 1966123235}
+        m_TargetAssemblyTypeName: ArrowsManager, Assembly-CSharp
         m_MethodName: ChangeDirection
         m_Mode: 5
         m_Arguments:
@@ -19099,8 +19177,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1622390972}
-        m_TargetAssemblyTypeName: BoardManager, Assembly-CSharp
+      - m_Target: {fileID: 1966123235}
+        m_TargetAssemblyTypeName: ArrowsManager, Assembly-CSharp
         m_MethodName: ChangeDirection
         m_Mode: 5
         m_Arguments:
@@ -26261,8 +26339,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1622390972}
-        m_TargetAssemblyTypeName: BoardManager, Assembly-CSharp
+      - m_Target: {fileID: 354565922}
+        m_TargetAssemblyTypeName: QuestionInfoManager, Assembly-CSharp
         m_MethodName: SelectOption
         m_Mode: 3
         m_Arguments:
@@ -26419,8 +26497,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiElements:
-    modal: {fileID: 1446621876}
-    TimeDelay: 1.05
+    modalUI: {fileID: 1446621876}
     winner: {fileID: 1312785556}
 --- !u!1 &1474991312
 GameObject:
@@ -26628,7 +26705,7 @@ PrefabInstance:
         type: 3}
       propertyPath: selectGame
       value: 
-      objectReference: {fileID: 1622390970}
+      objectReference: {fileID: 0}
     - target: {fileID: 456338014620923728, guid: 7638ed5972147d2449267fac0ca6e74c,
         type: 3}
       propertyPath: titleRound
@@ -29951,8 +30028,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1622390971}
-  - component: {fileID: 1622390972}
-  - component: {fileID: 1622390970}
+  - component: {fileID: 1622390974}
   - component: {fileID: 1622390973}
   m_Layer: 0
   m_Name: gameController
@@ -29961,34 +30037,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1622390970
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1622390969}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 993eb9da7f980974587c4254e4f68ec4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  roundInfo:
-    modal: {fileID: 0}
-    TimeDelay: 1.05
-    roundTitle: {fileID: 193500776}
-    numberRound: {fileID: 1228022727}
-    diceButton: {fileID: 773666536}
-    diceTitle: {fileID: 1289900767}
-  waitPlayerManager: {fileID: 1938963748}
-  dialogueManager: {fileID: 274807242}
-  diceManager: {fileID: 633581131}
-  arrowsManager: {fileID: 1966123235}
-  minigameInfoManager: {fileID: 721591994}
-  questionManager: {fileID: 354565922}
-  resultsInfoManager: {fileID: 1446621880}
-  boardManager: {fileID: 1622390972}
-  canvasModal: {fileID: 374821127}
 --- !u!4 &1622390971
 Transform:
   m_ObjectHideFlags: 0
@@ -30004,85 +30052,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1622390972
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1622390969}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b84cfe2aff854d049c0615102423883, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  UImediatorManager: {fileID: 1622390970}
-  players:
-  - {fileID: 832570711}
-  - {fileID: 1672179051}
-  - {fileID: 1070433192}
-  - {fileID: 238640056}
-  boxes:
-  - {fileID: 350423347}
-  - {fileID: 277812241}
-  - {fileID: 671238733}
-  - {fileID: 736937503}
-  - {fileID: 1561333529}
-  - {fileID: 968896188}
-  - {fileID: 1602985169}
-  - {fileID: 483215586}
-  - {fileID: 1105504777}
-  - {fileID: 780731522}
-  - {fileID: 1343386342}
-  - {fileID: 1757853255}
-  - {fileID: 629752177}
-  - {fileID: 158261633}
-  - {fileID: 1052820894}
-  - {fileID: 537768444}
-  - {fileID: 1725514313}
-  - {fileID: 2122920451}
-  - {fileID: 1388942166}
-  - {fileID: 330999069}
-  - {fileID: 896903090}
-  - {fileID: 1007816669}
-  - {fileID: 1510172208}
-  - {fileID: 386285050}
-  - {fileID: 837226810}
-  - {fileID: 308188450}
-  - {fileID: 1140926761}
-  - {fileID: 1575970067}
-  - {fileID: 1622697041}
-  - {fileID: 1432382780}
-  - {fileID: 716597309}
-  - {fileID: 97978304}
-  - {fileID: 1943590585}
-  - {fileID: 1835157872}
-  - {fileID: 1027756448}
-  - {fileID: 240060118}
-  - {fileID: 265436885}
-  - {fileID: 441009961}
-  - {fileID: 1581101165}
-  - {fileID: 850814298}
-  - {fileID: 1886174283}
-  - {fileID: 1402139721}
-  - {fileID: 1627499715}
-  - {fileID: 1889949653}
-  - {fileID: 400988021}
-  - {fileID: 1833696581}
-  - {fileID: 1986853719}
-  - {fileID: 852147627}
-  - {fileID: 1771206827}
-  - {fileID: 1096502513}
-  - {fileID: 1345493513}
-  - {fileID: 991691771}
-  - {fileID: 1778928930}
-  - {fileID: 1113220188}
-  - {fileID: 278887256}
-  - {fileID: 1517381264}
-  speed: 100
-  isDefaultDice: 0
-  defaultDice: 6
-  offsetPlayer: 25
 --- !u!114 &1622390973
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30105,6 +30074,26 @@ MonoBehaviour:
   sceneViewId: 1
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &1622390974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1622390969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ec2db61f1b71394ebb5d1145f9b41ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvasModal: {fileID: 374821127}
+  boardManager: {fileID: 275189282}
+  waitPlayerManager: {fileID: 1938963748}
+  dialogueManager: {fileID: 274807242}
+  diceManager: {fileID: 633581131}
+  arrowsManager: {fileID: 1966123235}
+  questionInfoManager: {fileID: 354565922}
+  minigameInfoManager: {fileID: 721591994}
 --- !u!1001 &1622697039
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30999,14 +30988,14 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1703842767}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 128463323}
   - {fileID: 1179353370}
-  m_Father: {fileID: 275189281}
+  m_Father: {fileID: 662430127}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -35555,8 +35544,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiElements:
-    modal: {fileID: 1938963744}
-    TimeDelay: 1.05
+    modalUI: {fileID: 1938963744}
     waitBoard: {fileID: 444146186}
     waitPlayer: {fileID: 492030668}
     message: {fileID: 1073367290}
@@ -36235,14 +36223,14 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1948351363}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 840009087}
   - {fileID: 851552993}
-  m_Father: {fileID: 275189281}
+  m_Father: {fileID: 662430127}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -36338,14 +36326,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiElements:
-    modal: {fileID: 1966123233}
-    TimeDelay: 1.05
+    modalUI: {fileID: 1966123233}
     leftButton: {fileID: 805610172}
     rightButton: {fileID: 1017286282}
     upButton: {fileID: 918086432}
     downButton: {fileID: 1021114964}
     titleTurn: {fileID: 966986402}
     player: {fileID: 0}
+  gameManager: {fileID: 1622390974}
 --- !u!1 &1978193361
 GameObject:
   m_ObjectHideFlags: 0
@@ -37050,8 +37038,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1622390972}
-        m_TargetAssemblyTypeName: BoardManager, Assembly-CSharp
+      - m_Target: {fileID: 354565922}
+        m_TargetAssemblyTypeName: QuestionInfoManager, Assembly-CSharp
         m_MethodName: SelectOption
         m_Mode: 3
         m_Arguments:
@@ -38080,7 +38068,7 @@ PrefabInstance:
         type: 3}
       propertyPath: selectGame
       value: 
-      objectReference: {fileID: 1622390970}
+      objectReference: {fileID: 0}
     - target: {fileID: 456338014620923728, guid: 7638ed5972147d2449267fac0ca6e74c,
         type: 3}
       propertyPath: titleRound

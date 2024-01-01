@@ -5,10 +5,12 @@ using System.Collections.Generic;
 using Photon.Realtime;
 using System.Threading.Tasks;
 using System.Collections;
+using System;
 public class BoardManager : MonoBehaviourPunCallbacks
 {
     [Header("Board Components")]
     public UIMediatorManager UImediatorManager;
+    public GameManager gameManager;
     public GameObject[] players;
     public GameObject[] boxes;
     [Header("Board Funcionality/offline")]
@@ -19,86 +21,91 @@ public class BoardManager : MonoBehaviourPunCallbacks
     public float offsetPlayer = 50f;
     int numberPlayers;
     private int currentSquare = 0;
-    private bool isMoving = false;
+    //private bool isMoving = false;
     BoardSquare[] boardSquares = new BoardSquare[56];
     private Vector3 nextPosition;
     private int dice;
-    private bool isActiveDice;
+    //private bool isActiveDice;
     private int currentPlayer = 0;
-    private int playersReady = 0;
+    // private int playersReady = 0;
     private bool isChangedNextSquare = false;
     void Start()
     {
         numberPlayers = Singleton.GetNumberPlayers();
-        if (Singleton.IsSinglePlayer())
-        {
+        // if (Singleton.IsSinglePlayer())
+        // {
 
-            PrepareGameRPC();
-        }
-        else
-        {
-            if (PhotonNetwork.IsConnected && PhotonNetwork.CurrentRoom != null)
-            {
-                // for sync scenes to other players
-                PhotonNetwork.AutomaticallySyncScene = true;
-                WaitPlayers("PrepareGameRPC");
+        //     // PrepareGameRPC();
+        // }
+        // else
+        // {
+        //     if (PhotonNetwork.IsConnected && PhotonNetwork.CurrentRoom != null)
+        //     {
+        //         // for sync scenes to other players
+        //         PhotonNetwork.AutomaticallySyncScene = true;
+        //         WaitPlayers("PrepareGameRPC");
 
-            }
-        }
+        //     }
+        // }
     }
-    public void WaitPlayers(string NameRPC)
+    // public void WaitPlayers(string NameRPC)
+    // {
+    //     photonView.RPC("WaitPlayersRPC", RpcTarget.All, NameRPC);
+    // }
+    // [PunRPC]
+    // void WaitPlayers2RPC(string NameRPC)
+    // {
+    //     playersReady++;
+    //     if (playersReady == numberPlayers && photonView.IsMine)
+    //     {
+    //         photonView.RPC(NameRPC, RpcTarget.All);
+    //     }
+    // }
+    // [PunRPC]
+    public void PrepareBoard()
     {
-        photonView.RPC("WaitPlayersRPC", RpcTarget.All, NameRPC);
+        PrepareBoxes();
+        PreparePlayers();
     }
-    [PunRPC]
-    void WaitPlayersRPC(string NameRPC)
-    {
-        playersReady++;
-        if (playersReady == numberPlayers && photonView.IsMine)
-        {
-            photonView.RPC(NameRPC, RpcTarget.All);
-        }
-    }
-    [PunRPC]
-    void PrepareGameRPC()
-    {
-        ResetPlayersReady();
-        if (Singleton.ExistRounds()) // si no es la ultima romda
-        {
-            // preparing boardsquare order
-            PrepareBoxes();
-            PreparePlayers();
-            // show Round Info
-            UImediatorManager.SetRoundInfo();
-            UpdatePlayersList(); // make it in player ui
-            UImediatorManager.HideWaitBoard();
-            // if is new round show partial results
-            if (Singleton.IsNotFirstRound())
-            {
-                //  ShowPartialResults();
-            }
-            UImediatorManager.ShowDialogue();
-        }
-        else
-        {
-            UImediatorManager.HideWaitBoard();
-            //caculate winner
-            UImediatorManager.ShowResultsInfo();
-        }
+    // public void PrepareGame()
+    // {
+    //     ResetPlayersReady();
+    //     if (Singleton.ExistRounds()) // si no es la ultima romda
+    //     {
+    //         // preparing boardsquare order
+    //         PrepareBoxes();
+    //         PreparePlayers();
+    //         // show Round Info
+    //         UImediatorManager.SetRoundInfo();
+    //         UpdatePlayersList(); // make it in player ui
+    //         UImediatorManager.HideWaitBoard();
+    //         // if is new round show partial results
+    //         if (Singleton.IsNotFirstRound())
+    //         {
+    //             //  ShowPartialResults();
+    //         }
+    //         UImediatorManager.ShowDialogue();
+    //     }
+    //     else
+    //     {
+    //         UImediatorManager.HideWaitBoard();
+    //         //caculate winner
+    //         UImediatorManager.ShowResultsInfo();
+    //     }
 
 
-    }
-    void ResetPlayersReady()
-    {
-        playersReady = 0;
-    }
-    [PunRPC]
-    void ShowDiceRPC()
-    {
-        ResetPlayersReady();
-        UImediatorManager.HideWaitPlayer();
-        UImediatorManager.ShowDice();
-    }
+    // }
+    // void ResetPlayersReady()
+    // {
+    //     playersReady = 0;
+    // }
+    // [PunRPC]
+    // void ShowDice2RPC()
+    // {
+    //     ResetPlayersReady();
+    //     UImediatorManager.HideWaitPlayer();
+    //     UImediatorManager.ShowDice();
+    // }
     void PrepareBoxes()
     {
         // preparing boardsquare order
@@ -179,42 +186,51 @@ public class BoardManager : MonoBehaviourPunCallbacks
         }
         // playerUI.SetPlayersListInfo(students);
     }
-    public void RollDice(int randomDice)
-    {
-        if (Singleton.IsSinglePlayer())
-            RollDiceRPC(randomDice);
-        else
-            photonView.RPC("RollDiceRPC", RpcTarget.All, randomDice);
-    }
-    [PunRPC]
-    public void RollDiceRPC(int randomDice)
-    {
-        StartCoroutine(UImediatorManager.diceManager.RotateDiceTime(randomDice));
-    }
+    // public void RollDice(int randomDice)
+    // {
+    //     if (Singleton.IsSinglePlayer())
+    //         gameManager.RollDiceRPC(randomDice);
+    //     else
+    //         photonView.RPC("RollDiceRPC", RpcTarget.All, randomDice);
+    // }
+    // [PunRPC]
+    // public void RollDiceRPC(int randomDice)
+    // {
+    //     //  StartCoroutine(UImediatorManager.diceManager.RotateDiceTime(randomDice));
+    //     StartCoroutine(gameManager.diceManager.RotateDiceTime(randomDice));
+    // }
+    // public void ThrowDice(int randomDice)
+    // {
+    //     if (Singleton.IsSinglePlayer())
+    //         ThrowDiceRPC(randomDice);
+    //     else
+    //         photonView.RPC("ThrowDiceRPC", RpcTarget.All, randomDice);
+    // }
     public void ThrowDice(int randomDice)
     {
-        if (Singleton.IsSinglePlayer())
-            ThrowDiceRPC(randomDice);
-        else
-            photonView.RPC("ThrowDiceRPC", RpcTarget.All, randomDice);
+        currentSquare = Singleton.GetSquarePlayer(currentPlayer);
+        dice = randomDice;
+        if (isDefaultDice)
+            dice = defaultDice;
+        StartCoroutine(MovingPlayer());
     }
-    [PunRPC]
-    public void ThrowDiceRPC(int randomDice)
-    {
-        UImediatorManager.HideDice();
-        if (!isMoving)
-        {
-            currentSquare = Singleton.GetSquarePlayer(currentPlayer);
-            dice = randomDice;
-            if (isDefaultDice)
-                dice = defaultDice;
-            UImediatorManager.SetDiceInfo(dice);
-            //  isActiveDice = true;
-            //SetNextSquare();
-            StartCoroutine(MovingPlayer());
-
-        }
-    }
+    // [PunRPC]
+    // public async void ThrowDiceRPC(int randomDice)
+    // {
+    //     //   UImediatorManager.HideDice();
+    //     await gameManager.diceManager.HideModal(gameManager.canvasModal);
+    //     //   if (!isMoving)
+    //     {
+    //         currentSquare = Singleton.GetSquarePlayer(currentPlayer);
+    //         dice = randomDice;
+    //         if (isDefaultDice)
+    //             dice = defaultDice;
+    //         // gameManager.diceManager.SetDiceInfo(dice);
+    //         //  isActiveDice = true;
+    //         //SetNextSquare();
+    //         StartCoroutine(MovingPlayer());
+    //     }
+    // }
     // void FixedUpdate()
     // {
     //       MovecurrentPlayer();
@@ -260,13 +276,13 @@ public class BoardManager : MonoBehaviourPunCallbacks
     //     }
     // }
 
-    [PunRPC]
-    void ShowQuestionRPC()
-    {
-        ResetPlayersReady();
-        UImediatorManager.HideWaitPlayer();
-        UImediatorManager.ShowQuestions();
-    }
+    // [PunRPC]
+    // void ShowQuestionRPC()
+    // {
+    //     ResetPlayersReady();
+    //     UImediatorManager.HideWaitPlayer();
+    //     UImediatorManager.ShowQuestions();
+    // }
     void SetNextSquare(int currentDice)
     {
         currentSquare = boardSquares[currentSquare].NextSquare;
@@ -276,53 +292,58 @@ public class BoardManager : MonoBehaviourPunCallbacks
             nextPosition += SetOffsetPosition(currentPlayer);
         //isMoving = true; // this activate the movement
     }
-    public void ChangeDirection(string direction)
+    // public void ChangeDirection(string direction)
+    // {
+    //     if (Singleton.IsSinglePlayer())
+    //         ChangeDirectionRPC(direction);
+    //     else
+    //         photonView.RPC("ChangeDirectionRPC", RpcTarget.All, direction);
+    // }
+    public async Task ChangeDirection(string direction)
     {
-        if (Singleton.IsSinglePlayer())
-            ChangeDirectionRPC(direction);
-        else
-            photonView.RPC("ChangeDirectionRPC", RpcTarget.All, direction);
-    }
-    [PunRPC]
-    public void ChangeDirectionRPC(string direction)
-    {
-        if (direction == boardSquares[currentSquare].DirectionOne)
-            boardSquares[currentSquare].SwitchToOne();
-        else
-            boardSquares[currentSquare].SwitchToTwo();
-        UImediatorManager.HideArrows();
-        //isActiveDice = true;
-        //  SetNextSquare();
-
+        boardSquares[currentSquare].ChangeDirection(direction);
+        await gameManager.arrowsManager.HideModal(gameManager.canvasModal);
         isChangedNextSquare = true;
         StartCoroutine(MovingPlayer());
     }
-    public void SelectOption(int value)
-    {
-        if (Singleton.IsSinglePlayer())
-        {
-            SelectOptionRPC(value);
-        }
-        else
-        {
-            if (Singleton.IsAnwserCorrect(value, currentPlayer))
-            {
-                ScoreManager.addStart(PhotonNetwork.LocalPlayer);
-            }
-            photonView.RPC("SelectOptionRPC", RpcTarget.All, value);
-        }
-        //  if (photonView.IsMine)
-    }
-    [PunRPC]
-    public async void SelectOptionRPC(int value)
-    {
-        //playerUI.SelectOption(value);
-        UpdatePlayersList();
-        await UImediatorManager.SelectOption(value);
-        FinishTurn();
-        // ChangeTurn();
-    }
-    async void FinishTurn()
+    // [PunRPC]
+    // public async void ChangeDirectionRPC(string direction)
+    // {
+    //     // if (direction == boardSquares[currentSquare].DirectionOne)
+    //     //     boardSquares[currentSquare].SwitchToOne();
+    //     // else
+    //     //     boardSquares[currentSquare].SwitchToTwo();
+    //     boardSquares[currentSquare].ChangeDirection(direction);
+    //     await gameManager.arrowsManager.HideModal(gameManager.canvasModal);
+    //     isChangedNextSquare = true;
+    //     StartCoroutine(MovingPlayer());
+    // }
+    // public void SelectOption(int value)
+    // {
+    //     if (Singleton.IsSinglePlayer())
+    //     {
+    //         SelectOptionRPC(value);
+    //     }
+    //     else
+    //     {
+    //         if (Singleton.IsAnwserCorrect(value, currentPlayer))
+    //         {
+    //             ScoreManager.addStart(PhotonNetwork.LocalPlayer);
+    //         }
+    //         photonView.RPC("SelectOptionRPC", RpcTarget.All, value);
+    //     }
+    //     //  if (photonView.IsMine)
+    // }
+    // [PunRPC]
+    // public async void SelectOptionRPC(int value)
+    // {
+    //     //playerUI.SelectOption(value);
+    //     UpdatePlayersList();
+    //     //  await UImediatorManager.SelectOption(value);
+    //     FinishTurn();
+    //     // ChangeTurn();
+    // }
+    public async Task FinishTurn()
     {   //saving current position current player
         Singleton.SaveSquarePlayer(currentPlayer, currentSquare);
         currentPlayer++;
@@ -330,15 +351,15 @@ public class BoardManager : MonoBehaviourPunCallbacks
         // this checks if the current player is the last one
         if (currentPlayer == numberPlayers)
         {
-            UImediatorManager.ShowMinigameInfo();
-            await Task.Delay(2000);
-            UImediatorManager.HideMinigameInfo();
+            await gameManager.minigameInfoManager.ShowModal(gameManager.canvasModal);
+            await Task.Delay(1000);
+            await gameManager.minigameInfoManager.HideModal(gameManager.canvasModal);
             Singleton.ResetPlayerTurn();
             GoToMinigame();
         }
         else
         {
-            UImediatorManager.ShowDice();
+            await gameManager.diceManager.ShowModal(gameManager.canvasModal);
         }
     }
     public void GoToMinigame()
@@ -347,12 +368,14 @@ public class BoardManager : MonoBehaviourPunCallbacks
     }
     public IEnumerator MovingPlayer()
     {
+        print("que paso el timing");
         while (dice > 0)
         {
+            print("dice" + dice);
             if (boardSquares[currentSquare].IsSquarePoint)
             {
-                UImediatorManager.ShowArrows(boardSquares[currentSquare].DirectionOne, boardSquares[currentSquare].DirectionTwo);
-                print(dice + "DEBI MOSTRARLO PERO NO SE QUE PASO");
+                gameManager.ShowArrows(boardSquares[currentSquare].DirectionOne, boardSquares[currentSquare].DirectionTwo);
+                //  print(dice + "DEBI MOSTRARLO PERO NO SE QUE PASO");
                 break;
             }
             else
@@ -368,8 +391,12 @@ public class BoardManager : MonoBehaviourPunCallbacks
 
             }
         }
-        // Singleton.SaveSquarePlayer(currentPlayer, currentSquare);
-        UImediatorManager.PrepareQuestions();
+        if (dice == 0)
+        {
+            Singleton.SaveSquarePlayer(currentPlayer, currentSquare);
+            yield return gameManager.questionInfoManager.ShowModal(gameManager.canvasModal);
+        }
+        //
     }
     public IEnumerator InternalMove()
     {

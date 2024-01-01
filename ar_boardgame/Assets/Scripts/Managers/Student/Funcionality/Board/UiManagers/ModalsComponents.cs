@@ -5,7 +5,7 @@ using UnityEngine.UI;
 namespace thisAPP.UIElements
 {
     [System.Serializable]
-    public class ArrowsUI : ModalAnimator
+    public class ArrowsUI : Modal
     {
         [SerializeField] private GameObject leftButton;
         [SerializeField] private GameObject rightButton;
@@ -22,14 +22,14 @@ namespace thisAPP.UIElements
         public Sprite Player { get => player; set => player = value; }
     }
     [System.Serializable]
-    public class MinigameInfo : ModalAnimator
+    public class MinigameInfo : Modal
     {
         [SerializeField] private TextMeshProUGUI minigameTitle;
 
         public TextMeshProUGUI MinigameTitle { get => minigameTitle; set => minigameTitle = value; }
     }
     [System.Serializable]
-    public class RoundInfo : ModalAnimator
+    public class RoundInfo : Modal
     {
         [SerializeField] private TextMeshProUGUI roundTitle;
         [SerializeField] private TextMeshProUGUI numberRound;
@@ -42,7 +42,7 @@ namespace thisAPP.UIElements
         public TextMeshProUGUI DiceTitle { get => diceTitle; set => diceTitle = value; }
     }
     [System.Serializable]
-    public class QuestionsInfo : ModalAnimator
+    public class QuestionsInfo : Modal
     {
 
         [SerializeField] private TextMeshProUGUI questionTitle;
@@ -53,7 +53,7 @@ namespace thisAPP.UIElements
         public GameObject[] Options { get => options; set => options = value; }
     }
     [System.Serializable]
-    public class ResultsInfo : ModalAnimator
+    public class ResultsInfo : Modal
     {
 
         [SerializeField] private TextMeshProUGUI winner;
@@ -62,7 +62,7 @@ namespace thisAPP.UIElements
         public TextMeshProUGUI Winner { get => winner; set => winner = value; }
     }
     [System.Serializable]
-    public class PlayerInfo : ModalAnimator
+    public class PlayerInfo : Modal
     {
         [SerializeField] private TextMeshProUGUI textStars;
         [SerializeField] private TextMeshProUGUI textCaps;
@@ -75,7 +75,7 @@ namespace thisAPP.UIElements
 
     }
     [System.Serializable]
-    public class DialogueUi : ModalAnimator
+    public class DialogueUi : Modal
     {
         [SerializeField] private TextMeshProUGUI chat;
         [SerializeField] private Button skipButton;
@@ -90,7 +90,7 @@ namespace thisAPP.UIElements
 
     }
     [System.Serializable]
-    public class WaitPlayerUi : ModalAnimator
+    public class WaitPlayerUi : Modal
     {
         [SerializeField] private GameObject waitBoard;
         [SerializeField] private GameObject waitPlayer;
@@ -105,7 +105,7 @@ namespace thisAPP.UIElements
         //public TextMeshProUGUI Wimmner { get => winner; set => winner = value; }
     }
     [System.Serializable]
-    public class DiceUi : ModalAnimator
+    public class DiceUi : Modal
     {
         [SerializeField] private GameObject dice;
         [SerializeField] private GameObject rotationObject;

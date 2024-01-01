@@ -35,19 +35,28 @@ namespace Models
             //   isNextSquareDirection = true;
             this.directionOne = directionOne;
         }
-        public void SwitchToOne()
-        {
-            nextSquare = squareOne;
-            isSquarePoint = false;
-        }
-        public void SwitchToTwo()
-        {
-            nextSquare = squareTwo;
-            isSquarePoint = false;
-        }
+        // public void SwitchToOne()
+        // {
+        //     nextSquare = squareOne;
+        //     isSquarePoint = false;
+        // }
+        // public void SwitchToTwo()
+        // {
+        //     nextSquare = squareTwo;
+        //     isSquarePoint = false;
+        // }
         public void ResetSquarePoint()
         {
             isSquarePoint = true;
+        }
+        public void ChangeDirection(string direction)
+        {
+            isSquarePoint = false;
+
+            if (directionOne == direction)
+                nextSquare = squareOne;
+            else if (directionTwo == direction)
+                nextSquare = squareTwo;
         }
 
     }

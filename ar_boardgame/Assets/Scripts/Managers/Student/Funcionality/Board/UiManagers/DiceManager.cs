@@ -1,13 +1,12 @@
 
 using System.Collections;
-using ExitGames.Client.Photon.StructWrapping;
-using Photon.Pun;
+using System.Threading.Tasks;
 using thisAPP.UIElements;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-public class DiceManager : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerDownHandler, IPointerUpHandler
+public class DiceManager : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerDownHandler, IPointerUpHandler, IModalAnimator
 {
     public DiceUi uiElements;
     public float swipeSpeed = 5f;
@@ -16,12 +15,13 @@ public class DiceManager : MonoBehaviour, IDragHandler, IEndDragHandler, IPointe
     public int numberDice = 1;
     private bool isRotating = false;
     private Vector3 defaultPosition;
-    public UIMediatorManager UImediatorManager;
+    public GameManager gameManager;
 
     void Awake()
     {
         //uiElements.Dice.transform.localPosition = defaultPosition;
         defaultPosition = uiElements.Dice.transform.position;
+        print("no se que estoy haciendo mal" + defaultPosition);
     }
     public void OnPointerDown(PointerEventData eventData)
     {
@@ -65,7 +65,6 @@ public class DiceManager : MonoBehaviour, IDragHandler, IEndDragHandler, IPointe
         Vector3 screenPosition = Camera.main.ScreenToWorldPoint(new Vector3(eventData.position.x, eventData.position.y));
         uiElements.Dice.transform.position = new Vector3(uiElements.Dice.transform.position.x, screenPosition.y, uiElements.Dice.transform.position.z);
     }
-
     public void OnEndDrag(PointerEventData eventData)
     {
         if (Singleton.IsMyTurn())
@@ -84,7 +83,7 @@ public class DiceManager : MonoBehaviour, IDragHandler, IEndDragHandler, IPointe
         uiElements.Dice.GetComponent<BoxCollider2D>().enabled = false;                  // one throw dice
         uiElements.SwipeAnimation.SetActive(false);                                       // disable animation of title "throw dice"
         numberDice = Random.Range(1, 7);
-        UImediatorManager.RollDice(numberDice);
+        gameManager.RollDice(numberDice);
 
     }
     public IEnumerator RotateDiceTime(int definedDice)
@@ -107,13 +106,12 @@ public class DiceManager : MonoBehaviour, IDragHandler, IEndDragHandler, IPointe
             }
             yield return null;
         }
-
         uiElements.ImageDice.sprite = uiElements.Dices[numberDice - 1];// set all dice for every one
         uiElements.RotationObject.GetComponent<Animation>().Play("DiceSelected"); //activate diceselected animation
         uiElements.TitleNumberDice.SetActive(true);     //activate diceTitleNumberBlink animation
         uiElements.TitleNumberDice.GetComponent<TextMeshProUGUI>().text = $"{numberDice}"; // set number dice in numberDicetText
         yield return new WaitForSeconds(uiElements.RotationObject.GetComponent<Animation>()["DiceSelected"].length);
-        UImediatorManager.ThrowDice(numberDice);
+        gameManager.ThrowDice(numberDice);
     }
     public void RestartDice()
     {
@@ -145,8 +143,17 @@ public class DiceManager : MonoBehaviour, IDragHandler, IEndDragHandler, IPointe
         }
     }
 
+    public async Task ShowModal(GameObject canvasModal)
+    {
 
+        uiElements.ShowModal(canvasModal);
+        SetDiceInfo();
+        await Task.Delay(1050);
+    }
 
-
-
+    public async Task HideModal(GameObject canvasModal)
+    {
+        uiElements.HideModal(canvasModal);
+        await Task.Delay(1050);
+    }
 }
