@@ -1,8 +1,6 @@
 using UnityEngine;
 using Models;
 using Photon.Pun;
-using System.Collections.Generic;
-using Photon.Realtime;
 using System.Threading.Tasks;
 using System.Collections;
 using System;
@@ -80,6 +78,8 @@ public class BoardManager : MonoBehaviourPunCallbacks
                 {
                     players[i].transform.localPosition = boxes[playerBox].transform.localPosition;
                     players[i].transform.localPosition += SetOffsetPosition(i);
+                    gameManager.playersInfoManager.UpdateScore(i);
+
                 }
                 //   players[i].GetComponent<PlayerManager>().PrepareData($"Player{i}", i); // set name to players sprite
             }

@@ -46,6 +46,7 @@ public class QuestionInfoManager : MonoBehaviour, IModalAnimator
         {
 
             uiElements.Options[value].GetComponent<Animator>().SetInteger("optionState", 1);
+            gameManager.playersInfoManager.UpdateScore(Singleton.GetCurrentPlayerTurn());
         }
         else
         {

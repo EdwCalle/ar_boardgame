@@ -11,9 +11,9 @@ public class ScoreManager
     {
         Hashtable hash = player.CustomProperties;
 
-        hash["score"] = JsonUtility.ToJson(new Score { stars = 0, caps = 0 });
-        Debug.Log(hash["score"]);
-        hash["partialScore"] = JsonUtility.ToJson(new Score { stars = 0, caps = 0 });
+        hash["score"] = JsonUtility.ToJson(new Score { stars = 0, caps = 0, extracoins = 0 });
+        // Debug.Log(hash["score"]);
+        hash["partialScore"] = JsonUtility.ToJson(new Score { stars = 0, caps = 0, extracoins = 0 });
         player.SetCustomProperties(hash);
     }
     public static void SetPartialScore(Player player, Score partialScore)
@@ -22,19 +22,20 @@ public class ScoreManager
         hash["partialScore"] = JsonUtility.ToJson(partialScore);
         player.SetCustomProperties(hash);
     }
-    public static Score UpdatedScore(Player player)
+    public static Score GetUpdatedScore(Player player)
     {
         Hashtable hash = player.CustomProperties;
         Score score = JsonUtility.FromJson<Score>((string)hash["score"]);
         Score partialScore = JsonUtility.FromJson<Score>((string)hash["partialScore"]);
-        Debug.Log("Partial Score:" + partialScore.ToString() + "Score:" + score.ToString());
+        //Debug.Log("Partial Score:" + partialScore.ToString() + "Score:" + score.ToString());
         score.UpdateScore(partialScore);
-        Debug.Log("Score:" + score.ToString());
+        //  Debug.Log("Score:" + score.ToString());
         hash["score"] = JsonUtility.ToJson(score);
+        hash["partialScore"] = JsonUtility.ToJson(new Score { stars = 0, caps = 0, extracoins = 0 });
         player.SetCustomProperties(hash);
         return score;
     }
-    public static Score addStart(Player player)
+    public static Score AddStart(Player player)
     {
         Hashtable hash = player.CustomProperties;
         Score score = JsonUtility.FromJson<Score>((string)hash["score"]);

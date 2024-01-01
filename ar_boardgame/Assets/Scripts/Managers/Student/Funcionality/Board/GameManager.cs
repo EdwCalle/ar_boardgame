@@ -106,11 +106,11 @@ public class GameManager : MonoBehaviourPunCallbacks
     }
     public void ThrowDice(int randomDice)
     {
-        if (Singleton.IsSinglePlayer())
-            ThrowDiceRPC(randomDice);
-        else
-            photonView.RPC("ThrowDiceRPC", RpcTarget.All, randomDice);
         ThrowDiceRPC(randomDice);
+        // if (Singleton.IsSinglePlayer())
+        //     ThrowDiceRPC(randomDice);
+        // else
+        //     photonView.RPC("ThrowDiceRPC", RpcTarget.All, randomDice);
     }
     [PunRPC]
     public async void ThrowDiceRPC(int randomDice)
@@ -135,7 +135,12 @@ public class GameManager : MonoBehaviourPunCallbacks
         if (Singleton.IsSinglePlayer())
             SelectOptionRPC(value);
         else
+        {
+            if (Singleton.GetQuestionRound(Singleton.GetCurrentPlayerTurn()).Solution == value)
+                ScoreManager.AddStart(PhotonNetwork.LocalPlayer);
             photonView.RPC("SelectOptionRPC", RpcTarget.All, value);
+        }
+
     }
     [PunRPC]
     public async void SelectOptionRPC(int value)

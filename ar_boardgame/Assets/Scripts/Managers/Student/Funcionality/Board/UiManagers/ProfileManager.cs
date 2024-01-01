@@ -23,9 +23,9 @@ public class ProfileManager : MonoBehaviour
     }
     public void UpdateScore(Score score)
     {
-        caps.text = $"{score.caps}";
-        stars.text = $"{score.stars}";
-        extracoins.text = $"{score.extracoins}";
+        caps.text = score.caps.ToString("0#");
+        stars.text = score.stars.ToString("0#");
+        extracoins.text = score.extracoins.ToString("0#");
     }
     public void SelectPlayer()
     {

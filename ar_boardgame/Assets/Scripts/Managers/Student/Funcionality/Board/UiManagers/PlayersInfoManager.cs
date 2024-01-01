@@ -1,4 +1,4 @@
-
+using Photon.Pun;
 using UnityEngine;
 public class PlayersInfoManager : MonoBehaviour
 {
@@ -15,5 +15,10 @@ public class PlayersInfoManager : MonoBehaviour
     {
         profileManager[0].SelectPlayer();
     }
+    public void UpdateScore(int currentTurn)
+    {
+        profileManager[currentTurn].UpdateScore(ScoreManager.GetUpdatedScore(PhotonNetwork.PlayerList[currentTurn]));
+    }
+
 
 }

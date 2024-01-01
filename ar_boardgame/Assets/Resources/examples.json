@@ -146,7 +146,7 @@
                 "info": ""
             },
             "interactionTime": 6.0,
-            "resolveTime": 5.0,
+            "resolveTime": 10.0,
             "feedbackTime": 10.0,
             "headerType": 0,
             "selectionType": 0,
@@ -165,7 +165,7 @@
                 "info": ""
             },
             "interactionTime": 6.0,
-            "resolveTime": 5.0,
+            "resolveTime": 10.0,
             "feedbackTime": 4.0,
             "headerType": 0,
             "selectionType": 0,
@@ -184,7 +184,7 @@
                 "info": ""
             },
             "interactionTime": 6.0,
-            "resolveTime": 5.0,
+            "resolveTime": 10.0,
             "feedbackTime": 4.0,
             "headerType": 0,
             "selectionType": 0,
