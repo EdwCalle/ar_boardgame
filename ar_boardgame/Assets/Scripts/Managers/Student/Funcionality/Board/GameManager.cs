@@ -13,15 +13,15 @@ public class GameManager : MonoBehaviourPunCallbacks
     public DiceManager diceManager;
     public ArrowsManager arrowsManager;
     public QuestionInfoManager questionInfoManager;
+    public PlayersInfoManager playersInfoManager;
     public MinigameInfoManager minigameInfoManager;
     void Awake()
     {
-        // canvasModal.SetActive(false);
-        // arrowsManager.uiElements.ModalUI.SetActive(false);
+        arrowsManager.uiElements.ModalUI.SetActive(false);
         dialogueManager.uiElements.ModalUI.SetActive(false);
         diceManager.uiElements.ModalUI.SetActive(false);
-        //  questionManager.uiElements.ModalUI.SetActive(false);
-        //   minigameInfoManager.uiElements.ModalUI.SetActive(false);
+        questionInfoManager.uiElements.ModalUI.SetActive(false);
+        minigameInfoManager.uiElements.ModalUI.SetActive(false);
         // resultsInfoManager.uiElements.ModalUI.SetActive(false);
     }
     // Start is called before the first frame update
@@ -106,10 +106,10 @@ public class GameManager : MonoBehaviourPunCallbacks
     }
     public void ThrowDice(int randomDice)
     {
-        // if (Singleton.IsSinglePlayer())
-        //     ThrowDiceRPC(randomDice);
-        // else
-        //     photonView.RPC("ThrowDiceRPC", RpcTarget.All, randomDice);
+        if (Singleton.IsSinglePlayer())
+            ThrowDiceRPC(randomDice);
+        else
+            photonView.RPC("ThrowDiceRPC", RpcTarget.All, randomDice);
         ThrowDiceRPC(randomDice);
     }
     [PunRPC]

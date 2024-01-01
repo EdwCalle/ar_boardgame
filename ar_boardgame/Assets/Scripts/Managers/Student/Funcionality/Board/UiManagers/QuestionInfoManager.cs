@@ -8,6 +8,7 @@ public class QuestionInfoManager : MonoBehaviour, IModalAnimator
 {
     public QuestionsInfo uiElements;
     public GameManager gameManager;
+
     public void PrepareQuestion()
     {
         EnableOptions(Singleton.IsMyTurn());

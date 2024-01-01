@@ -9,7 +9,7 @@ using System;
 public class BoardManager : MonoBehaviourPunCallbacks
 {
     [Header("Board Components")]
-    public UIMediatorManager UImediatorManager;
+    //   public UIMediatorManager UImediatorManager;
     public GameManager gameManager;
     public GameObject[] players;
     public GameObject[] boxes;
@@ -32,80 +32,12 @@ public class BoardManager : MonoBehaviourPunCallbacks
     void Start()
     {
         numberPlayers = Singleton.GetNumberPlayers();
-        // if (Singleton.IsSinglePlayer())
-        // {
-
-        //     // PrepareGameRPC();
-        // }
-        // else
-        // {
-        //     if (PhotonNetwork.IsConnected && PhotonNetwork.CurrentRoom != null)
-        //     {
-        //         // for sync scenes to other players
-        //         PhotonNetwork.AutomaticallySyncScene = true;
-        //         WaitPlayers("PrepareGameRPC");
-
-        //     }
-        // }
     }
-    // public void WaitPlayers(string NameRPC)
-    // {
-    //     photonView.RPC("WaitPlayersRPC", RpcTarget.All, NameRPC);
-    // }
-    // [PunRPC]
-    // void WaitPlayers2RPC(string NameRPC)
-    // {
-    //     playersReady++;
-    //     if (playersReady == numberPlayers && photonView.IsMine)
-    //     {
-    //         photonView.RPC(NameRPC, RpcTarget.All);
-    //     }
-    // }
-    // [PunRPC]
     public void PrepareBoard()
     {
         PrepareBoxes();
         PreparePlayers();
     }
-    // public void PrepareGame()
-    // {
-    //     ResetPlayersReady();
-    //     if (Singleton.ExistRounds()) // si no es la ultima romda
-    //     {
-    //         // preparing boardsquare order
-    //         PrepareBoxes();
-    //         PreparePlayers();
-    //         // show Round Info
-    //         UImediatorManager.SetRoundInfo();
-    //         UpdatePlayersList(); // make it in player ui
-    //         UImediatorManager.HideWaitBoard();
-    //         // if is new round show partial results
-    //         if (Singleton.IsNotFirstRound())
-    //         {
-    //             //  ShowPartialResults();
-    //         }
-    //         UImediatorManager.ShowDialogue();
-    //     }
-    //     else
-    //     {
-    //         UImediatorManager.HideWaitBoard();
-    //         //caculate winner
-    //         UImediatorManager.ShowResultsInfo();
-    //     }
-
-
-    // }
-    // void ResetPlayersReady()
-    // {
-    //     playersReady = 0;
-    // }
-    // [PunRPC]
-    // void ShowDice2RPC()
-    // {
-    //     ResetPlayersReady();
-    //     UImediatorManager.HideWaitPlayer();
-    //     UImediatorManager.ShowDice();
-    // }
     void PrepareBoxes()
     {
         // preparing boardsquare order
@@ -155,6 +87,7 @@ public class BoardManager : MonoBehaviourPunCallbacks
                 players[i].SetActive(false);
         }
         currentSquare = Singleton.GetSquarePlayer(0); // set position to player one 
+        gameManager.playersInfoManager.FirstTurn();
     }
     public Vector3 SetOffsetPosition(int playerTurn)
     {
@@ -172,39 +105,19 @@ public class BoardManager : MonoBehaviourPunCallbacks
 
         return Vector3.zero;
     }
-    private void UpdatePlayersList()
-    {
-        List<Student> students = new();
-        foreach (Player player in PhotonNetwork.PlayerList)
-        {
-            Student student = new Student
-            {
-                Score = ScoreManager.UpdatedScore(player).FormatScore(),
-                NickName = player.NickName
-            };
-            students.Add(student);
-        }
-        // playerUI.SetPlayersListInfo(students);
-    }
-    // public void RollDice(int randomDice)
+    // private void UpdatePlayersList()
     // {
-    //     if (Singleton.IsSinglePlayer())
-    //         gameManager.RollDiceRPC(randomDice);
-    //     else
-    //         photonView.RPC("RollDiceRPC", RpcTarget.All, randomDice);
-    // }
-    // [PunRPC]
-    // public void RollDiceRPC(int randomDice)
-    // {
-    //     //  StartCoroutine(UImediatorManager.diceManager.RotateDiceTime(randomDice));
-    //     StartCoroutine(gameManager.diceManager.RotateDiceTime(randomDice));
-    // }
-    // public void ThrowDice(int randomDice)
-    // {
-    //     if (Singleton.IsSinglePlayer())
-    //         ThrowDiceRPC(randomDice);
-    //     else
-    //         photonView.RPC("ThrowDiceRPC", RpcTarget.All, randomDice);
+    //     List<Student> students = new();
+    //     foreach (Player player in PhotonNetwork.PlayerList)
+    //     {
+    //         Student student = new Student
+    //         {
+    //             Score = ScoreManager.UpdatedScore(player).FormatScore(),
+    //             NickName = player.NickName
+    //         };
+    //         students.Add(student);
+    //     }
+    //     // playerUI.SetPlayersListInfo(students);
     // }
     public void ThrowDice(int randomDice)
     {
@@ -214,75 +127,6 @@ public class BoardManager : MonoBehaviourPunCallbacks
             dice = defaultDice;
         StartCoroutine(MovingPlayer());
     }
-    // [PunRPC]
-    // public async void ThrowDiceRPC(int randomDice)
-    // {
-    //     //   UImediatorManager.HideDice();
-    //     await gameManager.diceManager.HideModal(gameManager.canvasModal);
-    //     //   if (!isMoving)
-    //     {
-    //         currentSquare = Singleton.GetSquarePlayer(currentPlayer);
-    //         dice = randomDice;
-    //         if (isDefaultDice)
-    //             dice = defaultDice;
-    //         // gameManager.diceManager.SetDiceInfo(dice);
-    //         //  isActiveDice = true;
-    //         //SetNextSquare();
-    //         StartCoroutine(MovingPlayer());
-    //     }
-    // }
-    // void FixedUpdate()
-    // {
-    //       MovecurrentPlayer();
-    // }
-    // void MovecurrentPlayer()
-    // {
-    //     if (isMoving)
-    //     {
-    //         players[currentPlayer].transform.localPosition = Vector3.MoveTowards(players[currentPlayer].transform.localPosition, nextPosition, Time.fixedDeltaTime * speed);
-    //         if (players[currentPlayer].transform.localPosition.Equals(nextPosition))
-    //         {
-    //             isMoving = false;
-    //             dice--;
-    //             //   Debug.Log("DiceNumber:" + dice + "CurrentSquare:" + currentSquare);
-    //         }
-    //     }
-    //     else
-    //     {
-    //         if (isActiveDice)
-    //         {
-    //             if (dice > 0)// if there are more movements, move again
-    //             {
-    //                 // ask for if there are directions, stop movments and stop asking for current LocalPostion
-    //                 if (boardSquares[currentSquare].IsSquarePoint)
-    //                 {
-    //                     isActiveDice = false;
-    //                     print("this is not controlled");
-    //                     // if (Singleton.IsMyTurn())
-    //                     UImediatorManager.ShowArrows(boardSquares[currentSquare].DirectionOne, boardSquares[currentSquare].DirectionTwo);
-    //                 }
-    //                 else
-    //                 {
-    //                     SetNextSquare(dice);
-    //                 }
-    //             }
-    //             else // stop moving
-    //             {
-    //                 isMoving = false;       //this stop moving when player go to their last square
-    //                 isActiveDice = false; // this used for dont loop everytime when moving is false
-    //                 UImediatorManager.PrepareQuestions();
-    //             }
-    //         }
-    //     }
-    // }
-
-    // [PunRPC]
-    // void ShowQuestionRPC()
-    // {
-    //     ResetPlayersReady();
-    //     UImediatorManager.HideWaitPlayer();
-    //     UImediatorManager.ShowQuestions();
-    // }
     void SetNextSquare(int currentDice)
     {
         currentSquare = boardSquares[currentSquare].NextSquare;
@@ -292,13 +136,6 @@ public class BoardManager : MonoBehaviourPunCallbacks
             nextPosition += SetOffsetPosition(currentPlayer);
         //isMoving = true; // this activate the movement
     }
-    // public void ChangeDirection(string direction)
-    // {
-    //     if (Singleton.IsSinglePlayer())
-    //         ChangeDirectionRPC(direction);
-    //     else
-    //         photonView.RPC("ChangeDirectionRPC", RpcTarget.All, direction);
-    // }
     public async Task ChangeDirection(string direction)
     {
         boardSquares[currentSquare].ChangeDirection(direction);
@@ -306,43 +143,6 @@ public class BoardManager : MonoBehaviourPunCallbacks
         isChangedNextSquare = true;
         StartCoroutine(MovingPlayer());
     }
-    // [PunRPC]
-    // public async void ChangeDirectionRPC(string direction)
-    // {
-    //     // if (direction == boardSquares[currentSquare].DirectionOne)
-    //     //     boardSquares[currentSquare].SwitchToOne();
-    //     // else
-    //     //     boardSquares[currentSquare].SwitchToTwo();
-    //     boardSquares[currentSquare].ChangeDirection(direction);
-    //     await gameManager.arrowsManager.HideModal(gameManager.canvasModal);
-    //     isChangedNextSquare = true;
-    //     StartCoroutine(MovingPlayer());
-    // }
-    // public void SelectOption(int value)
-    // {
-    //     if (Singleton.IsSinglePlayer())
-    //     {
-    //         SelectOptionRPC(value);
-    //     }
-    //     else
-    //     {
-    //         if (Singleton.IsAnwserCorrect(value, currentPlayer))
-    //         {
-    //             ScoreManager.addStart(PhotonNetwork.LocalPlayer);
-    //         }
-    //         photonView.RPC("SelectOptionRPC", RpcTarget.All, value);
-    //     }
-    //     //  if (photonView.IsMine)
-    // }
-    // [PunRPC]
-    // public async void SelectOptionRPC(int value)
-    // {
-    //     //playerUI.SelectOption(value);
-    //     UpdatePlayersList();
-    //     //  await UImediatorManager.SelectOption(value);
-    //     FinishTurn();
-    //     // ChangeTurn();
-    // }
     public async Task FinishTurn()
     {   //saving current position current player
         Singleton.SaveSquarePlayer(currentPlayer, currentSquare);
@@ -359,6 +159,7 @@ public class BoardManager : MonoBehaviourPunCallbacks
         }
         else
         {
+            gameManager.playersInfoManager.ChangeTurn();
             await gameManager.diceManager.ShowModal(gameManager.canvasModal);
         }
     }
