@@ -148,6 +148,16 @@ public class GameManager : MonoBehaviourPunCallbacks
         await questionInfoManager.CheckOption(value);
         await boardManager.FinishTurn();
     }
+    public void FromMyTurn()
+    {
+        photonView.RPC("FromMyTurnRPC", RpcTarget.All);
+    }
+    [PunRPC]
+    public async void FromMyTurnRPC()
+    {
+        await questionInfoManager.FromMyTurn();
+        await boardManager.FinishTurn();
+    }
 
     void ResetPlayersReady()
     {

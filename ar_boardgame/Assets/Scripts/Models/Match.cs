@@ -3,18 +3,19 @@ using UnityEngine;
 namespace Models
 {
     [System.Serializable]
-    public class GeneralGame
+    public class Match
     {
         [SerializeField] private int id;
         [SerializeField] private string title;
         [SerializeField] private string subject;
         [SerializeField] private List<Round> rounds = new List<Round>();
-
-        public GeneralGame()
+        [SerializeField] private List<Question> angelQuestions;
+        [SerializeField] private List<Question> demonQuestions;
+        public Match()
         {
         }
 
-        public GeneralGame(int id, string title, string subject)
+        public Match(int id, string title, string subject)
         {
             this.id = id;
             this.title = title;
@@ -25,6 +26,8 @@ namespace Models
         public string Title { get => title; set => title = value; }
         public string Subject { get => subject; set => subject = value; }
         public List<Round> Rounds { get => rounds; set => rounds = value; }
+        public List<Question> AngelQuestions { get => angelQuestions; set => angelQuestions = value; }
+        public List<Question> DemonQuestions { get => demonQuestions; set => demonQuestions = value; }
 
         public override string ToString()
         {

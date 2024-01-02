@@ -339,5 +339,108 @@
                 }
             ]
         }
+    ],
+    "demonQuestions": [
+        {
+            "title": "¿Cuál de las siguientes opciones es una parte del cuerpo humano?",
+            "optionA": "gato",
+            "optionB": "perro",
+            "optionC": "cerebro",
+            "optionD": "camiseta",
+            "solution": 2,
+            "isSelected": false
+        },
+        {
+            "title": "¿Quién es el ratón amigo del pato Donald en los dibujos animados de Disney?",
+            "optionA": "Mickey Mouse",
+            "optionB": "Minnie Mouse",
+            "optionC": "Goofy",
+            "optionD": "Daisy Duck",
+            "solution": 0,
+            "isSelected": false
+        },
+        {
+            "title": "En Paw Patrol, ¿cuál es el nombre del cachorro que siempre está listo para trabajar con herramientas?",
+            "optionA": "Chase",
+            "optionB": "Marshall",
+            "optionC": "Rubble",
+            "optionD": "Rocky",
+            "solution": 2,
+            "isSelected": false
+        },
+        {
+            "title": "¿Cuál de estos personajes vive en una piña debajo del mar?",
+            "optionA": "Bob Esponja",
+            "optionB": "Dora la Exploradora",
+            "optionC": "Peppa Pig",
+            "optionD": "Blaze",
+            "solution": 0,
+            "isSelected": false
+        },
+        {
+            "title": "¿Cómo se llama la abeja amiga de Winnie the Pooh?",
+            "optionA": "Tigger",
+            "optionB": "Piglet",
+            "optionC": "Eeyore",
+            "optionD": "Maya",
+            "solution": 3,
+            "isSelected": false
+        }
+    ],
+    "angelQuestions": [
+        {
+            "title": "En Frozen, ¿quién tiene el poder de convertir cosas en hielo con sus manos?",
+            "optionA": "Elsa",
+            "optionB": "Anna",
+            "optionC": "Olaf",
+            "optionD": "Kristoff",
+            "solution": 0,
+            "isSelected": false
+        },
+        {
+            "title": "¿Qué animal es Patricio en Bob Esponja?",
+            "optionA": "Estrella de mar",
+            "optionB": "Calamar",
+            "optionC": "Cangrejo",
+            "optionD": "Pescado",
+            "solution": 0,
+            "isSelected": false
+        },
+        {
+            "title": "¿Cuál es el nombre del león que es rey de la Sabana en El Rey León?",
+            "optionA": "Timón",
+            "optionB": "Scar",
+            "optionC": "Simba",
+            "optionD": "Pumba",
+            "solution": 2,
+            "isSelected": false
+        },
+        {
+            "title": "En Peppa Pig, ¿qué tipo de animal es Peppa?",
+            "optionA": "Cerdo",
+            "optionB": "Conejo",
+            "optionC": "Gato",
+            "optionD": "Rana",
+            "solution": 0,
+            "isSelected": false
+        },
+        {
+            "title": "¿Quién es el personaje principal en Dora la Exploradora?",
+            "optionA": "Diego",
+            "optionB": "Boots",
+            "optionC": "Dora",
+            "optionD": "Swiper",
+            "solution": 2,
+            "isSelected": false
+        },
+        {
+            "title": "¿Cuál es el nombre del oso que vive en el Bosque de los Cien Acres con sus amigos?",
+            "optionA": "Yogui",
+            "optionB": "Winnie the Pooh",
+            "optionC": "Paddington",
+            "optionD": " Baloo",
+            "solution": 1,
+            "isSelected": false
+        }
     ]
 }

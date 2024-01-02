@@ -1,4 +1,6 @@
 
+
+using System.Collections.Generic;
 using Models;
 using UnityEngine;
 
@@ -7,8 +9,8 @@ public class Singleton : MonoBehaviour
     public static Singleton instance;
 
     // for game funcionality
-    //public
-    GeneralGame currentGeneralGame = new();
+    // public
+    Match currentGeneralGame = new();
     // [HideInInspector] public Minigame currentMinigame = new();
 
     //for load examples from json
@@ -19,7 +21,9 @@ public class Singleton : MonoBehaviour
         public Minigame[] minigames;
         public Dialogue[] dialogues;
         public Round[] rounds;
-        public GeneralGame[] generalGames;
+        public List<Question> angelQuestions;
+        public List<Question> demonQuestions;
+        public Match[] generalGames;
     }
     public TextAsset examplesJson;
     Wrapper ExampleData;
@@ -52,13 +56,20 @@ public class Singleton : MonoBehaviour
     public void PreLoadDataStudent()
     {
         ExampleData = JsonUtility.FromJson<Wrapper>(examplesJson.text);
-        currentGeneralGame = new GeneralGame(01, "Bloque 1:Las Plantas", "Ciencias Naturales");
+        currentGeneralGame = new Match(01, "Bloque 1:Las Plantas", "Ciencias Naturales");
+
         SetRoundExample(0, 0);
         SetRoundExample(1, 1);
         SetRoundExample(2, 2);
+        SetExtraQuestion();
         // print(JsonUtility.ToJson(currentGeneralGame.Rounds[0]));
         // print(JsonUtility.ToJson(currentGeneralGame.Rounds[1]));
-        // print(JsonUtility.ToJson(currentGeneralGame.Rounds[2]));
+        // print(JsonUtility.ToJson(currentGeneralGame.[DemonQuestions]));
+    }
+    public void SetExtraQuestion()
+    {
+        currentGeneralGame.DemonQuestions = ExampleData.demonQuestions;
+        currentGeneralGame.AngelQuestions = ExampleData.angelQuestions;
     }
     public void SetRoundExample(int numberRound, int idMinigame)
     {

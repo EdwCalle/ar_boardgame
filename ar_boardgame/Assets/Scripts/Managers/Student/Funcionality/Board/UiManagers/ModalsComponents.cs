@@ -44,13 +44,14 @@ namespace thisAPP.UIElements
     [System.Serializable]
     public class QuestionsInfo : Modal
     {
-
         [SerializeField] private TextMeshProUGUI questionTitle;
+        [SerializeField] private TextMeshProUGUI textTimer;
         [SerializeField] private GameObject[] options;
-
 
         public TextMeshProUGUI QuestionTitle { get => questionTitle; set => questionTitle = value; }
         public GameObject[] Options { get => options; set => options = value; }
+        public TextMeshProUGUI TextTimer { get => textTimer; set => textTimer = value; }
+        // }
     }
     [System.Serializable]
     public class ResultsInfo : Modal

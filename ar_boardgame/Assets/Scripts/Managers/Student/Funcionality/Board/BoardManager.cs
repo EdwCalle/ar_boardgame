@@ -169,10 +169,10 @@ public class BoardManager : MonoBehaviourPunCallbacks
     }
     public IEnumerator MovingPlayer()
     {
-        print("que paso el timing");
+        //   print("que paso el timing");
         while (dice > 0)
         {
-            print("dice" + dice);
+            // print("dice" + dice);
             if (boardSquares[currentSquare].IsSquarePoint)
             {
                 gameManager.ShowArrows(boardSquares[currentSquare].DirectionOne, boardSquares[currentSquare].DirectionTwo);

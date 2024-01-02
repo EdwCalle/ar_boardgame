@@ -14,7 +14,7 @@ namespace Pages
         // public TMP_InputField roundNumber;
         public SelectorManager selectorRounds;
         public TextMeshProUGUI titleModal;
-        Models.GeneralGame generalGame;
+        Models.Match generalGame;
         public List<Round> selectedRounds;
         private EditMode editMode;
 
@@ -33,7 +33,7 @@ namespace Pages
         {
             if (editMode == EditMode.create)
             {
-                generalGame = new Models.GeneralGame
+                generalGame = new Models.Match
                 {
                     Title = title.text,
                     Rounds = selectedRounds,
@@ -69,7 +69,7 @@ namespace Pages
         void PrepareRow(GameObject row, int pos)
         {
 
-            Models.GeneralGame generalGame = CrudGeneralGame.GetGeneralGames()[pos];
+            Models.Match generalGame = CrudGeneralGame.GetGeneralGames()[pos];
             row.GetComponent<RowManager>().code = generalGame.Id;
             row.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = generalGame.Title;
             row.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = $"{generalGame.Rounds.Count}";

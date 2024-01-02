@@ -6,16 +6,16 @@ namespace Api
     public class CrudGeneralGame
     {
 
-        public static List<GeneralGame> GetGeneralGames()
+        public static List<Match> GetGeneralGames()
         {
             return SingletonTeacher.instance.GeneralGamesT;
         }
-        public static void Create(GeneralGame generalGame)
+        public static void Create(Match generalGame)
         {
             generalGame.Id = GetGeneralGames().Count + 1;
             SingletonTeacher.instance.GeneralGamesT.Add(generalGame);
         }
-        public static void Edit(GeneralGame generalGame)
+        public static void Edit(Match generalGame)
         {
             int i = SingletonTeacher.instance.GeneralGamesT.FindIndex(ob => ob.Id == generalGame.Id);
             SingletonTeacher.instance.GeneralGamesT[i] = generalGame;
@@ -26,7 +26,7 @@ namespace Api
             SingletonTeacher.instance.GeneralGamesT.RemoveAll(ob => ob.Id == id);
 
         }
-        public static GeneralGame GetById(int id)
+        public static Match GetById(int id)
         {
             return GetGeneralGames().Find(ob => ob.Id == id);
             //    SingletonTeacher.instance.generalGamesT.Add(generalGame);
@@ -36,7 +36,7 @@ namespace Api
         {
             List<Round> noSelectedRounds = new List<Round>();
             List<Round> selectedRounds = new List<Round>();
-            GeneralGame generalGame = GetById(id);
+            Match generalGame = GetById(id);
             foreach (Round item in CrudRounds.GetRounds())
             {
 
