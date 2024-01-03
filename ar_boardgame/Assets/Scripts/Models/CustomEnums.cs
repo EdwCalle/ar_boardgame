@@ -41,6 +41,13 @@ namespace Models
         edit,
         delete
     }
+    public enum SquareType
+    {
+        normal,
+        demon,
+        angel,
+        random
+    }
 
 
 

@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Models;
 using Photon.Pun;
 using UnityEngine;
 
@@ -96,12 +97,16 @@ public class GameManager : MonoBehaviourPunCallbacks
         if (Singleton.IsSinglePlayer())
             RollDiceRPC(randomDice);
         else
+        {
             photonView.RPC("RollDiceRPC", RpcTarget.All, randomDice);
+            //  photonView.RPC("RollDiceRPC", RpcTarget.All, randomDice);
+        }
+
     }
     [PunRPC]
     public void RollDiceRPC(int randomDice)
     {
-        print("yo soy el que me imprimi varias veces");
+        //        print("yo soy el que me imprimi varias veces");
         StartCoroutine(diceManager.RotateDiceTime(randomDice));
     }
     public void ThrowDice(int randomDice)
@@ -130,13 +135,19 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         await boardManager.ChangeDirection(direction);
     }
-    public void SelectOption(int value)
+    public void SelectOption(int value, bool solution, SquareType squareType)
     {
         if (Singleton.IsSinglePlayer())
             SelectOptionRPC(value);
         else
         {
-            if (Singleton.GetQuestionRound(Singleton.GetCurrentPlayerTurn()).Solution == value)
+            if (!solution && squareType == SquareType.demon)
+                ScoreManager.DeleteExtraCoins(PhotonNetwork.LocalPlayer);
+            if (solution && squareType == SquareType.demon)
+                ScoreManager.AddExtraCoins(PhotonNetwork.LocalPlayer, 2);
+            if (solution && squareType == SquareType.angel)
+                ScoreManager.AddExtraCoins(PhotonNetwork.LocalPlayer, 1);
+            if (solution && squareType == SquareType.normal)
                 ScoreManager.AddStart(PhotonNetwork.LocalPlayer);
             photonView.RPC("SelectOptionRPC", RpcTarget.All, value);
         }
@@ -146,19 +157,17 @@ public class GameManager : MonoBehaviourPunCallbacks
     public async void SelectOptionRPC(int value)
     {
         await questionInfoManager.CheckOption(value);
-        await boardManager.FinishTurn();
     }
     public void FromMyTurn()
     {
         photonView.RPC("FromMyTurnRPC", RpcTarget.All);
     }
-    [PunRPC]
-    public async void FromMyTurnRPC()
-    {
-        await questionInfoManager.FromMyTurn();
-        await boardManager.FinishTurn();
-    }
 
+    [PunRPC]
+    public void FromMyTurnRPC()
+    {
+        questionInfoManager.FromMyTurn();
+    }
     void ResetPlayersReady()
     {
         playersReady = 0;
@@ -168,11 +177,21 @@ public class GameManager : MonoBehaviourPunCallbacks
         arrowsManager.ActivateArrows(DirectionOne, DirectionTwo);
         await arrowsManager.ShowModal(canvasModal);
     }
-    // public async void ShowQuestions()
-    // {
-    //     await questionInfoManager.ShowModal(canvasModal);
-    // }
-    // Update is called once per frame
+    public void ShowQuestions(SquareType squareType)
+    {
+        if (Singleton.IsMyTurn())
+        {
+            int RandomNumber = Singleton.GetRadomNumberQuestion(squareType);
+            photonView.RPC("ShowQuestionsRPC", RpcTarget.All, squareType, RandomNumber);
+        }
+
+    }
+    [PunRPC]
+    async void ShowQuestionsRPC(SquareType squareType, int RandomNumber)
+    {
+        await questionInfoManager.PrepareModal(squareType, RandomNumber);
+    }
+    //Update is called once per frame
     void Update()
     {
 

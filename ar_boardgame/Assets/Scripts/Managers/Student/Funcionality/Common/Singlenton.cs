@@ -1,5 +1,4 @@
 
-
 using System.Collections.Generic;
 using Models;
 using UnityEngine;
@@ -154,8 +153,32 @@ public class Singleton : MonoBehaviour
     }
     public static Sentence[] GetSentences()
     {
+
         return instance.currentGeneralGame.Rounds[instance.boardPersistent.CurrentRound].Dialogue.Sentences;
     }
+    public static Question GetDemonQuestion(int position)
+    {
+
+        //instance.boardPersistent = Random.Range(0, instance.currentGeneralGame.AngelQuestions.Count);
+        return instance.currentGeneralGame.DemonQuestions[position];
+    }
+    public static Question GetAngelQuestion(int position)
+    {
+        return instance.currentGeneralGame.AngelQuestions[position];
+    }
+    public static int GetRadomNumberQuestion(SquareType squareType)
+    {
+        if (squareType == SquareType.angel)
+        {
+            return Random.Range(0, instance.currentGeneralGame.AngelQuestions.Count);
+        }
+        if (squareType == SquareType.demon)
+        {
+            return Random.Range(0, instance.currentGeneralGame.DemonQuestions.Count);
+        }
+        return 0;
+    }
+
 
 
 }

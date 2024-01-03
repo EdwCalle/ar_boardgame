@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Threading.Tasks;
+using Models;
 using thisAPP.UIElements;
 using TMPro;
 using UnityEngine;
@@ -12,10 +13,15 @@ public class QuestionInfoManager : MonoBehaviour, IModalAnimator
     public float defaultTime = 60f;
     float elapsedTime;
     private Coroutine myCoroutine;
+    private Question currentQuestion;
+    private SquareType squareType;
+
+
+
     public void PrepareQuestion()
     {
         EnableOptions(Singleton.IsMyTurn());
-        SetQuestion(Singleton.GetCurrentPlayerTurn());
+        SetQuestion();
     }
     void EnableOptions(bool value)
     {
@@ -24,16 +30,14 @@ public class QuestionInfoManager : MonoBehaviour, IModalAnimator
         uiElements.Options[2].GetComponent<Button>().interactable = value;
         uiElements.Options[3].GetComponent<Button>().interactable = value;
     }
-    public void SetQuestion(int currentPlayer)
+    public void SetQuestion()
     {
-
-        uiElements.QuestionTitle.text = Singleton.GetQuestionRound(currentPlayer).Title;
-        SetOption(0, Singleton.GetQuestionRound(currentPlayer).OptionA);
-        SetOption(1, Singleton.GetQuestionRound(currentPlayer).OptionB);
-        SetOption(2, Singleton.GetQuestionRound(currentPlayer).OptionC);
-        SetOption(3, Singleton.GetQuestionRound(currentPlayer).OptionD);
+        uiElements.QuestionTitle.text = currentQuestion.Title;
+        SetOption(0, currentQuestion.OptionA);
+        SetOption(1, currentQuestion.OptionB);
+        SetOption(2, currentQuestion.OptionC);
+        SetOption(3, currentQuestion.OptionD);
         uiElements.TextTimer.text = defaultTime.ToString("0#");
-
     }
     public void SetOption(int pos, string value)
     {
@@ -41,11 +45,13 @@ public class QuestionInfoManager : MonoBehaviour, IModalAnimator
     }
     public void SelectOption(int value)
     {
-        gameManager.SelectOption(value);
+        bool solution = value == currentQuestion.Solution;
+        gameManager.SelectOption(value, solution, squareType);
     }
     public async Task CheckOption(int value)
     {
-        int solution = Singleton.GetQuestionRound(Singleton.GetCurrentPlayerTurn()).Solution;
+        print("no se cuanto");
+        int solution = currentQuestion.Solution;
         if (value == -1)
         {
             uiElements.Options[solution].GetComponent<Animator>().SetInteger("optionState", 2);
@@ -68,9 +74,36 @@ public class QuestionInfoManager : MonoBehaviour, IModalAnimator
             uiElements.Options[value].GetComponent<Animator>().SetInteger("optionState", 0);
         uiElements.Options[solution].GetComponent<Animator>().SetInteger("optionState", 0);
         await HideModal(gameManager.canvasModal);
+        if (squareType == SquareType.angel || squareType == SquareType.demon)
+        {
+            gameManager.ShowQuestions(SquareType.normal);
+
+        }
+        else
+        {
+            await gameManager.boardManager.FinishTurn();
+        }
 
     }
+    public async Task PrepareModal(SquareType squareType, int RandomNumber = 0)
+    {
+        this.squareType = squareType;
+        if (squareType == SquareType.demon)
+        {
 
+            currentQuestion = Singleton.GetDemonQuestion(RandomNumber);
+        }
+        if (squareType == SquareType.angel)
+        {
+
+            currentQuestion = Singleton.GetAngelQuestion(RandomNumber);
+        }
+        if (squareType == SquareType.normal)
+        {
+            currentQuestion = Singleton.GetQuestionRound(Singleton.GetCurrentPlayerTurn());
+        }
+        await ShowModal(gameManager.canvasModal);
+    }
     public async Task ShowModal(GameObject canvasModal)
     {
         PrepareQuestion();
@@ -95,9 +128,8 @@ public class QuestionInfoManager : MonoBehaviour, IModalAnimator
         }
 
     }
-    public async Task FromMyTurn()
+    public async void FromMyTurn()
     {
-
         await CheckOption(-1);
     }
 

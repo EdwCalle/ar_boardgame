@@ -21,11 +21,11 @@ public class DiceManager : MonoBehaviour, IDragHandler, IEndDragHandler, IPointe
     {
         //uiElements.Dice.transform.localPosition = defaultPosition;
         defaultPosition = uiElements.Dice.transform.position;
-        print("no se que estoy haciendo mal" + defaultPosition);
+        //  print("no se que estoy haciendo mal" + defaultPosition);
     }
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (!isRotating && Singleton.IsMyTurn())
+        if (!isRotating && Singleton.IsMyTurn() && uiElements.Dice.GetComponent<BoxCollider2D>().enabled)
         {
             isRotating = true;
             StartCoroutine(RotateDice());
@@ -51,13 +51,13 @@ public class DiceManager : MonoBehaviour, IDragHandler, IEndDragHandler, IPointe
     public void OnPointerUp(PointerEventData eventData)
     {
 
-        if (Singleton.IsMyTurn())
+        if (Singleton.IsMyTurn() && uiElements.Dice.GetComponent<BoxCollider2D>().enabled)
             isRotating = false;
     }
     public void OnDrag(PointerEventData eventData)
     {
 
-        if (Singleton.IsMyTurn())
+        if (Singleton.IsMyTurn() && uiElements.Dice.GetComponent<BoxCollider2D>().enabled)
             MoveObjectWithSwipe(eventData);
     }
     void MoveObjectWithSwipe(PointerEventData eventData)
@@ -67,7 +67,7 @@ public class DiceManager : MonoBehaviour, IDragHandler, IEndDragHandler, IPointe
     }
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (Singleton.IsMyTurn())
+        if (Singleton.IsMyTurn() && uiElements.Dice.GetComponent<BoxCollider2D>().enabled)
         {
             if (uiElements.Dice.transform.position.y > uiElements.LimitObject.transform.position.y)
                 HandleSwipeUp();
@@ -84,7 +84,6 @@ public class DiceManager : MonoBehaviour, IDragHandler, IEndDragHandler, IPointe
         uiElements.SwipeAnimation.SetActive(false);                                       // disable animation of title "throw dice"
         numberDice = Random.Range(1, 7);
         gameManager.RollDice(numberDice);
-
     }
     public IEnumerator RotateDiceTime(int definedDice)
     {

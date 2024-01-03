@@ -44,6 +44,27 @@ public class ScoreManager
         player.SetCustomProperties(hash);
         return score;
     }
+    public static Score AddExtraCoins(Player player, int value)
+    {
+        Hashtable hash = player.CustomProperties;
+        Score score = JsonUtility.FromJson<Score>((string)hash["score"]);
+        score.extracoins += value;
+        hash["score"] = JsonUtility.ToJson(score);
+        player.SetCustomProperties(hash);
+        return score;
+    }
+    public static Score DeleteExtraCoins(Player player)
+    {
+        Hashtable hash = player.CustomProperties;
+        Score score = JsonUtility.FromJson<Score>((string)hash["score"]);
+        if (score.extracoins - 2 < 0)
+            score.extracoins = 0;
+        else
+            score.extracoins -= 2;
+        hash["score"] = JsonUtility.ToJson(score);
+        player.SetCustomProperties(hash);
+        return score;
+    }
     public static Score GetMinigameResults(Minigame minigame)
     {
 

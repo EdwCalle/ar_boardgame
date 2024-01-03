@@ -66,6 +66,22 @@ public class BoardManager : MonoBehaviourPunCallbacks
         boardSquares[41].HasAnotherDirection("right");
         boardSquares[19].HasAnotherDirection("up");
         boardSquares[21].HasAnotherDirection("up");
+        // set demons square
+        boardSquares[11].SquareType = SquareType.demon;
+        boardSquares[12].SquareType = SquareType.demon;
+        boardSquares[54].SquareType = SquareType.demon;
+        boardSquares[55].SquareType = SquareType.demon;
+        // set angel square
+        boardSquares[38].SquareType = SquareType.angel;
+        boardSquares[39].SquareType = SquareType.angel;
+        boardSquares[25].SquareType = SquareType.angel;
+        // set random square
+        boardSquares[7].SquareType = SquareType.random;
+        boardSquares[48].SquareType = SquareType.random;
+        boardSquares[49].SquareType = SquareType.random;
+        boardSquares[17].SquareType = SquareType.random;
+        boardSquares[31].SquareType = SquareType.random;
+
     }
     void PreparePlayers()
     {
@@ -144,7 +160,9 @@ public class BoardManager : MonoBehaviourPunCallbacks
         StartCoroutine(MovingPlayer());
     }
     public async Task FinishTurn()
-    {   //saving current position current player
+    {
+        print("me imprimi una vez");
+        //saving current position current player
         Singleton.SaveSquarePlayer(currentPlayer, currentSquare);
         currentPlayer++;
         Singleton.UpdateTurn();
@@ -194,8 +212,9 @@ public class BoardManager : MonoBehaviourPunCallbacks
         }
         if (dice == 0)
         {
-            Singleton.SaveSquarePlayer(currentPlayer, currentSquare);
-            yield return gameManager.questionInfoManager.ShowModal(gameManager.canvasModal);
+            //  Singleton.SaveSquarePlayer(currentPlayer, currentSquare);
+            // yield return gameManager.questionInfoManager.ShowModal(gameManager.canvasModal);
+            gameManager.ShowQuestions(boardSquares[currentSquare].SquareType);
         }
         //
     }

@@ -10,6 +10,7 @@ namespace Models
         private string directionTwo;
         private int squareOne;
         private int squareTwo;
+        private SquareType squareType = SquareType.normal;
         public BoardSquare(int nextSquare)
         {
             this.nextSquare = nextSquare;
@@ -21,6 +22,7 @@ namespace Models
         // public bool IsNextSquareDirection { get => isNextSquareDirection; set => isNextSquareDirection = value; }
         public string DirectionOne { get => directionOne; set => directionOne = value; }
         public string DirectionTwo { get => directionTwo; set => directionTwo = value; }
+        public SquareType SquareType { get => squareType; set => squareType = value; }
 
         public void setSquarePointPropeties(string directionOne, string directionTwo, int squareOne, int squareTwo)
         {
@@ -58,6 +60,7 @@ namespace Models
             else if (directionTwo == direction)
                 nextSquare = squareTwo;
         }
+
 
     }
 }

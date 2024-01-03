@@ -55,6 +55,8 @@ MonoBehaviour:
   - WaitPlayers2RPC
   - ShowDice2RPC
   - FromMyTurnRPC
+  - SetRadomNumberQuestionRPC
+  - ShowQuestionsRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

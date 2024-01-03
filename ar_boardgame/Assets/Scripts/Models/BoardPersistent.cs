@@ -32,12 +32,6 @@ namespace Models
     public int CurrentPlayerTurn { get => currentPlayerTurn; set => currentPlayerTurn = value; }
     public int[] SquarePlayers { get => squarePlayers; set => squarePlayers = value; }
 
-    /// <summary>
-    /// All players data
-    /// </summary>
-    // public Student[] Students { get => students; set => students = value; }
-
-
 
 
 
