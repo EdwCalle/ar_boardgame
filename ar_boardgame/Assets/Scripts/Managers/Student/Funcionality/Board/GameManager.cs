@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using ExitGames.Client.Photon;
 using Models;
 using Photon.Pun;
 using UnityEngine;
@@ -42,6 +43,10 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             if (PhotonNetwork.IsConnected && PhotonNetwork.CurrentRoom != null)
             {
+                Hashtable playerProperties = PhotonNetwork.LocalPlayer.CustomProperties;
+                print("turno" + playerProperties["turn"]);
+                Singleton.SetMyTurn((int)playerProperties["turn"]);
+
                 // for sync scenes to other players
                 PhotonNetwork.AutomaticallySyncScene = true;
                 // WaitPlayers("PrepareGameRPC");

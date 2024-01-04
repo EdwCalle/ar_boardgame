@@ -115,6 +115,10 @@ public class Singleton : MonoBehaviour
     {
         return instance.boardPersistent.MyTurn == instance.boardPersistent.CurrentPlayerTurn;
     }
+    public static void SetMyTurn(int turn)
+    {
+        instance.boardPersistent.MyTurn = turn;
+    }
     public static void UpdateTurn()
     {
         instance.boardPersistent.CurrentPlayerTurn++;

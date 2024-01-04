@@ -24,6 +24,7 @@ public class ConnectionServer : MonoBehaviourPunCallbacks
         if (username.text.Length >= 1)
         {
             PhotonNetwork.NickName = username.text;
+            PhotonNetwork.AutomaticallySyncScene = true;
             PhotonNetwork.ConnectUsingSettings();
         }
     }
