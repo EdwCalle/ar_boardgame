@@ -16,12 +16,14 @@ public class ArrowsManager : MonoBehaviour, IModalAnimator
         SetActiveArrow(uiElements.DownButton, directionOne, directionTwo, "down");
         if (Singleton.IsMyTurn())
         {
-            uiElements.TitleTurn.text = "Elije el camino por el cual quieres ir";
+            gameManager.turnInfoManager.PrepareTurnInfo("Elije el camino por el cual quieres avanzar");
+            //  uiElements.TitleTurn.text =
             //sprite player
         }
         else
         {
-            uiElements.TitleTurn.text = $"Espera un momento, el jugador{Singleton.GetCurrentPlayerTurn()} esta seleccionando el camino";
+            gameManager.turnInfoManager.PrepareTurnInfo(message: $"Espera un momento, el jugador{Singleton.GetCurrentPlayerTurn()} esta seleccionando el camino");
+            //uiElements.TitleTurn.text = $"Espera un momento, el jugador{Singleton.GetCurrentPlayerTurn()} esta seleccionando el camino";
             //sprite player
         }
 
@@ -50,6 +52,7 @@ public class ArrowsManager : MonoBehaviour, IModalAnimator
     }
     public async Task HideModal(GameObject canvasModal)
     {
+        gameManager.turnInfoManager.HideTurn(canvasModal);
         uiElements.HideModal(canvasModal);
         await Task.Delay(1050);
     }

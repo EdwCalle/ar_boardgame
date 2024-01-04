@@ -76,7 +76,7 @@ public class BoardManager : MonoBehaviourPunCallbacks
         boardSquares[39].SquareType = SquareType.angel;
         boardSquares[25].SquareType = SquareType.angel;
         // set random square
-        boardSquares[7].SquareType = SquareType.random;
+        boardSquares[8].SquareType = SquareType.random;
         boardSquares[48].SquareType = SquareType.random;
         boardSquares[49].SquareType = SquareType.random;
         boardSquares[17].SquareType = SquareType.random;
@@ -212,9 +212,18 @@ public class BoardManager : MonoBehaviourPunCallbacks
         }
         if (dice == 0)
         {
+            if (boardSquares[currentSquare].SquareType == SquareType.random)
+
+            {
+                gameManager.ShowRandomQuestion();
+            }
+            else
+            {
+                gameManager.ShowQuestions(boardSquares[currentSquare].SquareType);
+            }
             //  Singleton.SaveSquarePlayer(currentPlayer, currentSquare);
             // yield return gameManager.questionInfoManager.ShowModal(gameManager.canvasModal);
-            gameManager.ShowQuestions(boardSquares[currentSquare].SquareType);
+
         }
         //
     }

@@ -23,7 +23,5 @@ public class Modal
         canvasModal.GetComponent<Animator>().SetTrigger("fadeIn");
         canvasModal.GetComponent<CanvasGroup>().blocksRaycasts = true;
         ModalUI.SetActive(true);
-
-
     }
 }

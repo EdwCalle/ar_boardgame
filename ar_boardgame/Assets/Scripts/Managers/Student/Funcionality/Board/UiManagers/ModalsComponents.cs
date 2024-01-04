@@ -11,15 +11,15 @@ namespace thisAPP.UIElements
         [SerializeField] private GameObject rightButton;
         [SerializeField] private GameObject upButton;
         [SerializeField] private GameObject downButton;
-        [SerializeField] private TextMeshProUGUI titleTurn;
-        [SerializeField] private Sprite player;
+        // [SerializeField] private TextMeshProUGUI titleTurn;
+        // [SerializeField] private Sprite player;
 
         public GameObject LeftButton { get => leftButton; set => leftButton = value; }
         public GameObject RightButton { get => rightButton; set => rightButton = value; }
         public GameObject UpButton { get => upButton; set => upButton = value; }
         public GameObject DownButton { get => downButton; set => downButton = value; }
-        public TextMeshProUGUI TitleTurn { get => titleTurn; set => titleTurn = value; }
-        public Sprite Player { get => player; set => player = value; }
+        // public TextMeshProUGUI TitleTurn { get => titleTurn; set => titleTurn = value; }
+        // public Sprite Player { get => player; set => player = value; }
     }
     [System.Serializable]
     public class MinigameInfo : Modal
@@ -115,8 +115,8 @@ namespace thisAPP.UIElements
         [SerializeField] private Sprite[] dices;
         [SerializeField] private GameObject swipeAnimation;
         [SerializeField] private GameObject titleNumberDice;
-        [SerializeField] private TextMeshProUGUI titleTurn;
-        [SerializeField] private Sprite player;
+        // [SerializeField] private TextMeshProUGUI titleTurn;
+        // [SerializeField] private Sprite player;
 
         public GameObject RotationObject { get => rotationObject; set => rotationObject = value; }
         public GameObject LimitObject { get => limitObject; set => limitObject = value; }
@@ -125,7 +125,32 @@ namespace thisAPP.UIElements
         public Image ImageDice { get => imageDice; set => imageDice = value; }
         public GameObject TitleNumberDice { get => titleNumberDice; set => titleNumberDice = value; }
         public GameObject Dice { get => dice; set => dice = value; }
+        // public TextMeshProUGUI TitleTurn { get => titleTurn; set => titleTurn = value; }
+        // public Sprite Player { get => player; set => player = value; }
+    }
+
+    [System.Serializable]
+    public class RandomSquareUI : Modal
+    {
+        [SerializeField] private GameObject extraItem;
+        [SerializeField] private Image imageExtraItem;
+        [SerializeField] private TextMeshProUGUI info;
+        [SerializeField] private Sprite[] extraItems;
+
+        public GameObject ExtraItem { get => extraItem; set => extraItem = value; }
+        public Image ImageExtraItem { get => imageExtraItem; set => imageExtraItem = value; }
+        public Sprite[] ExtraItems { get => extraItems; set => extraItems = value; }
+        public TextMeshProUGUI Info { get => info; set => info = value; }
+    }
+    [System.Serializable]
+    public class TurnUI : Modal
+    {
+        [SerializeField] private TextMeshProUGUI titleTurn;
+        [SerializeField] private Image imageSprite;
+        [SerializeField] private Sprite[] avatars;
+
         public TextMeshProUGUI TitleTurn { get => titleTurn; set => titleTurn = value; }
-        public Sprite Player { get => player; set => player = value; }
+        public Sprite[] Avatars { get => avatars; set => avatars = value; }
+        public Image ImageSprite { get => imageSprite; set => imageSprite = value; }
     }
 }

@@ -2,26 +2,32 @@ using System.Threading.Tasks;
 using Models;
 using Photon.Pun;
 using UnityEngine;
-
 public class GameManager : MonoBehaviourPunCallbacks
 {
     private int playersReady = 0;
     public GameObject canvasModal;
     public BoardManager boardManager;
+    public TurnInfoManager turnInfoManager;
 
     public WaitPlayerManager waitPlayerManager;
     public DialogueManager dialogueManager;
     public DiceManager diceManager;
+
     public ArrowsManager arrowsManager;
+
     public QuestionInfoManager questionInfoManager;
+    public RandomSquareManager randomSquareManager;
     public PlayersInfoManager playersInfoManager;
     public MinigameInfoManager minigameInfoManager;
+
     void Awake()
     {
         arrowsManager.uiElements.ModalUI.SetActive(false);
         dialogueManager.uiElements.ModalUI.SetActive(false);
         diceManager.uiElements.ModalUI.SetActive(false);
+        turnInfoManager.uiElements.ModalUI.SetActive(false);
         questionInfoManager.uiElements.ModalUI.SetActive(false);
+        randomSquareManager.uiElements.ModalUI.SetActive(false);
         minigameInfoManager.uiElements.ModalUI.SetActive(false);
         // resultsInfoManager.uiElements.ModalUI.SetActive(false);
     }
@@ -190,6 +196,26 @@ public class GameManager : MonoBehaviourPunCallbacks
     async void ShowQuestionsRPC(SquareType squareType, int RandomNumber)
     {
         await questionInfoManager.PrepareModal(squareType, RandomNumber);
+    }
+    public void ShowRandomQuestion()
+    {
+        if (Singleton.IsMyTurn())
+        {
+            int RandomNumber = Random.Range(0, 3);
+            if (RandomNumber == 0)
+                ScoreManager.AddExtraCoins(PhotonNetwork.LocalPlayer, 1);
+            if (RandomNumber == 1)
+                ScoreManager.AddExtraCoins(PhotonNetwork.LocalPlayer, 2);
+            if (RandomNumber == 2)
+                ScoreManager.DeleteExtraCoins(PhotonNetwork.LocalPlayer);
+            photonView.RPC("ShowRandomQuestionRPC", RpcTarget.All, RandomNumber);
+        }
+
+    }
+    [PunRPC]
+    void ShowRandomQuestionRPC(int RandomNumber)
+    {
+        randomSquareManager.PrepareRandomSquare(RandomNumber);
     }
     //Update is called once per frame
     void Update()

@@ -132,13 +132,15 @@ public class DiceManager : MonoBehaviour, IDragHandler, IEndDragHandler, IPointe
         ResetDice();
         if (Singleton.IsMyTurn())
         {
-            uiElements.TitleTurn.text = "Es tu turno";
+            gameManager.turnInfoManager.PrepareTurnInfo("Es tu turno");
+            //uiElements.TitleTurn.text = "Es tu turno";
             uiElements.SwipeAnimation.SetActive(true);
         }
         else
         {
             uiElements.SwipeAnimation.SetActive(false);
-            uiElements.TitleTurn.text = $"Player{Singleton.GetCurrentPlayerTurn()} está lanzando el dado";
+            gameManager.turnInfoManager.PrepareTurnInfo($"Player{Singleton.GetCurrentPlayerTurn()} está lanzando el dado");
+            // uiElements.TitleTurn.text = ;
         }
     }
 
@@ -152,6 +154,7 @@ public class DiceManager : MonoBehaviour, IDragHandler, IEndDragHandler, IPointe
 
     public async Task HideModal(GameObject canvasModal)
     {
+        gameManager.turnInfoManager.HideTurn(canvasModal);
         uiElements.HideModal(canvasModal);
         await Task.Delay(1050);
     }

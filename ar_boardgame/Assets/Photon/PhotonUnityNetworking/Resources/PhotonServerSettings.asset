@@ -57,6 +57,7 @@ MonoBehaviour:
   - FromMyTurnRPC
   - SetRadomNumberQuestionRPC
   - ShowQuestionsRPC
+  - ShowRandomQuestionRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
