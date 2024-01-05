@@ -147,7 +147,7 @@ public class DiceManager : MonoBehaviour, IDragHandler, IEndDragHandler, IPointe
     public async Task ShowModal(GameObject canvasModal)
     {
 
-        uiElements.ShowModal(canvasModal);
+        uiElements.ShowModal(canvasModal, "dice");
         SetDiceInfo();
         await Task.Delay(1050);
     }
@@ -155,7 +155,7 @@ public class DiceManager : MonoBehaviour, IDragHandler, IEndDragHandler, IPointe
     public async Task HideModal(GameObject canvasModal)
     {
         gameManager.turnInfoManager.HideTurn(canvasModal);
-        uiElements.HideModal(canvasModal);
+        uiElements.HideModal(canvasModal, "dice");
         await Task.Delay(1050);
     }
 }

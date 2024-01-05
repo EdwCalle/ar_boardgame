@@ -23,10 +23,7 @@ public class DialogueManager : MonoBehaviour, IModalAnimator
     int focusedCharacter = 1;
     Sentence[] sentences;
     public Sentence[] Sentences { get => sentences; set => sentences = value; }
-    void Start()
-    {
 
-    }
     public void StartDialogue()
     {
         StartCoroutine(IterateSentece());
@@ -78,19 +75,20 @@ public class DialogueManager : MonoBehaviour, IModalAnimator
 
     public async Task ShowModal(GameObject canvasModal)
     {
-        uiElements.ShowModal(canvasModal);
+        uiElements.ShowModal(canvasModal, "dialogo");
         await Task.Delay(2000);
         SetDialogue();
         NextSentece();
     }
     public async Task HideModal(GameObject canvasModal)
     {
-        uiElements.HideModal(canvasModal);
+        uiElements.HideModal(canvasModal, "dialogo");
         await Task.Delay(1050);
         gameManager.waitPlayerManager.SetMessage("sincronizando tablero, esperando al resto de jugadores");
         gameManager.waitPlayerManager.uiElements.WaitBoard.SetActive(false);
         gameManager.waitPlayerManager.uiElements.WaitPlayer.SetActive(true);
-        await gameManager.WaitPlayer("ShowDiceRPC");
+        await gameManager.waitPlayerManager.ShowModal(canvasModal);
+        gameManager.WaitPlayer("ShowDiceRPC");
     }
 
     //override 

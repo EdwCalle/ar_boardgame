@@ -5,10 +5,10 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Student/mainPageStudent.unity
     guid: f8b91b4e80007ba4b83ef9b347c91d85
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Student/multiplayer.unity
     guid: 9363c7f453420c946866c87831ac42a7
   - enabled: 1

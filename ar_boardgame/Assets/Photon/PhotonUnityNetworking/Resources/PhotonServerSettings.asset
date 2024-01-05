@@ -23,7 +23,7 @@ MonoBehaviour:
     Server: 
     Port: 0
     ProxyServer: 
-    Protocol: 0
+    Protocol: 1
     EnableProtocolFallback: 1
     AuthMode: 0
     EnableLobbyStatistics: 0
@@ -38,26 +38,16 @@ MonoBehaviour:
   - ClickRpc
   - DestroyRpc
   - FinishGame
-  - PlayerFinishedGame
-  - PlayerLoadedScene
-  - PrepareGame
-  - SelectOptionRPC
-  - StartGame
-  - ThrowDiceRPC
-  - WaitPlayers
-  - PrepareGameRPC
-  - WaitPlayersRPC
-  - Testear
-  - RollDiceRPC
-  - ShowDiceRPC
-  - ShowQuestionRPC
-  - PrepareBoard
-  - WaitPlayers2RPC
-  - ShowDice2RPC
   - FromMyTurnRPC
-  - SetRadomNumberQuestionRPC
+  - PrepareGameRPC
+  - RollDiceRPC
+  - SelectOptionRPC
+  - ShowDiceRPC
   - ShowQuestionsRPC
   - ShowRandomQuestionRPC
+  - StartGame
+  - ThrowDiceRPC
+  - WaitPlayersRPC
   DisableAutoOpenWizard: 1
-  ShowSettings: 0
+  ShowSettings: 1
   DevRegionSetOnce: 1

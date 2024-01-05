@@ -36,7 +36,13 @@ public class NetBoardManager : MonoBehaviour
     void Update()
     {
         if (PhotonNetwork.IsConnected && PhotonNetwork.CurrentRoom != null)
-            SendLogMessage($"Number players:{PhotonNetwork.CurrentRoom.Players.Count} RoomName:{PhotonNetwork.CurrentRoom.Name} Nickname:{PhotonNetwork.LocalPlayer.NickName} LocalPlayer:{PhotonNetwork.CurrentRoom.PlayerCount}");
+        {
+            int ping = PhotonNetwork.NetworkingClient.LoadBalancingPeer.RoundTripTime;
+            SendLogMessage($"Number players:{PhotonNetwork.CurrentRoom.Players.Count} RoomName:{PhotonNetwork.CurrentRoom.Name} Nickname:{PhotonNetwork.LocalPlayer.NickName} LocalPlayer:{PhotonNetwork.CurrentRoom.PlayerCount} ping:{ping}");
+            // Display the ping in the console or update a UI element
+
+        }
+
 
     }
 }

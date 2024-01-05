@@ -44,28 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b8c1597b2ea61c4e971ffc58aac7eb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentGeneralGame:
-    id: 0
-    title: 
-    subject: 
-    rounds: []
-  currentMinigame:
-    id: 0
-    level: 0
-    title: 
-    function: 
-    models: []
-    questions: []
-    extraInfo:
-      type: 
-      info: 
-    interactionTime: 0
-    resolveTime: 0
-    feedbackTime: 0
-    headerType: 0
-    selectionType: 0
-    extraComponentType: 0
-    timerState: 0
   examplesJson: {fileID: 4900000, guid: 57b0956365d047346861cef2673562e5, type: 3}
-  isSinglePlayerMode: 1
-  numberPlayers: 1
+  isSinglePlayerMode: 0
+  boardPersistent:
+    numberPlayers: 2

@@ -6,11 +6,11 @@ public class TurnInfoManager : MonoBehaviour
     public GameManager gameManager;
     public void ShowTurn(GameObject canvasModal)
     {
-        uiElements.ShowModal(canvasModal);
+        uiElements.ShowModal(canvasModal, "turn");
     }
     public void HideTurn(GameObject canvasModal)
     {
-        uiElements.HideModal(canvasModal);
+        uiElements.HideModal(canvasModal, "turn");
     }
     public void PrepareTurnInfo(string message)
     {

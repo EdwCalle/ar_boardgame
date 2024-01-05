@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using ExitGames.Client.Photon;
 using Models;
 using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
 public class GameManager : MonoBehaviourPunCallbacks
 {
@@ -44,37 +45,41 @@ public class GameManager : MonoBehaviourPunCallbacks
             if (PhotonNetwork.IsConnected && PhotonNetwork.CurrentRoom != null)
             {
                 Hashtable playerProperties = PhotonNetwork.LocalPlayer.CustomProperties;
-                print("turno" + playerProperties["turn"]);
-                Singleton.SetMyTurn((int)playerProperties["turn"]);
+                // print("turno" + playerProperties["turn"]);
+                //Singleton.SetMyTurn((int)playerProperties["turn"]);
 
                 // for sync scenes to other players
                 PhotonNetwork.AutomaticallySyncScene = true;
-                // WaitPlayers("PrepareGameRPC");
-                photonView.RPC("WaitPlayersRPC", RpcTarget.All, "PrepareGameRPC");
+                WaitPlayer("PrepareGameRPC");
+                // photonView.RPC("WaitPlayersRPC", RpcTarget.All, "PrepareGameRPC");
                 // photonView.RPC("WaitPlayersRPC", RpcTarget.All);
                 // Debug.Log("no se lo que ");
             }
         }
     }
-    public async Task WaitPlayer(string nameRPC)
+    public void WaitPlayer(string nameRPC)
     {
-        await waitPlayerManager.ShowModal(canvasModal);
-        photonView.RPC("WaitPlayersRPC", RpcTarget.All, nameRPC);
+        photonView.RPC("WaitPlayersRPC", RpcTarget.MasterClient, nameRPC);
     }
     [PunRPC]
     void WaitPlayersRPC(string NameRPC)
     {
         //Debug.Log("pueda que si ");
         playersReady++;
-        if (playersReady == Singleton.GetNumberPlayers() && photonView.IsMine)
+        if (playersReady == Singleton.GetNumberPlayers())
         {
+            ResetPlayersReady();
             photonView.RPC(NameRPC, RpcTarget.All);
         }
+        // else
+        // {
+        //     return;
+        // }
     }
     [PunRPC]
     async void PrepareGameRPC()
     {
-        ResetPlayersReady();
+        // ResetPlayersReady();
         if (Singleton.ExistRounds())
         {
             boardManager.PrepareBoard();
@@ -99,7 +104,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     [PunRPC]
     async void ShowDiceRPC()
     {
-        ResetPlayersReady();
+        // ResetPlayersReady();
         await waitPlayerManager.HideModal(canvasModal);
         await diceManager.ShowModal(canvasModal);
     }
@@ -145,6 +150,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public async void ChangeDirectionRPC(string direction)
     {
         await boardManager.ChangeDirection(direction);
+        Debug.Log("no se cuando me imprimi");
     }
     public void SelectOption(int value, bool solution, SquareType squareType)
     {
@@ -190,18 +196,18 @@ public class GameManager : MonoBehaviourPunCallbacks
     }
     public void ShowQuestions(SquareType squareType)
     {
-        if (Singleton.IsMyTurn())
+        if (PhotonNetwork.IsMasterClient)
         {
             int RandomNumber = Singleton.GetRadomNumberQuestion(squareType);
             photonView.RPC("ShowQuestionsRPC", RpcTarget.All, squareType, RandomNumber);
         }
-
     }
     [PunRPC]
     async void ShowQuestionsRPC(SquareType squareType, int RandomNumber)
     {
         await questionInfoManager.PrepareModal(squareType, RandomNumber);
     }
+
     public void ShowRandomQuestion()
     {
         if (Singleton.IsMyTurn())
@@ -226,5 +232,12 @@ public class GameManager : MonoBehaviourPunCallbacks
     void Update()
     {
 
+    }
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        Debug.LogWarning($"Disconnected from Photon: {cause}");
+        Application.Quit();
+        // Handle the disconnection here, for example, you can try to reconnect
+        // or show a message to the user.
     }
 }

@@ -17,12 +17,12 @@ public class WaitPlayerManager : MonoBehaviour, IModalAnimator
     // }
     public async Task ShowModal(GameObject canvasModal)
     {
-        uiElements.ShowModal(canvasModal);
+        uiElements.ShowModal(canvasModal, "waitPlayer");
         await Task.Delay(2000);
     }
     public async Task HideModal(GameObject canvasModal)
     {
-        uiElements.HideModal(canvasModal);
+        uiElements.HideModal(canvasModal, "waitPlayer");
         await Task.Delay(2000);
     }
 

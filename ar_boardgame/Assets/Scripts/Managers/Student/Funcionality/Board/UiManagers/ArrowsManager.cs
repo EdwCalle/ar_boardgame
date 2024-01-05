@@ -47,13 +47,13 @@ public class ArrowsManager : MonoBehaviour, IModalAnimator
     public async Task ShowModal(GameObject canvasModal)
     {
 
-        uiElements.ShowModal(canvasModal);
+        uiElements.ShowModal(canvasModal, "arrows");
         await Task.Delay(1050);
     }
     public async Task HideModal(GameObject canvasModal)
     {
         gameManager.turnInfoManager.HideTurn(canvasModal);
-        uiElements.HideModal(canvasModal);
+        uiElements.HideModal(canvasModal, "arrows");
         await Task.Delay(1050);
     }
 

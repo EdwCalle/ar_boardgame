@@ -46,11 +46,13 @@ public class QuestionInfoManager : MonoBehaviour, IModalAnimator
     public void SelectOption(int value)
     {
         bool solution = value == currentQuestion.Solution;
+
         gameManager.SelectOption(value, solution, squareType);
     }
     public async Task CheckOption(int value)
     {
-        print("no se cuanto");
+        print(squareType);
+        // print("no se cuanto");
         int solution = currentQuestion.Solution;
         if (value == -1)
         {
@@ -76,11 +78,12 @@ public class QuestionInfoManager : MonoBehaviour, IModalAnimator
         await HideModal(gameManager.canvasModal);
         if (squareType == SquareType.angel || squareType == SquareType.demon)
         {
-            gameManager.ShowQuestions(SquareType.normal);
-
+            //  gameManager.ShowQuestions(SquareType.normal);
+            await PrepareModal(SquareType.normal);
         }
         else
         {
+            //  print("quiero saber donde ocurre el error 2");
             await gameManager.boardManager.FinishTurn();
         }
 
@@ -90,7 +93,6 @@ public class QuestionInfoManager : MonoBehaviour, IModalAnimator
         this.squareType = squareType;
         if (squareType == SquareType.demon)
         {
-
             currentQuestion = Singleton.GetDemonQuestion(RandomNumber);
         }
         if (squareType == SquareType.angel)
@@ -107,7 +109,7 @@ public class QuestionInfoManager : MonoBehaviour, IModalAnimator
     public async Task ShowModal(GameObject canvasModal)
     {
         PrepareQuestion();
-        uiElements.ShowModal(canvasModal);
+        uiElements.ShowModal(canvasModal, "QuestionInfo");
         await Task.Delay(1050);
         myCoroutine = StartCoroutine(Countdown());
 
@@ -135,7 +137,7 @@ public class QuestionInfoManager : MonoBehaviour, IModalAnimator
 
     public async Task HideModal(GameObject canvasModal)
     {
-        uiElements.HideModal(canvasModal);
+        uiElements.HideModal(canvasModal, "QuestionInfo");
         await Task.Delay(1050);
     }
 }

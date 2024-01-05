@@ -12,13 +12,13 @@ public class MinigameInfoManager : MonoBehaviour, IModalAnimator
     public async Task ShowModal(GameObject canvasModal)
     {
         SetTitlteMinigame();
-        uiElements.ShowModal(canvasModal);
+        uiElements.ShowModal(canvasModal, "minigameInfo");
         await Task.Delay(1050);
 
     }
     public async Task HideModal(GameObject canvasModal)
     {
-        uiElements.HideModal(canvasModal);
+        uiElements.HideModal(canvasModal, "minigameInfo");
         await Task.Delay(1050);
     }
 }

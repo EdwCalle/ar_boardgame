@@ -15,13 +15,13 @@ public class RandomSquareManager : MonoBehaviour, IModalAnimator
     //public float speed = 10;
     public async Task ShowModal(GameObject canvasModal)
     {
-        uiElements.ShowModal(canvasModal);
+        uiElements.ShowModal(canvasModal, "randomSquare");
         await Task.Delay(2000);
     }
     public async Task HideModal(GameObject canvasModal)
     {
         gameManager.turnInfoManager.HideTurn(canvasModal);
-        uiElements.HideModal(canvasModal);
+        uiElements.HideModal(canvasModal, "randomSquare");
         await Task.Delay(2000);
         gameManager.ShowQuestions(SquareType.normal);
     }
