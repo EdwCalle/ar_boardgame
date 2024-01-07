@@ -1063,6 +1063,11 @@ PrefabInstance:
       propertyPath: isSinglePlayerMode
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1177760313930652538, guid: f5069c7f6027cf34992037c962c99fda,
+        type: 3}
+      propertyPath: boardPersistent.numberPlayers
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2469942812086968723, guid: f5069c7f6027cf34992037c962c99fda,
         type: 3}
       propertyPath: m_LocalPosition.x

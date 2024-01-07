@@ -4,11 +4,13 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Models;
 using System.Collections;
+using System.Threading;
 
 
 public class CountdownTimer : MonoBehaviour
 {
-    [SerializeField] private MediatorMinigame mediatorMinigame;
+    // [SerializeField] private MediatorMinigame mediatorMinigame;
+    public MinigameManager minigameManager;
     private float interactionTime; // Total time for the countdown in seconds
     private float resolveTime;  // Total time for the countdown in seconds
     private float feedbackTime;  // Total time for the countdown in seconds
@@ -46,12 +48,16 @@ public class CountdownTimer : MonoBehaviour
         yield return StartCoroutine(CountownTimer(currentTime));
 
         detectPlane.EnableTap(true);
-        ChangeState(false, TimerState.offset, 15f);//15
+        ChangeState(false, TimerState.offset, InteractionTime);//15
         yield return StartCoroutine(CountownTimer(currentTime));
 
 
         detectPlane.EnableTap(false);
-        mediatorMinigame.StartMinigame();
+        minigameManager.StartResolveTime();
+
+        //mediatorMinigame.StartMinigame();
+
+
         // ChangeState(true, TimerState.offset, offSet, "Enfoca la cámara y exploremos el nivel");
         // yield return StartCoroutine(CountownTimer(currentTime));
 
@@ -61,20 +67,20 @@ public class CountdownTimer : MonoBehaviour
         ChangeState(true, TimerState.offset, offSet, "Hora de Resolver el Juego!!!!!!!");
         yield return StartCoroutine(CountownTimer(currentTime));
 
-        mediatorMinigame.StartHeadear();
+        // mediatorMinigame.StartHeadear();
         ChangeState(false, TimerState.resolve, resolveTime);
         yield return StartCoroutine(CountownTimer(currentTime));
         ChangeState(true, TimerState.offset, offSet, "Se acabó el tiempo, pero te dejo las respuestas");
         yield return StartCoroutine(CountownTimer(currentTime));
+        minigameManager.resultsManager.ShowResults();
 
-
-        mediatorMinigame.StopMinigame();
+        //mediatorMinigame.StopMinigame();
         ChangeState(false, TimerState.feedback, feedbackTime);
         yield return StartCoroutine(CountownTimer(currentTime));
 
         Singleton.GetCurrentMinigame().TimerState = TimerState.none;
         //gameFinish = true;
-        mediatorMinigame.WaitingFinishGame();
+        minigameManager.FinishGame();
 
 
     }
@@ -85,19 +91,6 @@ public class CountdownTimer : MonoBehaviour
             textTime.Label.text = elapsedTime.ToString("0");
             elapsedTime -= Time.deltaTime;
             yield return null;
-        }
-    }
-    void Update()
-    {
-        if (gameStart)
-        {
-            StartCoroutine(MinigameQueqe());
-            gameStart = false;
-        }
-        if (gameFinish)
-        {
-            mediatorMinigame.WaitingFinishGame();
-            gameFinish = false;
         }
     }
 
@@ -134,12 +127,14 @@ public class CountdownTimer : MonoBehaviour
         this.resolveTime = resolveTime;
         this.feedbackTime = feedbackTime;
     }
-    public void PrepareLevel()
+    public void LoadLevel()
     {
         BuildTimer(Singleton.GetCurrentMinigame().InteractionTime,
                    Singleton.GetCurrentMinigame().ResolveTime,
                    Singleton.GetCurrentMinigame().FeedbackTime);
         ChangeState(true, TimerState.offset, offSet, "Enfoca la cámara y exploremos el nivel");
+
+        //StartMinigame();
         // mediatorMinigame.ActivateCamera();
         //  gameStart = true;
 

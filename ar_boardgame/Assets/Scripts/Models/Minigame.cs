@@ -15,7 +15,7 @@ namespace Models
         [SerializeField] private float interactionTime;
         [SerializeField] private float resolveTime;
         [SerializeField] private float feedbackTime;
-        [SerializeField] private HeaderType headerType;
+        //  [SerializeField] private HeaderType headerType;
         [SerializeField] private SelectionType selectionType;
         [SerializeField] private ExtraComponentType extraComponentType;
         [SerializeField] private TimerState timerState;
@@ -29,15 +29,15 @@ namespace Models
         public float InteractionTime { get => interactionTime; set => interactionTime = value; }
         public float ResolveTime { get => resolveTime; set => resolveTime = value; }
         public float FeedbackTime { get => feedbackTime; set => feedbackTime = value; }
-        public HeaderType HeaderType { get => headerType; set => headerType = value; }
+        //public HeaderType HeaderType { get => headerType; set => headerType = value; }
         public SelectionType SelectionType { get => selectionType; set => selectionType = value; }
         public ExtraComponentType ExtraComponentType { get => extraComponentType; set => extraComponentType = value; }
         public int Level { get => level; set => level = value; }
         public TimerState TimerState { get => timerState; set => timerState = value; }
-        public void ConfigureLevel(HeaderType header, SelectionType selection, ExtraComponentType extraComponent)
+        public void ConfigureLevel(SelectionType selection, ExtraComponentType extraComponent)
         {
             //  this.level = level;
-            this.headerType = header;
+            //this.headerType = header;
             this.selectionType = selection;
             this.extraComponentType = extraComponent;
         }

@@ -37,7 +37,7 @@
             "question": {
                 "title": "Pregunta 1",
                 "optionA": "1",
-                "optionB": "2",
+                "optionB": "soy buena 2",
                 "optionC": "3",
                 "optionD": "4",
                 "solution": 1,
@@ -82,7 +82,7 @@
                 "title": "Pregunta 2",
                 "optionA": "1a",
                 "optionB": "2b",
-                "optionC": "3c",
+                "optionC": "soy buena 3c",
                 "optionD": "4d",
                 "solution": 2,
                 "isSelected": 0
@@ -124,7 +124,7 @@
             },
             "question": {
                 "title": "Pregunta 3",
-                "optionA": "a",
+                "optionA": "soy buena a",
                 "optionB": "b",
                 "optionC": "c",
                 "optionD": "d",
@@ -185,7 +185,7 @@
             },
             "interactionTime": 6.0,
             "resolveTime": 10.0,
-            "feedbackTime": 4.0,
+            "feedbackTime": 20,
             "headerType": 0,
             "selectionType": 0,
             "extraComponentType": 0,

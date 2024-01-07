@@ -3,18 +3,16 @@ using Models;
 public class SelectableModel : MonoBehaviour
 {
 
-    public MediatorMinigame mediatorMinigame;
+    //private Models3DManager models3DManager;
+    private Models3DManager models3DManager;
     private bool isSelected = false;
     private bool isSolution;
     public int index;
     public static int lastSelectedItem = -1;
 
     public bool IsSolution { get => isSolution; set => isSolution = value; }
+    public Models3DManager Models3DManager { get => models3DManager; set => models3DManager = value; }
 
-    //public static SelectionType selection;
-    void Start()
-    {
-    }
     public void SelectModel()
     {
         // if the mode time is interaction just interact
@@ -56,44 +54,7 @@ public class SelectableModel : MonoBehaviour
         }
 
     }
-    void Update()
-    {
-        // if (timer.GetComponent<CountdownTimer>().isCountingDown)
-        // {
-        //     if (Input.GetMouseButtonDown(0))
-        //     {
-        //         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        //         RaycastHit hit;
 
-        //         if (Physics.Raycast(ray, out hit))
-        //         {
-        //             if (hit.collider.gameObject == checkbox)
-        //             {
-        //                 // This object was clicked.
-        //                 // Put your click logic here.
-        //                 print("selected model" + Name);
-        //                 selectModel();
-        //             }
-        //         }
-        //     }
-        // }
-        // else
-        // {
-        //     print("go 1");
-        //     if (!stop)
-        //     {
-        //         print("go 2");
-        //         if (timer.GetComponent<CountdownTimer>().showResults)
-        //         {
-        //             print("go 3");
-        //             setCorrect();
-        //         }
-        //     }
-
-
-        // }
-
-    }
     public void SetCorrect(int index)
     {
         Singleton.GetCurrentMinigame().Models[index].IsSelected = isSelected;
@@ -111,7 +72,7 @@ public class SelectableModel : MonoBehaviour
     public void FindedItem()
     {
         Singleton.GetCurrentMinigame().Models[index].IsSelected = true;
-        mediatorMinigame.FoundItem(index);
+        models3DManager.FoundItem(index);
         gameObject.SetActive(false);
     }
     public void SwitchModelSelected()
@@ -131,14 +92,11 @@ public class SelectableModel : MonoBehaviour
         }
         GetComponent<Renderer>().material.color = currentColor;
         // Modify the alpha channel and set it back to the material
-
-
-
-
     }
     public void UnselectModel(int index)
     {
-        mediatorMinigame.ItemsManager.Items[index].transform.GetChild(1).gameObject.GetComponent<SelectableModel>().SwitchModelSelected();
+        SwitchModelSelected();
+        //  mediatorMinigame.ItemsManager.Items[index].transform.GetChild(1).gameObject.GetComponent<SelectableModel>().SwitchModelSelected();
     }
 
 }

@@ -8,7 +8,7 @@ public class Singleton : MonoBehaviour
     public static Singleton instance;
 
     // for game funcionality
-    // public
+    public
     Match currentGeneralGame = new();
     // [HideInInspector] public Minigame currentMinigame = new();
 
@@ -181,6 +181,10 @@ public class Singleton : MonoBehaviour
             return Random.Range(0, instance.currentGeneralGame.DemonQuestions.Count);
         }
         return 0;
+    }
+    public static void AddRound()
+    {
+        instance.boardPersistent.CurrentRound++;
     }
 
 

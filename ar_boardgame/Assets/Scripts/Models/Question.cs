@@ -11,7 +11,7 @@ namespace Models
         [SerializeField] private string optionC;
         [SerializeField] private string optionD;
         [SerializeField] private int solution;
-        [SerializeField] private int isSelected = 0;
+        [SerializeField] private int optionSelected = 0;
 
 
 
@@ -21,7 +21,7 @@ namespace Models
         public string OptionA { get => optionA; set => optionA = value; }
         public string Title { get => title; set => title = value; }
         public int Solution { get => solution; set => solution = value; }
-        public int IsSelected { get => isSelected; set => isSelected = value; }
+        public int OptionSelected { get => optionSelected; set => optionSelected = value; }
 
         public Question(string title, string OptionA, string OptionB, string OptionC, string OptionD, int solution = 0)
         {

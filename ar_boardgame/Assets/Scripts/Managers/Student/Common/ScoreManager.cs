@@ -110,7 +110,7 @@ public class ScoreManager
         int stars = 0;
         foreach (Model3D item in minigame.Models)
         {
-            if (item.Question.IsSelected == item.Question.Solution)
+            if (item.Question.OptionSelected == item.Question.Solution)
                 stars++;
         }
         return new Score { Stars = stars };

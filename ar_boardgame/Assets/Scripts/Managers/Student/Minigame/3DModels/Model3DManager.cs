@@ -4,21 +4,12 @@ using Models;
 using UnityEngine;
 using UnityGLTF;
 
-public class ItemManager : MonoBehaviour
+public class Model3DManager : MonoBehaviour
 {
     // Start is called before the first frame update
     public GameObject modelCollider;
     public GameObject model;
 
-    void Start()
-    {
-
-    }
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
     public void SetModelInBox(ModelInBox modelInBox)
     {
         model.transform.localScale = modelInBox.Scale;
@@ -56,12 +47,15 @@ public class ItemManager : MonoBehaviour
         // transform.GetChild(1).gameObject.GetComponent<SelectableModel>().IsSolution = solution;
 
     }
+    public void SetModels3DManager(Models3DManager models3DManager)
+    {
+        modelCollider.GetComponent<SelectableModel>().Models3DManager = models3DManager;
+    }
     public void ShowFeedback(int index)
     {
-        if (Singleton.GetCurrentMinigame().ExtraComponentType == ExtraComponentType.normal)
-        {
-            modelCollider.GetComponent<SelectableModel>().SetCorrect(index);
-        }
+
+        modelCollider.GetComponent<SelectableModel>().SetCorrect(index);
+
 
         //   transform.GetChild(1).gameObject.GetComponent<SelectableModel>().SetCorrect();
     }
@@ -83,15 +77,16 @@ public class ItemManager : MonoBehaviour
         }
 
     }
-    public void ItemManagerBuilder(int index, ModelInBox modelInBox, Vector3 colliderSize, string url, bool solution)
+    public void ItemManagerBuilder(int index, ModelInBox modelInBox, Vector3 colliderSize, string url, bool solution, Models3DManager models3DManager)
     {
         SetIndex(index);
         SetColliderScale(colliderSize);
         SetModelInBox(modelInBox);
         SetModelUri(url);
         SetSolution(solution);
+        SetModels3DManager(models3DManager);
         // SetActive(active);
-
     }
+
 
 }
