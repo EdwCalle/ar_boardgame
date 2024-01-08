@@ -20,8 +20,8 @@ public class CameraMovement : MonoBehaviour
     {
         Debug.Log(Cursor.lockState);
         characterController = GetComponent<CharacterController>();
-        playerCamera = Camera.main; // Access the main camera in the scene
-                                    //  Cursor.lockState = CursorLockMode.Locked; // Lock the cursor to the center of the game window
+        //  playerCamera = Camera.main; // Access the main camera in the scene
+        //  Cursor.lockState = CursorLockMode.Locked; // Lock the cursor to the center of the game window
     }
 
     void Update()
@@ -31,8 +31,8 @@ public class CameraMovement : MonoBehaviour
             // Player flying
             float forwardMovement = Input.GetAxis("Vertical") * movementSpeed * Time.deltaTime;
             float strafeMovement = Input.GetAxis("Horizontal") * movementSpeed * Time.deltaTime;
-            float ascent = Input.GetKey(KeyCode.Space) ? ascentSpeed : 0;
-            float descent = Input.GetKey(KeyCode.LeftShift) ? -descentSpeed : 0;
+            float ascent = Input.GetKey(KeyCode.Space) ? ascentSpeed * Time.deltaTime : 0;
+            float descent = Input.GetKey(KeyCode.LeftShift) ? -descentSpeed * Time.deltaTime : 0;
 
             Vector3 movement = (transform.forward * forwardMovement) + (transform.right * strafeMovement) + (transform.up * (ascent + descent));
             characterController.Move(movement);
@@ -80,7 +80,6 @@ public class CameraMovement : MonoBehaviour
     public void enableCameraMovement()
     {
         GUI.FocusControl(null);
-
         toggleCameraMovement(toggle.GetComponent<Toggle>().isOn);
     }
 

@@ -19,54 +19,53 @@ public class CountdownTimer : MonoBehaviour
     public float CurrentTime { get => currentTime; set => currentTime = value; }
     public float ResolveTime { get => resolveTime; set => resolveTime = value; }
     public float FeedbackTime { get => feedbackTime; set => feedbackTime = value; }
+    public bool IsAR { get => isAR; set => isAR = value; }
 
     float offSet = 4f;
     public Texting messageState;
     public Texting textTime;
-    public bool gameStart;
-    public bool gameFinish;
-
     public DetectPlane detectPlane;
 
     public GameObject scene;
+
+    public GameObject cursor;
+
+    bool isAR = false;
     void Start()
     {
 
     }
     IEnumerator MinigameQueqe()
     {
-        ChangeState(true, TimerState.offset, offSet, "Enfoca tus alrededores para dectectar el escenario");
-        yield return StartCoroutine(CountownTimer(currentTime));
+        if (IsAR)
+        {
+            ChangeState(true, TimerState.offset, offSet, "Enfoca tus alrededores para dectectar el escenario");
+            yield return StartCoroutine(CountownTimer(currentTime));
 
-        ChangeState(false, TimerState.offset, 6f);//6
-        detectPlane.EnablePlaneDetection(true);
-        yield return StartCoroutine(CountownTimer(currentTime));
+            ChangeState(false, TimerState.offset, 6f);//6
+            detectPlane.EnablePlaneDetection(true);
+            yield return StartCoroutine(CountownTimer(currentTime));
 
-        detectPlane.EnablePlaneDetection(false);
-        scene.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
-        ChangeState(true, TimerState.offset, offSet, "Ahora ubica el escenario acorde a tu espacio");
-        yield return StartCoroutine(CountownTimer(currentTime));
+            detectPlane.EnablePlaneDetection(false);
+            scene.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
+            ChangeState(true, TimerState.offset, offSet, "Ahora ubica el escenario acorde a tu espacio");
+            yield return StartCoroutine(CountownTimer(currentTime));
 
-        detectPlane.EnableTap(true);
-        ChangeState(false, TimerState.offset, InteractionTime);//15
-        yield return StartCoroutine(CountownTimer(currentTime));
-
-
-        detectPlane.EnableTap(false);
+            detectPlane.EnableTap(true);
+            ChangeState(false, TimerState.offset, InteractionTime);//15
+            yield return StartCoroutine(CountownTimer(currentTime));
+            detectPlane.EnableTap(false);
+        }
         minigameManager.StartResolveTime();
 
-        //mediatorMinigame.StartMinigame();
-
-
+        if (!IsAR)
+            cursor.SetActive(true);
         // ChangeState(true, TimerState.offset, offSet, "Enfoca la cámara y exploremos el nivel");
         // yield return StartCoroutine(CountownTimer(currentTime));
-
         // ChangeState(false, TimerState.interaction, interactionTime);
         // yield return StartCoroutine(CountownTimer(currentTime));
-
         ChangeState(true, TimerState.offset, offSet, "Hora de Resolver el Juego!!!!!!!");
         yield return StartCoroutine(CountownTimer(currentTime));
-
         // mediatorMinigame.StartHeadear();
         ChangeState(false, TimerState.resolve, resolveTime);
         yield return StartCoroutine(CountownTimer(currentTime));

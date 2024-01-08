@@ -22,6 +22,7 @@ public class DetectPlane : MonoBehaviour
     //public GameObject items;
     // public GameObject scene;
     public GameObject plane;
+    LayerMask layerForDEtect;
     //public GameObject objects;
     void Start()
     {
@@ -64,23 +65,27 @@ public class DetectPlane : MonoBehaviour
             {
                 Touch touch = Input.GetTouch(0);
 
-                if (arRaycastManager.Raycast(touch.position, hits, TrackableType.PlaneWithinPolygon))
+                bool isUI = IsPointerOverUIObject(touch.position);
+
+                if (!isUI && arRaycastManager.Raycast(touch.position, hits, TrackableType.PlaneWithinPolygon))
                 {
-                    if (!EventSystem.current.IsPointerOverGameObject(touch.fingerId))
-                    {
-                        // Get the intersection point with the detected plane
-                        Pose hitPose = hits[0].pose;
-                        transform.localPosition = hitPose.position;
-                        transform.rotation = hitPose.rotation;
-                    }
-
-
-
-
-
+                    // Get the intersection point with the detected plane
+                    Pose hitPose = hits[0].pose;
+                    transform.localPosition = hitPose.position;
+                    transform.rotation = hitPose.rotation;
                 }
             }
         }
 
+    }
+    public bool IsPointerOverUIObject(Vector2 touchPosition)
+    {
+        PointerEventData pointerEventData = new PointerEventData(EventSystem.current);
+        pointerEventData.position = touchPosition;
+        List<RaycastResult> raycastResults = new List<RaycastResult>();
+
+        EventSystem.current.RaycastAll(pointerEventData, raycastResults);
+
+        return raycastResults.Count > 0;
     }
 }

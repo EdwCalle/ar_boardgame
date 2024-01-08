@@ -1,11 +1,10 @@
 using Models;
 using Photon.Pun;
-using UnityEditor.SearchService;
 using UnityEngine.SceneManagement;
 public class MinigameManager : MonoBehaviourPunCallbacks
 {
     //Load Info Manager include title
-
+    public PlatformManager platformManager;
     public LoadingScreenManager loadingScreenManager;
     public NormalMinigameManager normalMinigameManager;
     public SearchMinigameManager searchMinigameManager;
@@ -30,6 +29,10 @@ public class MinigameManager : MonoBehaviourPunCallbacks
         if (Singleton.GetCurrentMinigame().Level == 3)
             return minigame = quizMinigameManager;
         throw new System.Exception("ThisApp: No type of level has been loaded."); ;
+    }
+    void Awake()
+    {
+        platformManager.SwitchPlatform();
     }
     async void Start()
     {
