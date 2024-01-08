@@ -7,19 +7,16 @@ using System.Linq;
 namespace Pages
 {
 
-    public class GeneralGamePage : MonoBehaviour, ICrud
+    public class CrudMatch : MonoBehaviour, ICrud
 
     {
         public TMP_InputField title;
         // public TMP_InputField roundNumber;
         public SelectorManager selectorRounds;
         public TextMeshProUGUI titleModal;
-        Models.Match generalGame;
+        Match generalGame;
         public List<Round> selectedRounds;
         private EditMode editMode;
-
-
-
 
         void Start()
         {
