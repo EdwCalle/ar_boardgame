@@ -14,7 +14,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Student/board.unity
     guid: 47b2d007ec1dc459d9ce8933552a96e0
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Student/minigames.unity
     guid: e0fce61e154878642b87d87ed1da83d3
   - enabled: 0
@@ -26,6 +26,9 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Teacher/crudModels.unity
     guid: ef2e79639bce8094685271b12667cab3
+  - enabled: 1
+    path: Assets/Scenes/Teacher/teacher.unity
+    guid: b86fb8784ff9c794fbdce5e4b010ce37
   m_configObjects:
     Unity.XR.WindowsMR.Settings: {fileID: 11400000, guid: 744b813df90924c169af73489b8325de,
       type: 2}

@@ -12,7 +12,7 @@ public class DetectPlane : MonoBehaviour
     public ARPlaneManager aRPlaneManager;
 
     public Slider Slider;
-    private List<ARRaycastHit> hits = new List<ARRaycastHit>();
+    private List<ARRaycastHit> hits = new();
 
     //public GameObject objectToPlace;
 
@@ -80,9 +80,9 @@ public class DetectPlane : MonoBehaviour
     }
     public bool IsPointerOverUIObject(Vector2 touchPosition)
     {
-        PointerEventData pointerEventData = new PointerEventData(EventSystem.current);
+        PointerEventData pointerEventData = new(EventSystem.current);
         pointerEventData.position = touchPosition;
-        List<RaycastResult> raycastResults = new List<RaycastResult>();
+        List<RaycastResult> raycastResults = new();
 
         EventSystem.current.RaycastAll(pointerEventData, raycastResults);
 

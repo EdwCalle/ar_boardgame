@@ -5,6 +5,7 @@ namespace Models
     [System.Serializable]
     public class Question
     {
+        [SerializeField] private int id;
         [SerializeField] private string title;
         [SerializeField] private string optionA;
         [SerializeField] private string optionB;
@@ -22,6 +23,7 @@ namespace Models
         public string Title { get => title; set => title = value; }
         public int Solution { get => solution; set => solution = value; }
         public int OptionSelected { get => optionSelected; set => optionSelected = value; }
+        public int Id { get => id; set => id = value; }
 
         public Question(string title, string OptionA, string OptionB, string OptionC, string OptionD, int solution = 0)
         {

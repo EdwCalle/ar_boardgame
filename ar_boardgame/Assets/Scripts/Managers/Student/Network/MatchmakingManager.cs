@@ -14,8 +14,8 @@ public class MatchmakingManager : MonoBehaviourPunCallbacks
     public TextMeshProUGUI nameJoinedRoom;
     public TextMeshProUGUI message;
     public bool activateServer = false;
-    private TypedLobby customLobby = new TypedLobby("customLobby", LobbyType.Default);
-    private Dictionary<string, RoomInfo> cachedRoomList = new Dictionary<string, RoomInfo>();
+    private TypedLobby customLobby = new("customLobby", LobbyType.Default);
+    private Dictionary<string, RoomInfo> cachedRoomList = new();
 
     List<PlayerMatchmaking> playerMatchmakings = new();
     public PlayerMatchmaking playerMatchmakingPrefab;

@@ -6,7 +6,7 @@ public class AutomaticConnection : MonoBehaviourPunCallbacks
 {
     //public string scene;
     //  public TextMeshProUGUI LogMessage;
-    private TypedLobby customLobby = new TypedLobby("customLobby", LobbyType.Default);
+    private TypedLobby customLobby = new("customLobby", LobbyType.Default);
     void Start()
     {
         if (!PhotonNetwork.IsConnected && !Singleton.IsSinglePlayer())

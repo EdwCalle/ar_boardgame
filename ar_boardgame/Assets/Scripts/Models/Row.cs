@@ -1,14 +1,15 @@
 
+
 namespace Models
 {
     public class Row
     {
-        string[] texts;
-
+        string[] cells;
+        int id;
         public Row()
         {
         }
-
-        public string[] Texts { get => texts; set => texts = value; }
+        public string[] Cells { get => cells; set => cells = value; }
+        public int Id { get => id; set => id = value; }
     }
 }
