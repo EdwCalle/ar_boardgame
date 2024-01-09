@@ -33,6 +33,8 @@ public class UploadFile : MonoBehaviour
         string filePath = EditorUtility.OpenFilePanel("Select a file", "", "");
         if (!string.IsNullOrEmpty(filePath))
         {
+            if (model.transform.childCount != 0)
+                Destroy(model.transform.GetChild(0).gameObject);
             model.GetComponent<GLTFComponent>().GLTFUri = filePath;
             model.GetComponent<GLTFComponent>().Load();
             // Use the selected file path.

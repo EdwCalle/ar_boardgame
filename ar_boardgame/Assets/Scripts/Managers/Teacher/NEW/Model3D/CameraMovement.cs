@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class CameraMovement : MonoBehaviour
@@ -20,7 +21,7 @@ public class CameraMovement : MonoBehaviour
     {
         Debug.Log(Cursor.lockState);
         characterController = GetComponent<CharacterController>();
-        //  playerCamera = Camera.main; // Access the main camera in the scene
+        playerCamera = Camera.main; // Access the main camera in the scene
         //  Cursor.lockState = CursorLockMode.Locked; // Lock the cursor to the center of the game window
     }
 
@@ -48,16 +49,16 @@ public class CameraMovement : MonoBehaviour
             //     isRotating = false;
             // }
             // if (isRotating)
-            {
-                float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
-                float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
 
-                verticalRotation -= mouseY;
-                verticalRotation = Mathf.Clamp(verticalRotation, -90f, 90f);
+            float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
+            float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
 
-                playerCamera.transform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
-                transform.Rotate(Vector3.up * mouseX);
-            }
+            verticalRotation -= mouseY;
+            verticalRotation = Mathf.Clamp(verticalRotation, -90f, 90f);
+
+            playerCamera.transform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
+            transform.Rotate(Vector3.up * mouseX);
+
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -77,10 +78,22 @@ public class CameraMovement : MonoBehaviour
 
             Cursor.lockState = CursorLockMode.None;
     }
+
     public void enableCameraMovement()
     {
+        EventSystem.current.SetSelectedGameObject(null);
+
         GUI.FocusControl(null);
         toggleCameraMovement(toggle.GetComponent<Toggle>().isOn);
     }
+    // void SelectToggleWithoutEvent(Toggle toggle, bool value)
+    // {
+    //     // Temporarily remove the listener
+    //     toggle.onValueChanged.RemoveListener(OnToggleQuestion);
+    //     // Set the toggle's state without triggering the event
+    //     toggle.isOn = value;
+    //     // Re-add the listener
+    //     toggle.onValueChanged.AddListener(OnToggleQuestion);
+    // }
 
 }

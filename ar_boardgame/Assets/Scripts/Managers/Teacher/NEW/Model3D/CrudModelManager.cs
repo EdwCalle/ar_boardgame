@@ -13,84 +13,78 @@ public class CrudModelManager : MonoBehaviour
     public VectorValues modelPosition;
 
     public GameObject model;
+    public GameObject modelGLTF;
 
     public GameObject resume;
 
-    public GameObject hitbox;
-    public GameObject box;
+    //public GameObject hitbox;
+    public GameObject colliderBox;
 
-    public GameObject tittle;
-    public GameObject description;
-    public GameObject copyright;
-
-
+    public TextMeshPro[] title;
+    public TextMeshPro[] description;
+    public TextMeshPro[] copyright;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        currentModel.Collider = new Models.Collider(new Vector3(0, 0, 0), new Vector3(0.2f, 0.2f, 0.2f));
-        currentModel.Position = new Vector3(0, 0, 0);
+        currentModel.Collider = new Models.Collider(new Vector3(0, 1.5f, 0), new Vector3(0.2f, 1f, 0.2f));
+        currentModel.Position = new Vector3(0, 1.5f, 0);
         currentModel.Scale = new Vector3(0.2f, 0.2f, 0.2f);
-
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
     public void UpdateColliderSize()
     {
-
-
         float x = (hitboxScale.getVectorValue().x / 2) + 0.1f; //(0.2-0,0.117/2)=0.0585-0.2=0.1415-0.1=0.0415+0.0585=1;
         resume.transform.position = new Vector3(x, resume.transform.position.y, resume.transform.position.z);
         // collider size
         currentModel.Collider.Size = hitboxScale.getVectorValue();
-        box.transform.localScale = currentModel.Collider.Size;
+        colliderBox.transform.localScale = currentModel.Collider.Size;
         // change pos postion accordting to x size
-
-
     }
-    public void UpdateColliderCenter()
-    {
-        // hitbox position
-        currentModel.Collider.Center = hitboxPosition.getVectorValue();
-        hitbox.transform.position = currentModel.Collider.Center;
-    }
+    // public void UpdateColliderCenter()
+    // {
+    //     // hitbox position
+    //     currentModel.Collider.Center = hitboxPosition.getVectorValue();
+    //     //  hitbox.transform.position = currentModel.Collider.Center;
+    // }
     public void UpdateModelPosition()
     {
         // model position
         currentModel.Position = modelPosition.getVectorValue();
-        model.transform.position = currentModel.Position;
+        // model.transform.position = currentModel.Position;
+        modelGLTF.transform.position = currentModel.Position;
     }
     public void UpdateModelScale()
     {
         // model position
         currentModel.Scale = modelScale.getVectorValue();
-        model.transform.localScale = currentModel.Scale;
+        //  model.transform.localScale = currentModel.Scale;
+        modelGLTF.transform.localScale = currentModel.Scale;
     }
     public void SaveModel()
     {
         SceneManager.LoadScene("mainPageTeacher");
     }
-    public void ResetRotation(GameObject gameObject)
+    // public void ResetRotation(GameObject gameObject)
+    // {
+    //     // gameObject.transform.Rotate(0f, 0f, 0f);
+    //     gameObject.transform.rotation = Quaternion.identity;
+    // }
+    public void UpdateTittle(TMP_InputField input)
     {
-        // gameObject.transform.Rotate(0f, 0f, 0f);
-        gameObject.transform.rotation = Quaternion.identity;
+        title[0].text = input.text;
+        title[1].text = input.text;
     }
-    public void UpdateTittle(GameObject gameObject)
+    public void UpdateDescription(TMP_InputField input)
     {
-        tittle.GetComponent<TextMeshPro>().text = gameObject.GetComponent<TMP_InputField>().text;
+        description[0].text = input.text;
+        description[1].text = input.text;
     }
-    public void UpdateDescription(GameObject gameObject)
+    public void UpdateCopyright(TMP_InputField input)
     {
-        description.GetComponent<TextMeshPro>().text = gameObject.GetComponent<TMP_InputField>().text;
-    }
-    public void UpdateCopy(GameObject gameObject)
-    {
-        copyright.GetComponent<TextMeshPro>().text = gameObject.GetComponent<TMP_InputField>().text;
+        copyright[0].text = input.text;
+        copyright[1].text = input.text;
     }
 
 
