@@ -9,10 +9,14 @@ public class SingletonTeacher : MonoBehaviour
     private List<Match> matchesT = new();
     private List<Round> roundsT = new();
     private List<Minigame> minigamesT = new();
+    private List<Model3D> models3DT = new();
     public List<Match> MatchesT { get => matchesT; set => matchesT = value; }
     public List<Round> RoundsT { get => roundsT; set => roundsT = value; }
     public List<Minigame> MinigamesT { get => minigamesT; set => minigamesT = value; }
+    public List<Model3D> Models3DT { get => models3DT; set => models3DT = value; }
+
     // Start is called before the first frame update
+
     private void Awake()
     {
         CreateSingleton();
@@ -30,7 +34,7 @@ public class SingletonTeacher : MonoBehaviour
     [System.Serializable]
     public class Wrapper
     {
-        public Model3D[] models;
+        public List<Model3D> models;
         public Minigame[] minigames;
         public Dialogue[] dialogues;
         public List<Round> rounds;
@@ -51,6 +55,7 @@ public class SingletonTeacher : MonoBehaviour
         // SetExtraQuestion();
         RoundsT = ExampleData.rounds;
         MatchesT = ExampleData.matches;
+        Models3DT = ExampleData.models;
         // print(JsonUtility.ToJson(currentGeneralGame.Rounds[0]));
         // print(JsonUtility.ToJson(currentGeneralGame.Rounds[1]));
         // print(JsonUtility.ToJson(currentGeneralGame.[DemonQuestions]));

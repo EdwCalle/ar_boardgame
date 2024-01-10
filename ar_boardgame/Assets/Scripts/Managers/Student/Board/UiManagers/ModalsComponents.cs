@@ -11,8 +11,6 @@ namespace thisAPP.UIElements
         [SerializeField] private GameObject rightButton;
         [SerializeField] private GameObject upButton;
         [SerializeField] private GameObject downButton;
-        // [SerializeField] private TextMeshProUGUI titleTurn;
-        // [SerializeField] private Sprite player;
 
         public GameObject LeftButton { get => leftButton; set => leftButton = value; }
         public GameObject RightButton { get => rightButton; set => rightButton = value; }

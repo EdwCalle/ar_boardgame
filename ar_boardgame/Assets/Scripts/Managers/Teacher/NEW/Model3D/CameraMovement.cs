@@ -62,7 +62,7 @@ public class CameraMovement : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Debug.Log("no funciona");
+            //  Debug.Log("no funciona");
             toggle.GetComponent<Toggle>().isOn = false;
             //  enableCameraMovement();
             // toggleCameraMovement(false);

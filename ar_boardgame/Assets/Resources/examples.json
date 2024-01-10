@@ -5,6 +5,8 @@
             "name": "Margarita",
             "description": "some description",
             "url": "Models3D/margarita.glb",
+            "urlMiniature": "Miniature/test.png",
+            "copyright": "@Edwin Calle",
             "position": {
                 "x": 1.0,
                 "y": 0.5,
@@ -49,6 +51,8 @@
             "name": "Arbusto",
             "description": "some description",
             "url": "Models3D/arbusto.glb",
+            "urlMiniature": "Miniature/test.png",
+            "copyright": "@Edwin Calle",
             "position": {
                 "x": 0.0,
                 "y": 0.5,
@@ -93,6 +97,8 @@
             "name": "Cactus",
             "description": "some description",
             "url": "Models3D/cactus.glb",
+            "urlMiniature": "Miniature/test.png",
+            "copyright": "@Edwin Calle",
             "position": {
                 "x": -1.5,
                 "y": 0.5,

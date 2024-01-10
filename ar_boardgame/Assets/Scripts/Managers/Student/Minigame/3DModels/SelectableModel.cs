@@ -77,7 +77,6 @@ public class SelectableModel : MonoBehaviour
     }
     public void SwitchModelSelected()
     {
-
         Color currentColor = GetComponent<Renderer>().material.color;
         if (isSelected)
         {

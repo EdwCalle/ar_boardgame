@@ -9,7 +9,9 @@ namespace Models
         [SerializeField] private int code;
         [SerializeField] private string name;
         [SerializeField] private string description;
+        [SerializeField] private string copyright;
         [SerializeField] private string url;
+        [SerializeField] private string urlMiniature;
         [SerializeField] private Vector3 position;
         [SerializeField] private Vector3 scale;
         [SerializeField] private bool isSolution;
@@ -48,6 +50,8 @@ namespace Models
         public Vector3 ColliderScale { get => colliderScale; set => colliderScale = value; }
         public Collider Collider { get; internal set; }
         public Question Question { get => question; set => question = value; }
+        public string UrlMiniature { get => urlMiniature; set => urlMiniature = value; }
+        public string Copyright { get => copyright; set => copyright = value; }
 
         // public Vector3 GetPosition()
         // {

@@ -26,10 +26,6 @@ public class UploadFile : MonoBehaviour
     {
 #if UNITY_EDITOR
 
-
-
-
-
         string filePath = EditorUtility.OpenFilePanel("Select a file", "", "");
         if (!string.IsNullOrEmpty(filePath))
         {
@@ -75,6 +71,7 @@ public class UploadFile : MonoBehaviour
     {
         SceneManager.LoadScene("crudModels");
     }
+
 
 
 }
