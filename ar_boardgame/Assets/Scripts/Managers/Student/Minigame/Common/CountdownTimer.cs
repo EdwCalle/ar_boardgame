@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Models;
 using System.Collections;
-using System.Threading;
 
 
 public class CountdownTimer : MonoBehaviour
@@ -57,7 +56,6 @@ public class CountdownTimer : MonoBehaviour
             detectPlane.EnableTap(false);
         }
         minigameManager.StartResolveTime();
-
         if (!IsAR)
             cursor.SetActive(true);
         // ChangeState(true, TimerState.offset, offSet, "Enfoca la cámara y exploremos el nivel");

@@ -31,7 +31,7 @@ public class RandomSquareManager : MonoBehaviour, IModalAnimator
         if (Singleton.IsMyTurn())
             gameManager.turnInfoManager.PrepareTurnInfo("Tu turno, espera a tu suerte...");
         else
-            gameManager.turnInfoManager.PrepareTurnInfo("Esperando a la casilla random del Player" + Singleton.GetCurrentPlayerTurn());
+            gameManager.turnInfoManager.PrepareTurnInfo($"Esperando a la casilla random del jugador ${Singleton.GetPlayerName()}");
         await ShowModal(gameManager.canvasModal);
         StartCoroutine(RotateRandomSquare(randomNumber));
     }

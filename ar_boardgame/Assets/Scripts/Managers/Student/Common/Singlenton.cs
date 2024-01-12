@@ -1,4 +1,3 @@
-
 using System.Collections.Generic;
 using Models;
 using UnityEngine;
@@ -8,7 +7,7 @@ public class Singleton : MonoBehaviour
     public static Singleton instance;
 
     // for game funcionality
-    public
+    // public
     Match currentGeneralGame = new();
     // [HideInInspector] public Minigame currentMinigame = new();
 
@@ -34,6 +33,7 @@ public class Singleton : MonoBehaviour
 
     // for board funcionality
     public BoardPersistent boardPersistent = new();
+    public string PlayerName;
     public bool IsSinglePlayerMode { get => isSinglePlayerMode; set => isSinglePlayerMode = value; }
 
     private void Awake()
@@ -85,7 +85,14 @@ public class Singleton : MonoBehaviour
         round.Minigame.Models.Add(ExampleData.models[2]);
     }
     // for minigame 
-
+    public static void SetPlayerName(string name)
+    {
+        instance.PlayerName = name;
+    }
+    public static string GetPlayerName()
+    {
+        return instance.PlayerName;
+    }
     public static Minigame GetCurrentMinigame()
     {
         return instance.currentGeneralGame.Rounds[instance.boardPersistent.CurrentRound].Minigame;

@@ -3,7 +3,9 @@ using ExitGames.Client.Photon;
 using Models;
 using Photon.Pun;
 using Photon.Realtime;
+using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 public class GameManager : MonoBehaviourPunCallbacks
 {
     private int playersReady = 0;
@@ -21,7 +23,8 @@ public class GameManager : MonoBehaviourPunCallbacks
     public RandomSquareManager randomSquareManager;
     public PlayersInfoManager playersInfoManager;
     public MinigameInfoManager minigameInfoManager;
-
+    public TextMeshProUGUI titleRound;
+    public TextMeshProUGUI numberRound;
     void Awake()
     {
         arrowsManager.uiElements.ModalUI.SetActive(false);
@@ -36,6 +39,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
+        Cursor.lockState = CursorLockMode.None;
         if (Singleton.IsSinglePlayer())
         {
             PrepareGameRPC();
@@ -46,7 +50,8 @@ public class GameManager : MonoBehaviourPunCallbacks
             {
                 Hashtable playerProperties = PhotonNetwork.LocalPlayer.CustomProperties;
                 // print("turno" + playerProperties["turn"]);
-                //Singleton.SetMyTurn((int)playerProperties["turn"]);
+                Singleton.SetMyTurn((int)playerProperties["turn"]);
+                Singleton.SetPlayerName(PhotonNetwork.NickName);
 
                 // for sync scenes to other players
                 PhotonNetwork.AutomaticallySyncScene = true;
@@ -83,6 +88,8 @@ public class GameManager : MonoBehaviourPunCallbacks
         if (Singleton.ExistRounds())
         {
             boardManager.PrepareBoard();
+            titleRound.text = Singleton.GetRoundTitle();
+            numberRound.text = $"{Singleton.GetNumberRound() + 1}";
             //uiMediatorManager.SetRoundInfo();// change way
             // UpdatePlayersList(); // change way
             await waitPlayerManager.HideModal(canvasModal);

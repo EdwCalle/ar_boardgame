@@ -64,7 +64,7 @@ public class MinigameManager : MonoBehaviourPunCallbacks
         }
         else
         {
-            // PhotonNetwork.AutomaticallySyncScene = true;
+            PhotonNetwork.AutomaticallySyncScene = false;
             StartLevelRPC();
         }
         //start level

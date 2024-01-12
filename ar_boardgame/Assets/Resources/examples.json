@@ -151,7 +151,7 @@
                 "type": "image",
                 "info": ""
             },
-            "interactionTime": 6.0,
+            "interactionTime": 10.0,
             "resolveTime": 10.0,
             "feedbackTime": 10.0,
             "headerType": 0,
@@ -337,11 +337,19 @@
             "sentences": [
                 {
                     "numberCharacter": 0,
-                    "line": "Tanjiro: ¡Hola Goku! ¿Sabías que las plantas tienen diferentes partes con funciones específicas?"
+                    "line": " ¡Hola!  ¿Sabías que las plantas tienen diferentes partes con funciones específicas?"
                 },
                 {
                     "numberCharacter": 1,
-                    "line": "Goku: ¡Hola Tanjiro! No tenía idea, pero suena interesante. ¿De qué partes estás hablando?"
+                    "line": " ¡Hola! No tenía idea, pero suena interesante. ¿De qué partes estás hablando?"
+                },
+                {
+                    "numberCharacter": 0,
+                    "line": " del Tallo, hojas y así... no me acuerdo del resto, ayudame"
+                },
+                {
+                    "numberCharacter": 1,
+                    "line": " raíces..."
                 }
             ]
         }

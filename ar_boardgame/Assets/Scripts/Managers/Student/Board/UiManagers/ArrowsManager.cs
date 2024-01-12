@@ -22,7 +22,7 @@ public class ArrowsManager : MonoBehaviour, IModalAnimator
         }
         else
         {
-            gameManager.turnInfoManager.PrepareTurnInfo(message: $"Espera un momento, el jugador{Singleton.GetCurrentPlayerTurn()} esta seleccionando el camino");
+            gameManager.turnInfoManager.PrepareTurnInfo(message: $"Espera un momento, el jugador {Singleton.GetPlayerName()} esta seleccionando el camino");
             //uiElements.TitleTurn.text = $"Espera un momento, el jugador{Singleton.GetCurrentPlayerTurn()} esta seleccionando el camino";
             //sprite player
         }

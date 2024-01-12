@@ -2587,8 +2587,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 0.97
   mouseSensitivity: 1.6
-  ascentSpeed: 0.005
-  descentSpeed: 0.005
+  ascentSpeed: 0.5
+  descentSpeed: 0.5
   toggle: {fileID: 1113205625}
 --- !u!136 &924129297
 CapsuleCollider:

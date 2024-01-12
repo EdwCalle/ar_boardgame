@@ -139,7 +139,7 @@ public class DiceManager : MonoBehaviour, IDragHandler, IEndDragHandler, IPointe
         else
         {
             uiElements.SwipeAnimation.SetActive(false);
-            gameManager.turnInfoManager.PrepareTurnInfo($"Player{Singleton.GetCurrentPlayerTurn()} está lanzando el dado");
+            gameManager.turnInfoManager.PrepareTurnInfo($"Jugador {Singleton.GetPlayerName()} está lanzando el dado");
             // uiElements.TitleTurn.text = ;
         }
     }
