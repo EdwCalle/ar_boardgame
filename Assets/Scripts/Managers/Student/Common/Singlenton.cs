@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Models;
+using Unity.Services.Multiplayer;
 using UnityEngine;
 
 public class Singleton : MonoBehaviour
@@ -35,6 +36,14 @@ public class Singleton : MonoBehaviour
     public BoardPersistent boardPersistent = new();
     public string PlayerName;
     public bool IsSinglePlayerMode { get => isSinglePlayerMode; set => isSinglePlayerMode = value; }
+
+    public ISession CurrentSession { get; private set; }
+    public void SetCurrentSession(ISession session)
+    {
+        instance.CurrentSession = session;
+    }
+
+
 
     private void Awake()
     {

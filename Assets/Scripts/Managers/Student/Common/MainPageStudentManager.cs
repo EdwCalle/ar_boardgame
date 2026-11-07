@@ -1,9 +1,11 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MainPageStudentManager : MonoBehaviour
 {
     // Start is called before the first frame update
+    [SerializeField] private TextMeshProUGUI username;
     void Start()
     {
 
@@ -20,6 +22,14 @@ public class MainPageStudentManager : MonoBehaviour
     }
     public void GoMultiplayer()
     {
-        SceneManager.LoadScene("multiplayer");
+        if (username.text.Length >= 1)
+        {
+            Singleton.SetPlayerName(username.text.Replace("\u200B", "").Trim());
+            SceneManager.LoadScene("multiplayer");
+        }
+        else
+        {
+            Debug.Log("Username is empty");
+        }
     }
 }
